@@ -3,6 +3,7 @@ import { create } from "zustand"
 import { healthLogs, healthSummary } from "@/data/mock/health"
 import type {
   CreateHealthLogInput,
+  DailyCheckInLog,
   HealthLog,
   HealthSummary,
   MealLog,
@@ -14,6 +15,7 @@ import type {
   WorkoutLog,
 } from "@/types/health"
 
+type LogDailyCheckInInput = Omit<DailyCheckInLog, "id" | "createdAt" | "type">
 type LogWeightInput = Omit<WeightLog, "id" | "createdAt" | "type">
 type LogMealInput = Omit<MealLog, "id" | "createdAt" | "type">
 type LogWorkoutInput = Omit<WorkoutLog, "id" | "createdAt" | "type">
@@ -25,6 +27,7 @@ type LogMoodInput = Omit<MoodLog, "id" | "createdAt" | "type">
 interface HealthState {
   logs: HealthLog[]
   addHealthLog: (input: CreateHealthLogInput) => HealthLog
+  logDailyCheckIn: (input: LogDailyCheckInInput) => HealthLog
   logWeight: (input: LogWeightInput) => HealthLog
   logMeal: (input: LogMealInput) => HealthLog
   logWorkout: (input: LogWorkoutInput) => HealthLog
@@ -57,6 +60,8 @@ export const useHealthStore = create<HealthState>((set, get) => {
   return {
     logs: initialLogs(),
     addHealthLog,
+    logDailyCheckIn: (input) =>
+      get().addHealthLog({ ...input, type: "daily-check-in" }),
     logWeight: (input) => get().addHealthLog({ ...input, type: "weight" }),
     logMeal: (input) => get().addHealthLog({ ...input, type: "meal" }),
     logWorkout: (input) => get().addHealthLog({ ...input, type: "workout" }),

@@ -1,6 +1,7 @@
 import { format, parseISO } from "date-fns"
 import {
   Activity,
+  ClipboardCheck,
   Droplets,
   Dumbbell,
   Footprints,
@@ -25,6 +26,25 @@ interface RecentCheckInsProps {
 function toTimelineItem(log: HealthLog): TimelineItem {
   const time = format(parseISO(log.createdAt), "MMM d, h:mm a")
   switch (log.type) {
+    case "daily-check-in": {
+      const completed = [
+        log.workoutStatus,
+        log.dietStatus,
+        log.supplementsStatus,
+        log.skincareStatus,
+        log.smokingStatus,
+        log.dsaStatus,
+        log.skillImprovementStatus,
+      ].filter((status) => status === "done").length
+      return {
+        id: log.id,
+        title: `Daily tracker · ${completed}/7 habits completed`,
+        description: `Focus ${log.focus}/5 · Mood ${log.mood}/5 · Energy ${log.energy}/5`,
+        time,
+        icon: ClipboardCheck,
+        tone: completed >= 5 ? "success" : "warning",
+      }
+    }
     case "weight":
       return {
         id: log.id,

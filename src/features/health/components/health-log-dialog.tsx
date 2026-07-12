@@ -27,7 +27,11 @@ import {
   type HealthLogFormValues,
 } from "@/features/health/schemas/health-log-schema"
 import { useHealthStore } from "@/store/health-store"
-import type { HealthLogType, MoodLevel } from "@/types/health"
+import type {
+  HabitStatus,
+  HealthLogType,
+  MoodLevel,
+} from "@/types/health"
 
 interface HealthLogDialogProps {
   open: boolean
@@ -36,6 +40,7 @@ interface HealthLogDialogProps {
 }
 
 const logTypeLabels: Record<HealthLogType, string> = {
+  "daily-check-in": "Daily tracker check-in",
   weight: "Weight",
   meal: "Meal & nutrition",
   workout: "Workout",
@@ -49,6 +54,14 @@ const defaultValues = (type: HealthLogType): HealthLogFormValues => ({
   type,
   date: "2026-07-12",
   note: "",
+  workoutStatus: "not-applicable",
+  dietStatus: "not-applicable",
+  supplementsStatus: "not-applicable",
+  skincareStatus: "not-applicable",
+  smokingStatus: "not-applicable",
+  dsaStatus: "not-applicable",
+  skillImprovementStatus: "not-applicable",
+  focus: 3,
   weightKg: undefined,
   mealName: "",
   calories: undefined,
@@ -79,6 +92,10 @@ function toMoodLevel(value: number | undefined): MoodLevel {
   return 3
 }
 
+function toHabitStatus(value: HabitStatus | undefined): HabitStatus {
+  return value ?? "not-applicable"
+}
+
 export function HealthLogDialog({
   open,
   onOpenChange,
@@ -105,6 +122,27 @@ export function HealthLogDialog({
   const onSubmit = (values: HealthLogFormValues) => {
     const base = { date: values.date, note: values.note || undefined }
     switch (values.type) {
+      case "daily-check-in":
+        addHealthLog({
+          ...base,
+          type: "daily-check-in",
+          calories: values.calories,
+          proteinGrams: values.proteinGrams,
+          steps: values.steps,
+          sleepHours: values.hours,
+          waterLiters: values.liters,
+          workoutStatus: toHabitStatus(values.workoutStatus),
+          dietStatus: toHabitStatus(values.dietStatus),
+          supplementsStatus: toHabitStatus(values.supplementsStatus),
+          skincareStatus: toHabitStatus(values.skincareStatus),
+          smokingStatus: toHabitStatus(values.smokingStatus),
+          dsaStatus: toHabitStatus(values.dsaStatus),
+          skillImprovementStatus: toHabitStatus(values.skillImprovementStatus),
+          focus: toMoodLevel(values.focus),
+          mood: toMoodLevel(values.mood),
+          energy: toMoodLevel(values.energy),
+        })
+        break
       case "weight":
         addHealthLog({
           ...base,
@@ -202,6 +240,71 @@ export function HealthLogDialog({
               <Input id="health-log-date" type="date" {...register("date")} />
               <FieldError message={errors.date?.message} />
             </div>
+
+
+            {type === "daily-check-in" ? (
+              <>
+                {(
+                  [
+                    ["workoutStatus", "Workout"],
+                    ["dietStatus", "Diet followed"],
+                    ["supplementsStatus", "Supplements"],
+                    ["skincareStatus", "Skincare"],
+                    ["smokingStatus", "No smoking"],
+                    ["dsaStatus", "DSA practice"],
+                    ["skillImprovementStatus", "Skill improvement"],
+                  ] as const
+                ).map(([fieldName, label]) => (
+                  <div key={fieldName} className="space-y-2">
+                    <Label>{label}</Label>
+                    <Controller
+                      control={control}
+                      name={fieldName}
+                      render={({ field }) => (
+                        <Select value={field.value} onValueChange={field.onChange}>
+                          <SelectTrigger aria-label={`${label} status`}>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="done">Done</SelectItem>
+                            <SelectItem value="missed">Missed</SelectItem>
+                            <SelectItem value="not-applicable">Not applicable</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
+                    <FieldError message={errors[fieldName]?.message} />
+                  </div>
+                ))}
+                {(["focus", "mood", "energy"] as const).map((fieldName) => (
+                  <div key={fieldName} className="space-y-2">
+                    <Label className="capitalize">{fieldName}</Label>
+                    <Controller
+                      control={control}
+                      name={fieldName}
+                      render={({ field }) => (
+                        <Select
+                          value={String(field.value ?? 3)}
+                          onValueChange={(value) => field.onChange(Number(value))}
+                        >
+                          <SelectTrigger aria-label={`${fieldName} rating`}>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {[1, 2, 3, 4, 5].map((rating) => (
+                              <SelectItem key={rating} value={String(rating)}>
+                                {rating} / 5
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
+                    <FieldError message={errors[fieldName]?.message} />
+                  </div>
+                ))}
+              </>
+            ) : null}
 
             {type === "weight" ? (
               <div className="space-y-2 sm:col-span-2">

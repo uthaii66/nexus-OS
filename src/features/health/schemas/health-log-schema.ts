@@ -6,6 +6,14 @@ export const healthLogSchema = z
   .object({
     type: z.enum(healthLogTypes),
     date: z.string().min(1, "Choose a date"),
+    workoutStatus: z.enum(["done", "missed", "not-applicable"]).optional(),
+    dietStatus: z.enum(["done", "missed", "not-applicable"]).optional(),
+    supplementsStatus: z.enum(["done", "missed", "not-applicable"]).optional(),
+    skincareStatus: z.enum(["done", "missed", "not-applicable"]).optional(),
+    smokingStatus: z.enum(["done", "missed", "not-applicable"]).optional(),
+    dsaStatus: z.enum(["done", "missed", "not-applicable"]).optional(),
+    skillImprovementStatus: z.enum(["done", "missed", "not-applicable"]).optional(),
+    focus: z.number().int().min(1).max(5).optional(),
     note: z.string().trim().max(240).optional(),
     weightKg: z.number().positive().max(350).optional(),
     mealName: z.string().trim().max(80).optional(),
@@ -27,6 +35,19 @@ export const healthLogSchema = z
       if (values[field] === undefined || values[field] === "") {
         context.addIssue({ code: "custom", path: [field], message })
       }
+    }
+
+    if (values.type === "daily-check-in") {
+      requireField("workoutStatus", "Choose workout status")
+      requireField("dietStatus", "Choose diet status")
+      requireField("supplementsStatus", "Choose supplements status")
+      requireField("skincareStatus", "Choose skincare status")
+      requireField("smokingStatus", "Choose smoking status")
+      requireField("dsaStatus", "Choose DSA status")
+      requireField("skillImprovementStatus", "Choose skill improvement status")
+      requireField("focus", "Rate your focus")
+      requireField("mood", "Rate your mood")
+      requireField("energy", "Rate your energy")
     }
 
     if (values.type === "weight") requireField("weightKg", "Enter your weight")

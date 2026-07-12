@@ -1,4 +1,5 @@
 export const healthLogTypes = [
+  "daily-check-in",
   "weight",
   "meal",
   "workout",
@@ -11,12 +12,32 @@ export const healthLogTypes = [
 export type HealthLogType = (typeof healthLogTypes)[number]
 export type MoodLevel = 1 | 2 | 3 | 4 | 5
 export type WorkoutIntensity = "low" | "moderate" | "high"
+export type HabitStatus = "done" | "missed" | "not-applicable"
 
 interface BaseHealthLog {
   id: string
   date: string
   createdAt: string
   note?: string
+}
+
+export interface DailyCheckInLog extends BaseHealthLog {
+  type: "daily-check-in"
+  calories?: number
+  proteinGrams?: number
+  steps?: number
+  sleepHours?: number
+  waterLiters?: number
+  workoutStatus: HabitStatus
+  dietStatus: HabitStatus
+  supplementsStatus: HabitStatus
+  skincareStatus: HabitStatus
+  smokingStatus: HabitStatus
+  dsaStatus: HabitStatus
+  skillImprovementStatus: HabitStatus
+  focus: MoodLevel
+  mood: MoodLevel
+  energy: MoodLevel
 }
 
 export interface WeightLog extends BaseHealthLog {
@@ -62,6 +83,7 @@ export interface MoodLog extends BaseHealthLog {
 }
 
 export type HealthLog =
+  | DailyCheckInLog
   | WeightLog
   | MealLog
   | WorkoutLog

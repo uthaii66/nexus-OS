@@ -153,8 +153,8 @@ export function HealthPage() {
             <Button variant="outline" onClick={() => openLog("weight")}>
               <Scale /> Log weight
             </Button>
-            <Button onClick={() => openLog("meal")}>
-              <Plus /> Log health
+            <Button onClick={() => openLog("daily-check-in")}>
+              <Plus /> Daily check-in
             </Button>
           </>
         }
