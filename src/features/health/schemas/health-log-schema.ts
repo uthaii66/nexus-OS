@@ -1,6 +1,6 @@
-import { z } from "zod"
+import { z } from "zod";
 
-import { healthLogTypes } from "@/types/health"
+import { healthLogTypes } from "@/types/health";
 
 export const healthLogSchema = z
   .object({
@@ -12,7 +12,9 @@ export const healthLogSchema = z
     skincareStatus: z.enum(["done", "missed", "not-applicable"]).optional(),
     smokingStatus: z.enum(["done", "missed", "not-applicable"]).optional(),
     dsaStatus: z.enum(["done", "missed", "not-applicable"]).optional(),
-    skillImprovementStatus: z.enum(["done", "missed", "not-applicable"]).optional(),
+    skillImprovementStatus: z
+      .enum(["done", "missed", "not-applicable"])
+      .optional(),
     focus: z.number().int().min(1).max(5).optional(),
     note: z.string().trim().max(240).optional(),
     weightKg: z.number().positive().max(350).optional(),
@@ -33,44 +35,44 @@ export const healthLogSchema = z
   .superRefine((values, context) => {
     const requireField = (field: keyof typeof values, message: string) => {
       if (values[field] === undefined || values[field] === "") {
-        context.addIssue({ code: "custom", path: [field], message })
+        context.addIssue({ code: "custom", path: [field], message });
       }
-    }
+    };
 
     if (values.type === "daily-check-in") {
-      requireField("workoutStatus", "Choose workout status")
-      requireField("dietStatus", "Choose diet status")
-      requireField("supplementsStatus", "Choose supplements status")
-      requireField("skincareStatus", "Choose skincare status")
-      requireField("smokingStatus", "Choose smoking status")
-      requireField("dsaStatus", "Choose DSA status")
-      requireField("skillImprovementStatus", "Choose skill improvement status")
-      requireField("focus", "Rate your focus")
-      requireField("mood", "Rate your mood")
-      requireField("energy", "Rate your energy")
+      requireField("workoutStatus", "Choose workout status");
+      requireField("dietStatus", "Choose diet status");
+      requireField("supplementsStatus", "Choose supplements status");
+      requireField("skincareStatus", "Choose skincare status");
+      requireField("smokingStatus", "Choose smoking status");
+      requireField("dsaStatus", "Choose DSA status");
+      requireField("skillImprovementStatus", "Choose skill improvement status");
+      requireField("focus", "Rate your focus");
+      requireField("mood", "Rate your mood");
+      requireField("energy", "Rate your energy");
     }
 
-    if (values.type === "weight") requireField("weightKg", "Enter your weight")
+    if (values.type === "weight") requireField("weightKg", "Enter your weight");
     if (values.type === "meal") {
-      requireField("mealName", "Enter the meal name")
-      requireField("calories", "Enter calories")
-      requireField("proteinGrams", "Enter protein")
+      requireField("mealName", "Enter the meal name");
+      requireField("calories", "Enter calories");
+      requireField("proteinGrams", "Enter protein");
     }
     if (values.type === "workout") {
-      requireField("workoutName", "Enter the workout")
-      requireField("durationMinutes", "Enter the duration")
-      requireField("intensity", "Choose an intensity")
+      requireField("workoutName", "Enter the workout");
+      requireField("durationMinutes", "Enter the duration");
+      requireField("intensity", "Choose an intensity");
     }
-    if (values.type === "steps") requireField("steps", "Enter your step count")
+    if (values.type === "steps") requireField("steps", "Enter your step count");
     if (values.type === "sleep") {
-      requireField("hours", "Enter hours slept")
-      requireField("quality", "Rate sleep quality")
+      requireField("hours", "Enter hours slept");
+      requireField("quality", "Rate sleep quality");
     }
-    if (values.type === "water") requireField("liters", "Enter water intake")
+    if (values.type === "water") requireField("liters", "Enter water intake");
     if (values.type === "mood") {
-      requireField("mood", "Rate your mood")
-      requireField("energy", "Rate your energy")
+      requireField("mood", "Rate your mood");
+      requireField("energy", "Rate your energy");
     }
-  })
+  });
 
-export type HealthLogFormValues = z.infer<typeof healthLogSchema>
+export type HealthLogFormValues = z.infer<typeof healthLogSchema>;

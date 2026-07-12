@@ -1,74 +1,74 @@
-import { format, parseISO } from "date-fns"
-import { Columns3, Eye, Flag, List, SearchX } from "lucide-react"
-import { useMemo, useState } from "react"
+import { format, parseISO } from "date-fns";
+import { Columns3, Eye, Flag, List, SearchX } from "lucide-react";
+import { useMemo, useState } from "react";
 
-import { EmptyState } from "@/components/common/empty-state"
-import { FilterBar } from "@/components/common/filter-bar"
-import { SearchInput } from "@/components/common/search-input"
-import { StatusBadge } from "@/components/common/status-badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { EmptyState } from "@/components/common/empty-state";
+import { FilterBar } from "@/components/common/filter-bar";
+import { SearchInput } from "@/components/common/search-input";
+import { StatusBadge } from "@/components/common/status-badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useCareerStore } from "@/store/career-store"
+} from "@/components/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useCareerStore } from "@/store/career-store";
 import {
   APPLICATION_STAGES,
   type ApplicationStage,
   type JobApplication,
-} from "@/types/career"
+} from "@/types/career";
 
 interface ApplicationPipelineProps {
-  onOpenApplication: (id: string) => void
+  onOpenApplication: (id: string) => void;
 }
 
 const stageTone = (
   stage: ApplicationStage,
 ): "neutral" | "info" | "success" | "warning" | "danger" => {
-  if (stage === "Offer") return "success"
-  if (stage === "Rejected") return "danger"
+  if (stage === "Offer") return "success";
+  if (stage === "Rejected") return "danger";
   if (
     ["Recruiter screen", "Technical interview", "Final interview"].includes(
       stage,
     )
   )
-    return "info"
-  if (["Applied", "Referral requested"].includes(stage)) return "warning"
-  return "neutral"
-}
+    return "info";
+  if (["Applied", "Referral requested"].includes(stage)) return "warning";
+  return "neutral";
+};
 
 export function ApplicationPipeline({
   onOpenApplication,
 }: ApplicationPipelineProps) {
-  const applications = useCareerStore((state) => state.applications)
-  const [view, setView] = useState<"board" | "table">("board")
-  const [query, setQuery] = useState("")
+  const applications = useCareerStore((state) => state.applications);
+  const [view, setView] = useState<"board" | "table">("board");
+  const [query, setQuery] = useState("");
   const [stageFilter, setStageFilter] = useState<ApplicationStage | "all">(
     "all",
-  )
+  );
 
   const filtered = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase()
+    const normalizedQuery = query.trim().toLowerCase();
     return applications.filter((application) => {
       const matchesSearch =
         !normalizedQuery ||
         `${application.company} ${application.role} ${application.location}`
           .toLowerCase()
-          .includes(normalizedQuery)
+          .includes(normalizedQuery);
       return (
         matchesSearch &&
         (stageFilter === "all" || application.stage === stageFilter)
-      )
-    })
-  }, [applications, query, stageFilter])
+      );
+    });
+  }, [applications, query, stageFilter]);
 
   const visibleStages =
-    stageFilter === "all" ? APPLICATION_STAGES : [stageFilter]
+    stageFilter === "all" ? APPLICATION_STAGES : [stageFilter];
 
   return (
     <Tabs
@@ -124,8 +124,8 @@ export function ApplicationPipeline({
             <Button
               variant="outline"
               onClick={() => {
-                setQuery("")
-                setStageFilter("all")
+                setQuery("");
+                setStageFilter("all");
               }}
             >
               Clear filters
@@ -140,7 +140,7 @@ export function ApplicationPipeline({
                 {visibleStages.map((stage) => {
                   const stageApplications = filtered.filter(
                     (application) => application.stage === stage,
-                  )
+                  );
                   return (
                     <section
                       key={stage}
@@ -176,7 +176,7 @@ export function ApplicationPipeline({
                         )}
                       </div>
                     </section>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -195,23 +195,23 @@ export function ApplicationPipeline({
         updates
       </p>
     </Tabs>
-  )
+  );
 }
 
 function ApplicationCard({
   application,
   onOpen,
 }: {
-  application: JobApplication
-  onOpen: (id: string) => void
+  application: JobApplication;
+  onOpen: (id: string) => void;
 }) {
-  const moveApplication = useCareerStore((state) => state.moveApplication)
-  const togglePriority = useCareerStore((state) => state.togglePriority)
+  const moveApplication = useCareerStore((state) => state.moveApplication);
+  const togglePriority = useCareerStore((state) => state.togglePriority);
   const initials = application.company
     .split(" ")
     .slice(0, 2)
     .map((part) => part[0])
-    .join("")
+    .join("");
 
   return (
     <article className="rounded-xl border border-border/75 bg-card p-3 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-lg">
@@ -288,21 +288,21 @@ function ApplicationCard({
         View details
       </Button>
     </article>
-  )
+  );
 }
 
 function ApplicationTable({
   applications,
   onOpen,
 }: {
-  applications: JobApplication[]
-  onOpen: (id: string) => void
+  applications: JobApplication[];
+  onOpen: (id: string) => void;
 }) {
-  const moveApplication = useCareerStore((state) => state.moveApplication)
-  const setFollowUpDate = useCareerStore((state) => state.setFollowUpDate)
-  const togglePriority = useCareerStore((state) => state.togglePriority)
-  const associateResume = useCareerStore((state) => state.associateResume)
-  const resumeVersions = useCareerStore((state) => state.resumeVersions)
+  const moveApplication = useCareerStore((state) => state.moveApplication);
+  const setFollowUpDate = useCareerStore((state) => state.setFollowUpDate);
+  const togglePriority = useCareerStore((state) => state.togglePriority);
+  const associateResume = useCareerStore((state) => state.associateResume);
+  const resumeVersions = useCareerStore((state) => state.resumeVersions);
 
   return (
     <div className="overflow-x-auto rounded-xl border border-border/70">
@@ -449,5 +449,5 @@ function ApplicationTable({
         </tbody>
       </table>
     </div>
-  )
+  );
 }

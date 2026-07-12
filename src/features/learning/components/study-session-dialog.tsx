@@ -1,10 +1,10 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { format } from "date-fns"
-import { BookOpenCheck } from "lucide-react"
-import { Controller, useForm } from "react-hook-form"
-import { toast } from "sonner"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { format } from "date-fns";
+import { BookOpenCheck } from "lucide-react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -13,35 +13,35 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { useLearningStore } from "@/store/learning-store"
-import { LEARNING_CATEGORIES } from "@/types/learning"
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useLearningStore } from "@/store/learning-store";
+import { LEARNING_CATEGORIES } from "@/types/learning";
 
 import {
   studySessionSchema,
   type StudySessionFormValues,
-} from "../schemas/learning-schemas"
+} from "../schemas/learning-schemas";
 
 interface StudySessionDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export function StudySessionDialog({
   open,
   onOpenChange,
 }: StudySessionDialogProps) {
-  const addStudySession = useLearningStore((state) => state.addStudySession)
+  const addStudySession = useLearningStore((state) => state.addStudySession);
   const {
     control,
     register,
@@ -58,25 +58,25 @@ export function StudySessionDialog({
       focusScore: 8,
       notes: "",
     },
-  })
+  });
 
   const onSubmit = (values: StudySessionFormValues) => {
     addStudySession({
       ...values,
       studiedAt: new Date(values.studiedAt).toISOString(),
       notes: values.notes || undefined,
-    })
+    });
     toast.success("Study session logged", {
       description: `${values.durationMinutes} minutes added to this week.`,
-    })
+    });
     reset({
       ...values,
       topic: "",
       notes: "",
       studiedAt: format(new Date(), "yyyy-MM-dd'T'HH:mm"),
-    })
-    onOpenChange(false)
-  }
+    });
+    onOpenChange(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -226,5 +226,5 @@ export function StudySessionDialog({
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

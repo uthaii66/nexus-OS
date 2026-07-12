@@ -1,18 +1,18 @@
-import { format, parseISO } from "date-fns"
-import { ArrowRight, CircleAlert } from "lucide-react"
-import { Link } from "react-router-dom"
+import { format, parseISO } from "date-fns";
+import { ArrowRight, CircleAlert } from "lucide-react";
+import { Link } from "react-router-dom";
 
-import { StatusBadge } from "@/components/common/status-badge"
-import { Progress } from "@/components/ui/progress"
-import type { Project, ProjectTask } from "@/types/projects"
+import { StatusBadge } from "@/components/common/status-badge";
+import { Progress } from "@/components/ui/progress";
+import type { Project, ProjectTask } from "@/types/projects";
 
 interface ProjectListRowProps {
-  project: Project
-  tasks: ProjectTask[]
+  project: Project;
+  tasks: ProjectTask[];
 }
 
 export function ProjectListRow({ project, tasks }: ProjectListRowProps) {
-  const activeTasks = tasks.filter((task) => task.status !== "done").length
+  const activeTasks = tasks.filter((task) => task.status !== "done").length;
 
   return (
     <article className="grid gap-4 rounded-xl border border-border bg-card/65 p-4 transition hover:border-white/15 md:grid-cols-[minmax(230px,1.5fr)_110px_160px_110px_40px] md:items-center">
@@ -66,5 +66,5 @@ export function ProjectListRow({ project, tasks }: ProjectListRowProps) {
         <ArrowRight className="size-4" />
       </Link>
     </article>
-  )
+  );
 }

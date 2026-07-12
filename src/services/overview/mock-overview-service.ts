@@ -1,5 +1,13 @@
-import { overviewAlerts, overviewLifeScore, overviewMetrics, overviewPriorities, overviewRecentActivity, overviewSchedule, overviewWeeklyProgress } from "@/data/mock/overview"
-import type { OverviewService } from "@/services/overview/overview-service"
+import {
+  overviewAlerts,
+  overviewLifeScore,
+  overviewMetrics,
+  overviewPriorities,
+  overviewRecentActivity,
+  overviewSchedule,
+  overviewWeeklyProgress,
+} from "@/data/mock/overview";
+import type { OverviewService } from "@/services/overview/overview-service";
 
 export const mockOverviewService: OverviewService = {
   async getSnapshot() {
@@ -11,6 +19,6 @@ export const mockOverviewService: OverviewService = {
       alerts: structuredClone(overviewAlerts),
       weeklyProgress: structuredClone(overviewWeeklyProgress),
       recentActivity: structuredClone(overviewRecentActivity),
-    }
+    };
   },
-}
+};

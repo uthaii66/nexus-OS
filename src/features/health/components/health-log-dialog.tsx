@@ -1,9 +1,9 @@
-import { useEffect } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm } from "react-hook-form"
-import { toast } from "sonner"
+import { useEffect } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -11,32 +11,28 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import {
   healthLogSchema,
   type HealthLogFormValues,
-} from "@/features/health/schemas/health-log-schema"
-import { useHealthStore } from "@/store/health-store"
-import type {
-  HabitStatus,
-  HealthLogType,
-  MoodLevel,
-} from "@/types/health"
+} from "@/features/health/schemas/health-log-schema";
+import { useHealthStore } from "@/store/health-store";
+import type { HabitStatus, HealthLogType, MoodLevel } from "@/types/health";
 
 interface HealthLogDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  defaultType?: HealthLogType
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  defaultType?: HealthLogType;
 }
 
 const logTypeLabels: Record<HealthLogType, string> = {
@@ -48,7 +44,7 @@ const logTypeLabels: Record<HealthLogType, string> = {
   sleep: "Sleep",
   water: "Water",
   mood: "Mood & energy",
-}
+};
 
 const defaultValues = (type: HealthLogType): HealthLogFormValues => ({
   type,
@@ -76,24 +72,24 @@ const defaultValues = (type: HealthLogType): HealthLogFormValues => ({
   liters: undefined,
   mood: 4,
   energy: 3,
-})
+});
 
 function FieldError({ message }: { message?: string }) {
   return message ? (
     <p className="text-xs text-red-300" role="alert">
       {message}
     </p>
-  ) : null
+  ) : null;
 }
 
 function toMoodLevel(value: number | undefined): MoodLevel {
   if (value === 1 || value === 2 || value === 3 || value === 4 || value === 5)
-    return value
-  return 3
+    return value;
+  return 3;
 }
 
 function toHabitStatus(value: HabitStatus | undefined): HabitStatus {
-  return value ?? "not-applicable"
+  return value ?? "not-applicable";
 }
 
 export function HealthLogDialog({
@@ -101,7 +97,7 @@ export function HealthLogDialog({
   onOpenChange,
   defaultType = "weight",
 }: HealthLogDialogProps) {
-  const addHealthLog = useHealthStore((state) => state.addHealthLog)
+  const addHealthLog = useHealthStore((state) => state.addHealthLog);
   const {
     register,
     control,
@@ -112,15 +108,15 @@ export function HealthLogDialog({
   } = useForm<HealthLogFormValues>({
     resolver: zodResolver(healthLogSchema),
     defaultValues: defaultValues(defaultType),
-  })
-  const type = watch("type")
+  });
+  const type = watch("type");
 
   useEffect(() => {
-    if (open) reset(defaultValues(defaultType))
-  }, [defaultType, open, reset])
+    if (open) reset(defaultValues(defaultType));
+  }, [defaultType, open, reset]);
 
   const onSubmit = (values: HealthLogFormValues) => {
-    const base = { date: values.date, note: values.note || undefined }
+    const base = { date: values.date, note: values.note || undefined };
     switch (values.type) {
       case "daily-check-in":
         addHealthLog({
@@ -141,15 +137,15 @@ export function HealthLogDialog({
           focus: toMoodLevel(values.focus),
           mood: toMoodLevel(values.mood),
           energy: toMoodLevel(values.energy),
-        })
-        break
+        });
+        break;
       case "weight":
         addHealthLog({
           ...base,
           type: "weight",
           weightKg: values.weightKg ?? 0,
-        })
-        break
+        });
+        break;
       case "meal":
         addHealthLog({
           ...base,
@@ -157,8 +153,8 @@ export function HealthLogDialog({
           mealName: values.mealName ?? "Meal",
           calories: values.calories ?? 0,
           proteinGrams: values.proteinGrams ?? 0,
-        })
-        break
+        });
+        break;
       case "workout":
         addHealthLog({
           ...base,
@@ -167,34 +163,34 @@ export function HealthLogDialog({
           durationMinutes: values.durationMinutes ?? 0,
           intensity: values.intensity ?? "moderate",
           caloriesBurned: values.caloriesBurned,
-        })
-        break
+        });
+        break;
       case "steps":
-        addHealthLog({ ...base, type: "steps", steps: values.steps ?? 0 })
-        break
+        addHealthLog({ ...base, type: "steps", steps: values.steps ?? 0 });
+        break;
       case "sleep":
         addHealthLog({
           ...base,
           type: "sleep",
           hours: values.hours ?? 0,
           quality: toMoodLevel(values.quality),
-        })
-        break
+        });
+        break;
       case "water":
-        addHealthLog({ ...base, type: "water", liters: values.liters ?? 0 })
-        break
+        addHealthLog({ ...base, type: "water", liters: values.liters ?? 0 });
+        break;
       case "mood":
         addHealthLog({
           ...base,
           type: "mood",
           mood: toMoodLevel(values.mood),
           energy: toMoodLevel(values.energy),
-        })
-        break
+        });
+        break;
     }
-    toast.success(`${logTypeLabels[values.type]} logged`)
-    onOpenChange(false)
-  }
+    toast.success(`${logTypeLabels[values.type]} logged`);
+    onOpenChange(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -241,7 +237,6 @@ export function HealthLogDialog({
               <FieldError message={errors.date?.message} />
             </div>
 
-
             {type === "daily-check-in" ? (
               <>
                 {(
@@ -261,14 +256,19 @@ export function HealthLogDialog({
                       control={control}
                       name={fieldName}
                       render={({ field }) => (
-                        <Select value={field.value} onValueChange={field.onChange}>
+                        <Select
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
                           <SelectTrigger aria-label={`${label} status`}>
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectItem value="done">Done</SelectItem>
                             <SelectItem value="missed">Missed</SelectItem>
-                            <SelectItem value="not-applicable">Not applicable</SelectItem>
+                            <SelectItem value="not-applicable">
+                              Not applicable
+                            </SelectItem>
                           </SelectContent>
                         </Select>
                       )}
@@ -285,7 +285,9 @@ export function HealthLogDialog({
                       render={({ field }) => (
                         <Select
                           value={String(field.value ?? 3)}
-                          onValueChange={(value) => field.onChange(Number(value))}
+                          onValueChange={(value) =>
+                            field.onChange(Number(value))
+                          }
                         >
                           <SelectTrigger aria-label={`${fieldName} rating`}>
                             <SelectValue />
@@ -550,5 +552,5 @@ export function HealthLogDialog({
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

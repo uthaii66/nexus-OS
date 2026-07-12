@@ -1,4 +1,4 @@
-import type { CareerDashboard } from "@/types/career"
+import type { CareerDashboard } from "@/types/career";
 
 export const mockCareerDashboard: CareerDashboard = {
   applications: [
@@ -389,4 +389,4 @@ export const mockCareerDashboard: CareerDashboard = {
       occurredAt: "2026-07-08T20:10:00+05:30",
     },
   ],
-}
+};

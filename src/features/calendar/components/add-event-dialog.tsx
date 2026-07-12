@@ -1,12 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { CalendarPlus } from "lucide-react"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarPlus } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -15,18 +15,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import type { CalendarEvent, CreateCalendarEventInput } from "@/types/calendar"
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import type { CalendarEvent, CreateCalendarEventInput } from "@/types/calendar";
 
 const eventSchema = z
   .object({
@@ -48,16 +48,16 @@ const eventSchema = z
   .refine((values) => new Date(values.end) > new Date(values.start), {
     message: "End time must be after the start time.",
     path: ["end"],
-  })
+  });
 
-type EventFormValues = z.infer<typeof eventSchema>
+type EventFormValues = z.infer<typeof eventSchema>;
 
 interface AddEventDialogProps {
-  onAdd: (input: CreateCalendarEventInput) => Promise<CalendarEvent>
+  onAdd: (input: CreateCalendarEventInput) => Promise<CalendarEvent>;
 }
 
 export function AddEventDialog({ onAdd }: AddEventDialogProps) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const {
     register,
     handleSubmit,
@@ -76,14 +76,14 @@ export function AddEventDialog({ onAdd }: AddEventDialogProps) {
       location: "",
       allDay: false,
     },
-  })
+  });
 
   const onSubmit = async (values: EventFormValues) => {
-    await onAdd(values)
-    toast.success("Event added to your calendar")
-    reset()
-    setOpen(false)
-  }
+    await onAdd(values);
+    toast.success("Event added to your calendar");
+    reset();
+    setOpen(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -156,7 +156,9 @@ export function AddEventDialog({ onAdd }: AddEventDialogProps) {
                 {...register("start")}
               />
               {errors.start ? (
-                <p className="text-destructive text-xs">{errors.start.message}</p>
+                <p className="text-destructive text-xs">
+                  {errors.start.message}
+                </p>
               ) : null}
             </div>
             <div className="space-y-2">
@@ -203,5 +205,5 @@ export function AddEventDialog({ onAdd }: AddEventDialogProps) {
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

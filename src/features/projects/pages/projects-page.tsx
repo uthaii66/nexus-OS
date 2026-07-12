@@ -4,55 +4,55 @@ import {
   List,
   ListChecks,
   TriangleAlert,
-} from "lucide-react"
-import { useMemo, useState } from "react"
+} from "lucide-react";
+import { useMemo, useState } from "react";
 
-import { FilterBar } from "@/components/common/filter-bar"
-import { MetricCard } from "@/components/common/metric-card"
-import { PageHeader } from "@/components/common/page-header"
-import { SearchInput } from "@/components/common/search-input"
-import { Button } from "@/components/ui/button"
+import { FilterBar } from "@/components/common/filter-bar";
+import { MetricCard } from "@/components/common/metric-card";
+import { PageHeader } from "@/components/common/page-header";
+import { SearchInput } from "@/components/common/search-input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { ProjectCard } from "@/features/projects/components/project-card"
-import { ProjectListRow } from "@/features/projects/components/project-list-row"
-import { useProjectsStore } from "@/store/projects-store"
-import type { ProjectStatus } from "@/types/projects"
+} from "@/components/ui/select";
+import { ProjectCard } from "@/features/projects/components/project-card";
+import { ProjectListRow } from "@/features/projects/components/project-list-row";
+import { useProjectsStore } from "@/store/projects-store";
+import type { ProjectStatus } from "@/types/projects";
 
-type ViewMode = "grid" | "list"
-type StatusFilter = ProjectStatus | "all"
+type ViewMode = "grid" | "list";
+type StatusFilter = ProjectStatus | "all";
 
 export function ProjectsPage() {
-  const projects = useProjectsStore((state) => state.projects)
-  const members = useProjectsStore((state) => state.members)
-  const tasks = useProjectsStore((state) => state.tasks)
-  const [query, setQuery] = useState("")
-  const [status, setStatus] = useState<StatusFilter>("all")
-  const [view, setView] = useState<ViewMode>("grid")
+  const projects = useProjectsStore((state) => state.projects);
+  const members = useProjectsStore((state) => state.members);
+  const tasks = useProjectsStore((state) => state.tasks);
+  const [query, setQuery] = useState("");
+  const [status, setStatus] = useState<StatusFilter>("all");
+  const [view, setView] = useState<ViewMode>("grid");
 
   const visibleProjects = useMemo(() => {
-    const normalized = query.trim().toLowerCase()
+    const normalized = query.trim().toLowerCase();
     return projects.filter((project) => {
       const matchesQuery =
         !normalized ||
         project.name.toLowerCase().includes(normalized) ||
         project.summary.toLowerCase().includes(normalized) ||
-        project.tags.some((tag) => tag.toLowerCase().includes(normalized))
-      return matchesQuery && (status === "all" || project.status === status)
-    })
-  }, [projects, query, status])
+        project.tags.some((tag) => tag.toLowerCase().includes(normalized));
+      return matchesQuery && (status === "all" || project.status === status);
+    });
+  }, [projects, query, status]);
 
-  const openTasks = tasks.filter((task) => task.status !== "done").length
-  const blockers = tasks.filter((task) => task.status === "blocked").length
+  const openTasks = tasks.filter((task) => task.status !== "done").length;
+  const blockers = tasks.filter((task) => task.status === "blocked").length;
   const averageProgress = Math.round(
     projects.reduce((total, project) => total + project.progress, 0) /
       projects.length,
-  )
+  );
 
   return (
     <div className="space-y-6">
@@ -186,8 +186,8 @@ export function ProjectsPage() {
             className="mt-5"
             variant="outline"
             onClick={() => {
-              setQuery("")
-              setStatus("all")
+              setQuery("");
+              setStatus("all");
             }}
           >
             Clear filters
@@ -195,7 +195,7 @@ export function ProjectsPage() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default ProjectsPage
+export default ProjectsPage;

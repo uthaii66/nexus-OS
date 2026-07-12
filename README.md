@@ -18,6 +18,7 @@ Version 1 focuses on a polished, responsive frontend with typed mock data and se
 ## Features
 
 ### Overview
+
 - Daily priorities
 - Life score
 - Financial summary
@@ -28,6 +29,7 @@ Version 1 focuses on a polished, responsive frontend with typed mock data and se
 - Alerts and recent activity
 
 ### Finance
+
 - INR formatting with Indian number grouping
 - Transactions and category tracking
 - Monthly income and expense summaries
@@ -39,6 +41,7 @@ Version 1 focuses on a polished, responsive frontend with typed mock data and se
 - India-based accounts, bills, and merchants
 
 ### Health
+
 - Daily check-ins
 - Weight tracking
 - Calories and protein
@@ -51,6 +54,7 @@ Version 1 focuses on a polished, responsive frontend with typed mock data and se
 - Habit consistency
 
 ### Learning
+
 - Python
 - DSA
 - React
@@ -63,6 +67,7 @@ Version 1 focuses on a polished, responsive frontend with typed mock data and se
 - Confidence and revision tracking
 
 ### Career
+
 - Job application pipeline
 - Application stages
 - Recruiter follow-ups
@@ -71,6 +76,7 @@ Version 1 focuses on a polished, responsive frontend with typed mock data and se
 - Notes and priority status
 
 ### Projects
+
 - Project cards
 - Milestones
 - Tasks
@@ -80,6 +86,7 @@ Version 1 focuses on a polished, responsive frontend with typed mock data and se
 - Notes and decisions
 
 ### Additional UI
+
 - Responsive desktop, tablet, and mobile layouts
 - Collapsible sidebar
 - Command palette
@@ -248,7 +255,7 @@ Finance values use:
 new Intl.NumberFormat("en-IN", {
   style: "currency",
   currency: "INR",
-})
+});
 ```
 
 All finance-related screens should use shared formatting utilities instead of hardcoded currency symbols.
@@ -278,6 +285,7 @@ Most interactions currently use mock data or session-only state.
 ## Roadmap
 
 ### Phase 2 — Real Data
+
 - Supabase setup
 - Authentication
 - Persistent finance, health, learning, career, and project data
@@ -286,6 +294,7 @@ Most interactions currently use mock data or session-only state.
 - Audit history
 
 ### Phase 3 — Automation
+
 - n8n workflows
 - Morning brief
 - Evening check-in
@@ -295,6 +304,7 @@ Most interactions currently use mock data or session-only state.
 - GitHub activity summaries
 
 ### Phase 4 — MCP Tools
+
 - Finance MCP
 - Health MCP
 - Learning MCP
@@ -303,6 +313,7 @@ Most interactions currently use mock data or session-only state.
 - Personal memory MCP
 
 ### Phase 5 — AI Agents
+
 - Uthai Chief-of-Staff Agent
 - Finance Agent
 - Health Agent

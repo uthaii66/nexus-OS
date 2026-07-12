@@ -1,4 +1,4 @@
-import { format, parseISO } from "date-fns"
+import { format, parseISO } from "date-fns";
 import {
   Activity,
   ClipboardCheck,
@@ -10,21 +10,21 @@ import {
   Salad,
   Scale,
   Smile,
-} from "lucide-react"
+} from "lucide-react";
 
 import {
   ActivityTimeline,
   type TimelineItem,
-} from "@/components/common/activity-timeline"
-import { SectionCard } from "@/components/common/section-card"
-import type { HealthLog } from "@/types/health"
+} from "@/components/common/activity-timeline";
+import { SectionCard } from "@/components/common/section-card";
+import type { HealthLog } from "@/types/health";
 
 interface RecentCheckInsProps {
-  logs: HealthLog[]
+  logs: HealthLog[];
 }
 
 function toTimelineItem(log: HealthLog): TimelineItem {
-  const time = format(parseISO(log.createdAt), "MMM d, h:mm a")
+  const time = format(parseISO(log.createdAt), "MMM d, h:mm a");
   switch (log.type) {
     case "daily-check-in": {
       const completed = [
@@ -35,7 +35,7 @@ function toTimelineItem(log: HealthLog): TimelineItem {
         log.smokingStatus,
         log.dsaStatus,
         log.skillImprovementStatus,
-      ].filter((status) => status === "done").length
+      ].filter((status) => status === "done").length;
       return {
         id: log.id,
         title: `Daily tracker · ${completed}/7 habits completed`,
@@ -43,7 +43,7 @@ function toTimelineItem(log: HealthLog): TimelineItem {
         time,
         icon: ClipboardCheck,
         tone: completed >= 5 ? "success" : "warning",
-      }
+      };
     }
     case "weight":
       return {
@@ -53,7 +53,7 @@ function toTimelineItem(log: HealthLog): TimelineItem {
         time,
         icon: Scale,
         tone: "primary",
-      }
+      };
     case "meal":
       return {
         id: log.id,
@@ -62,7 +62,7 @@ function toTimelineItem(log: HealthLog): TimelineItem {
         time,
         icon: Salad,
         tone: "success",
-      }
+      };
     case "workout":
       return {
         id: log.id,
@@ -71,7 +71,7 @@ function toTimelineItem(log: HealthLog): TimelineItem {
         time,
         icon: Dumbbell,
         tone: "primary",
-      }
+      };
     case "steps":
       return {
         id: log.id,
@@ -79,7 +79,7 @@ function toTimelineItem(log: HealthLog): TimelineItem {
         time,
         icon: Footprints,
         tone: "success",
-      }
+      };
     case "sleep":
       return {
         id: log.id,
@@ -88,7 +88,7 @@ function toTimelineItem(log: HealthLog): TimelineItem {
         time,
         icon: MoonStar,
         tone: "primary",
-      }
+      };
     case "water":
       return {
         id: log.id,
@@ -96,7 +96,7 @@ function toTimelineItem(log: HealthLog): TimelineItem {
         time,
         icon: Droplets,
         tone: "neutral",
-      }
+      };
     case "mood":
       return {
         id: log.id,
@@ -105,7 +105,7 @@ function toTimelineItem(log: HealthLog): TimelineItem {
         time,
         icon: Smile,
         tone: "warning",
-      }
+      };
     default:
       return {
         id: "unknown",
@@ -113,7 +113,7 @@ function toTimelineItem(log: HealthLog): TimelineItem {
         time,
         icon: Activity,
         tone: "neutral",
-      }
+      };
   }
 }
 
@@ -121,7 +121,7 @@ export function RecentCheckIns({ logs }: RecentCheckInsProps) {
   const items = [...logs]
     .sort((left, right) => right.createdAt.localeCompare(left.createdAt))
     .slice(0, 7)
-    .map(toTimelineItem)
+    .map(toTimelineItem);
 
   return (
     <SectionCard
@@ -133,5 +133,5 @@ export function RecentCheckIns({ logs }: RecentCheckInsProps) {
     >
       <ActivityTimeline items={items} />
     </SectionCard>
-  )
+  );
 }

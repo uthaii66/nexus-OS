@@ -1,6 +1,6 @@
-import { useMemo } from "react"
-import { format, parseISO } from "date-fns"
-import { useReducedMotion } from "framer-motion"
+import { useMemo } from "react";
+import { format, parseISO } from "date-fns";
+import { useReducedMotion } from "framer-motion";
 import {
   Area,
   AreaChart,
@@ -14,21 +14,21 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts"
+} from "recharts";
 
-import { ChartCard } from "@/components/common/chart-card"
+import { ChartCard } from "@/components/common/chart-card";
 import type {
   HealthLog,
   NutritionTrendPoint,
   WeightLog,
   WeightTrendPoint,
-} from "@/types/health"
+} from "@/types/health";
 
 interface HealthChartsProps {
-  weightTrend: WeightTrendPoint[]
-  nutritionTrend: NutritionTrendPoint[]
-  logs: HealthLog[]
-  targetWeightKg: number
+  weightTrend: WeightTrendPoint[];
+  nutritionTrend: NutritionTrendPoint[];
+  logs: HealthLog[];
+  targetWeightKg: number;
 }
 
 const tooltipStyle = {
@@ -37,7 +37,7 @@ const tooltipStyle = {
   borderRadius: 12,
   color: "#f8fafc",
   boxShadow: "0 16px 40px rgba(0,0,0,.3)",
-}
+};
 
 export function HealthCharts({
   weightTrend,
@@ -45,26 +45,26 @@ export function HealthCharts({
   logs,
   targetWeightKg,
 }: HealthChartsProps) {
-  const reduceMotion = useReducedMotion()
+  const reduceMotion = useReducedMotion();
   const mergedWeightTrend = useMemo(() => {
     const byDate = new Map(
       weightTrend.map((point) => [point.date, { ...point }]),
-    )
+    );
     const weightLogs = logs.filter(
       (log): log is WeightLog => log.type === "weight",
-    )
+    );
     weightLogs.forEach((log) => {
-      const existing = byDate.get(log.date)
+      const existing = byDate.get(log.date);
       byDate.set(log.date, {
         date: log.date,
         weightKg: log.weightKg,
         movingAverageKg: existing?.movingAverageKg ?? log.weightKg,
-      })
-    })
+      });
+    });
     return [...byDate.values()].sort((left, right) =>
       left.date.localeCompare(right.date),
-    )
-  }, [logs, weightTrend])
+    );
+  }, [logs, weightTrend]);
 
   return (
     <div className="grid gap-4 xl:grid-cols-2">
@@ -251,5 +251,5 @@ export function HealthCharts({
         </ResponsiveContainer>
       </ChartCard>
     </div>
-  )
+  );
 }

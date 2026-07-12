@@ -6,14 +6,14 @@ import {
   ShieldCheck,
   SlidersHorizontal,
   UserRound,
-} from "lucide-react"
-import { useEffect, useState } from "react"
-import { toast } from "sonner"
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
-import { PageHeader } from "@/components/common/page-header"
-import { SectionCard } from "@/components/common/section-card"
-import { StatusBadge } from "@/components/common/status-badge"
-import { Button } from "@/components/ui/button"
+import { PageHeader } from "@/components/common/page-header";
+import { SectionCard } from "@/components/common/section-card";
+import { StatusBadge } from "@/components/common/status-badge";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -21,19 +21,19 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import { ProfileForm } from "@/features/settings/components/profile-form"
-import { SettingsRow } from "@/features/settings/components/settings-row"
-import { useSettingsStore } from "@/store/settings-store"
-import { useUiStore } from "@/store/ui-store"
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { ProfileForm } from "@/features/settings/components/profile-form";
+import { SettingsRow } from "@/features/settings/components/settings-row";
+import { useSettingsStore } from "@/store/settings-store";
+import { useUiStore } from "@/store/ui-store";
 import type {
   CurrencyPreference,
   DashboardWidgetId,
@@ -42,12 +42,12 @@ import type {
   SidebarPreference,
   ThemePreference,
   WeightUnit,
-} from "@/types/settings"
+} from "@/types/settings";
 
 const widgetOptions: {
-  id: DashboardWidgetId
-  label: string
-  description: string
+  id: DashboardWidgetId;
+  label: string;
+  description: string;
 }[] = [
   {
     id: "todayFocus",
@@ -84,12 +84,12 @@ const widgetOptions: {
     label: "Recent Activity",
     description: "A stream of recent manual updates.",
   },
-]
+];
 
 const notificationOptions: {
-  id: keyof NotificationPreferences
-  label: string
-  description: string
+  id: keyof NotificationPreferences;
+  label: string;
+  description: string;
 }[] = [
   {
     id: "reminders",
@@ -116,51 +116,51 @@ const notificationOptions: {
     label: "Weekly digest",
     description: "A local summary of progress across your dashboard.",
   },
-]
+];
 
 export function SettingsPage() {
-  const [resetOpen, setResetOpen] = useState(false)
-  const theme = useSettingsStore((state) => state.theme)
-  const sidebar = useSettingsStore((state) => state.sidebar)
-  const reducedMotion = useSettingsStore((state) => state.reducedMotion)
-  const currency = useSettingsStore((state) => state.currency)
-  const weightUnit = useSettingsStore((state) => state.weightUnit)
-  const dateFormat = useSettingsStore((state) => state.dateFormat)
-  const dashboardWidgets = useSettingsStore((state) => state.dashboardWidgets)
-  const notifications = useSettingsStore((state) => state.notifications)
-  const setPreference = useSettingsStore((state) => state.setPreference)
-  const setNotification = useSettingsStore((state) => state.setNotification)
+  const [resetOpen, setResetOpen] = useState(false);
+  const theme = useSettingsStore((state) => state.theme);
+  const sidebar = useSettingsStore((state) => state.sidebar);
+  const reducedMotion = useSettingsStore((state) => state.reducedMotion);
+  const currency = useSettingsStore((state) => state.currency);
+  const weightUnit = useSettingsStore((state) => state.weightUnit);
+  const dateFormat = useSettingsStore((state) => state.dateFormat);
+  const dashboardWidgets = useSettingsStore((state) => state.dashboardWidgets);
+  const notifications = useSettingsStore((state) => state.notifications);
+  const setPreference = useSettingsStore((state) => state.setPreference);
+  const setNotification = useSettingsStore((state) => state.setNotification);
   const setWidgetVisibility = useSettingsStore(
     (state) => state.setWidgetVisibility,
-  )
-  const resetPreferences = useSettingsStore((state) => state.resetPreferences)
+  );
+  const resetPreferences = useSettingsStore((state) => state.resetPreferences);
 
-  const sidebarCollapsed = useUiStore((state) => state.sidebarCollapsed)
-  const compactMode = useUiStore((state) => state.compactMode)
-  const setSidebarCollapsed = useUiStore((state) => state.setSidebarCollapsed)
-  const setCompactMode = useUiStore((state) => state.setCompactMode)
+  const sidebarCollapsed = useUiStore((state) => state.sidebarCollapsed);
+  const compactMode = useUiStore((state) => state.compactMode);
+  const setSidebarCollapsed = useUiStore((state) => state.setSidebarCollapsed);
+  const setCompactMode = useUiStore((state) => state.setCompactMode);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("reduce-motion", reducedMotion)
-    document.documentElement.dataset.themePreference = theme
-  }, [reducedMotion, theme])
+    document.documentElement.classList.toggle("reduce-motion", reducedMotion);
+    document.documentElement.dataset.themePreference = theme;
+  }, [reducedMotion, theme]);
 
   const handleSidebarPreference = (value: SidebarPreference) => {
-    setPreference("sidebar", value)
-    if (value === "expanded") setSidebarCollapsed(false)
-    if (value === "collapsed") setSidebarCollapsed(true)
-  }
+    setPreference("sidebar", value);
+    if (value === "expanded") setSidebarCollapsed(false);
+    if (value === "collapsed") setSidebarCollapsed(true);
+  };
 
   const handleReset = () => {
-    resetPreferences()
-    setSidebarCollapsed(false)
-    setCompactMode(false)
-    setResetOpen(false)
-    toast.success("Preferences restored to defaults")
-  }
+    resetPreferences();
+    setSidebarCollapsed(false);
+    setCompactMode(false);
+    setResetOpen(false);
+    toast.success("Preferences restored to defaults");
+  };
 
   const visibleWidgetCount =
-    Object.values(dashboardWidgets).filter(Boolean).length
+    Object.values(dashboardWidgets).filter(Boolean).length;
 
   return (
     <div className="space-y-6">
@@ -448,7 +448,7 @@ export function SettingsPage() {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }
 
-export default SettingsPage
+export default SettingsPage;

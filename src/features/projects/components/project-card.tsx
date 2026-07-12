@@ -1,30 +1,30 @@
-import { format, parseISO } from "date-fns"
+import { format, parseISO } from "date-fns";
 import {
   ArrowUpRight,
   CalendarDays,
   CircleAlert,
   ListChecks,
-} from "lucide-react"
-import { motion, useReducedMotion } from "framer-motion"
-import { Link } from "react-router-dom"
+} from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "react-router-dom";
 
-import { StatusBadge } from "@/components/common/status-badge"
-import { Progress } from "@/components/ui/progress"
-import type { Project, ProjectMember, ProjectTask } from "@/types/projects"
+import { StatusBadge } from "@/components/common/status-badge";
+import { Progress } from "@/components/ui/progress";
+import type { Project, ProjectMember, ProjectTask } from "@/types/projects";
 
 interface ProjectCardProps {
-  project: Project
-  tasks: ProjectTask[]
-  members: ProjectMember[]
-  index: number
+  project: Project;
+  tasks: ProjectTask[];
+  members: ProjectMember[];
+  index: number;
 }
 
 const statusTone = (status: Project["status"]) => {
-  if (status === "active") return "success" as const
-  if (status === "on-hold") return "warning" as const
-  if (status === "completed") return "info" as const
-  return "neutral" as const
-}
+  if (status === "active") return "success" as const;
+  if (status === "on-hold") return "warning" as const;
+  if (status === "completed") return "info" as const;
+  return "neutral" as const;
+};
 
 export function ProjectCard({
   project,
@@ -32,8 +32,8 @@ export function ProjectCard({
   members,
   index,
 }: ProjectCardProps) {
-  const reduceMotion = useReducedMotion()
-  const openTasks = tasks.filter((task) => task.status !== "done").length
+  const reduceMotion = useReducedMotion();
+  const openTasks = tasks.filter((task) => task.status !== "done").length;
 
   return (
     <motion.article
@@ -138,5 +138,5 @@ export function ProjectCard({
         </div>
       ) : null}
     </motion.article>
-  )
+  );
 }

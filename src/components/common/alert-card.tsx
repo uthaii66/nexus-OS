@@ -1,26 +1,26 @@
-import type { LucideIcon } from "lucide-react"
-import { AlertCircle, ArrowRight } from "lucide-react"
+import type { LucideIcon } from "lucide-react";
+import { AlertCircle, ArrowRight } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-type AlertSeverity = "info" | "warning" | "danger"
+type AlertSeverity = "info" | "warning" | "danger";
 
 interface AlertCardProps {
-  title: string
-  description: string
-  severity?: AlertSeverity
-  icon?: LucideIcon
-  actionLabel?: string
-  onAction?: () => void
-  className?: string
+  title: string;
+  description: string;
+  severity?: AlertSeverity;
+  icon?: LucideIcon;
+  actionLabel?: string;
+  onAction?: () => void;
+  className?: string;
 }
 
 const severityClass: Record<AlertSeverity, string> = {
   info: "bg-primary/10 text-indigo-300",
   warning: "bg-warning/10 text-amber-300",
   danger: "bg-destructive/10 text-red-300",
-}
+};
 
 export function AlertCard({
   title,
@@ -31,7 +31,7 @@ export function AlertCard({
   onAction,
   className,
 }: AlertCardProps) {
-  const isUrgent = severity === "danger"
+  const isUrgent = severity === "danger";
 
   return (
     <div
@@ -72,5 +72,5 @@ export function AlertCard({
         </Button>
       ) : null}
     </div>
-  )
+  );
 }

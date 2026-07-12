@@ -1,6 +1,6 @@
-import { z } from "zod"
+import { z } from "zod";
 
-import { LEARNING_CATEGORIES } from "@/types/learning"
+import { LEARNING_CATEGORIES } from "@/types/learning";
 
 export const studySessionSchema = z.object({
   category: z.enum(LEARNING_CATEGORIES),
@@ -13,6 +13,6 @@ export const studySessionSchema = z.object({
   studiedAt: z.string().min(1, "Choose a date and time"),
   focusScore: z.coerce.number().int().min(1).max(10),
   notes: z.string().trim().max(300).optional(),
-})
+});
 
-export type StudySessionFormValues = z.infer<typeof studySessionSchema>
+export type StudySessionFormValues = z.infer<typeof studySessionSchema>;

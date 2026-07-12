@@ -1,4 +1,4 @@
-import { differenceInCalendarDays, format, parseISO } from "date-fns"
+import { differenceInCalendarDays, format, parseISO } from "date-fns";
 import {
   Building2,
   CalendarClock,
@@ -8,28 +8,28 @@ import {
   PiggyBank,
   ReceiptText,
   ShieldCheck,
-} from "lucide-react"
+} from "lucide-react";
 
-import { SectionCard } from "@/components/common/section-card"
-import { StatusBadge } from "@/components/common/status-badge"
-import { Progress } from "@/components/ui/progress"
+import { SectionCard } from "@/components/common/section-card";
+import { StatusBadge } from "@/components/common/status-badge";
+import { Progress } from "@/components/ui/progress";
 import type {
   Bill,
   BudgetCategory,
   DebtAccount,
   FinanceAccount,
   Transaction,
-} from "@/types/finance"
+} from "@/types/finance";
 
 interface AccountOverviewProps {
-  accounts: FinanceAccount[]
+  accounts: FinanceAccount[];
 }
 
 interface FinanceDetailsProps {
-  bills: Bill[]
-  budgets: BudgetCategory[]
-  debts: DebtAccount[]
-  transactions: Transaction[]
+  bills: Bill[];
+  budgets: BudgetCategory[];
+  debts: DebtAccount[];
+  transactions: Transaction[];
 }
 
 const currency = new Intl.NumberFormat("en-IN", {
@@ -37,14 +37,14 @@ const currency = new Intl.NumberFormat("en-IN", {
   currency: "INR",
   minimumFractionDigits: 0,
   maximumFractionDigits: 2,
-})
+});
 
 const accountIcons = {
   checking: Landmark,
   savings: PiggyBank,
   credit: CreditCard,
   investment: LineChart,
-} as const
+} as const;
 
 export function AccountOverview({ accounts }: AccountOverviewProps) {
   return (
@@ -54,7 +54,7 @@ export function AccountOverview({ accounts }: AccountOverviewProps) {
       contentClassName="grid gap-3 sm:grid-cols-2 xl:grid-cols-4"
     >
       {accounts.map((account) => {
-        const Icon = accountIcons[account.kind]
+        const Icon = accountIcons[account.kind];
         return (
           <article
             key={account.id}
@@ -85,10 +85,10 @@ export function AccountOverview({ accounts }: AccountOverviewProps) {
               {account.institution} ·••{account.lastFour}
             </p>
           </article>
-        )
+        );
       })}
     </SectionCard>
-  )
+  );
 }
 
 export function FinanceDetails({
@@ -97,7 +97,7 @@ export function FinanceDetails({
   debts,
   transactions,
 }: FinanceDetailsProps) {
-  const sessionSpending = new Map<string, number>()
+  const sessionSpending = new Map<string, number>();
   transactions
     .filter(
       (transaction) =>
@@ -108,8 +108,8 @@ export function FinanceDetails({
       sessionSpending.set(
         transaction.category,
         (sessionSpending.get(transaction.category) ?? 0) + transaction.amount,
-      )
-    })
+      );
+    });
 
   return (
     <div className="grid gap-4 xl:grid-cols-3">
@@ -120,9 +120,9 @@ export function FinanceDetails({
         contentClassName="space-y-4"
       >
         {budgets.slice(0, 7).map((budget) => {
-          const spent = sessionSpending.get(budget.category) ?? 0
-          const percentage = Math.min((spent / budget.allocated) * 100, 100)
-          const isOver = spent > budget.allocated
+          const spent = sessionSpending.get(budget.category) ?? 0;
+          const percentage = Math.min((spent / budget.allocated) * 100, 100);
+          const isOver = spent > budget.allocated;
           return (
             <div key={budget.category} className="space-y-2">
               <div className="flex items-center justify-between gap-3 text-xs">
@@ -143,7 +143,7 @@ export function FinanceDetails({
                 aria-label={`${budget.category} budget ${Math.round(percentage)} percent used`}
               />
             </div>
-          )
+          );
         })}
       </SectionCard>
 
@@ -157,7 +157,7 @@ export function FinanceDetails({
           const days = differenceInCalendarDays(
             parseISO(bill.dueDate),
             parseISO("2026-07-12"),
-          )
+          );
           return (
             <article
               key={bill.id}
@@ -184,7 +184,7 @@ export function FinanceDetails({
                 </p>
               </div>
             </article>
-          )
+          );
         })}
         <div className="flex items-center gap-2 rounded-xl bg-primary/5 px-3 py-2.5 text-xs text-muted-foreground">
           <ShieldCheck className="size-4 text-indigo-300" aria-hidden="true" />3
@@ -200,7 +200,8 @@ export function FinanceDetails({
       >
         {debts.map((debt) => {
           const paidPercent =
-            ((debt.originalBalance - debt.balance) / debt.originalBalance) * 100
+            ((debt.originalBalance - debt.balance) / debt.originalBalance) *
+            100;
           return (
             <article key={debt.id} className="space-y-3">
               <div className="flex items-start justify-between gap-3">
@@ -234,7 +235,7 @@ export function FinanceDetails({
                 <span>Next {currency.format(debt.minimumPayment)}</span>
               </div>
             </article>
-          )
+          );
         })}
         <div className="flex items-center gap-2 rounded-xl border border-border/60 bg-secondary/20 p-3 text-xs text-muted-foreground">
           <ReceiptText className="size-4 text-indigo-300" aria-hidden="true" />
@@ -242,5 +243,5 @@ export function FinanceDetails({
         </div>
       </SectionCard>
     </div>
-  )
+  );
 }

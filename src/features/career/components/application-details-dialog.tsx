@@ -1,5 +1,5 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { format, parseISO } from "date-fns"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { format, parseISO } from "date-fns";
 import {
   CalendarClock,
   FileText,
@@ -7,42 +7,42 @@ import {
   MapPin,
   MessageSquarePlus,
   Pencil,
-} from "lucide-react"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
+} from "lucide-react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-import { StatusBadge } from "@/components/common/status-badge"
-import { Button } from "@/components/ui/button"
+import { StatusBadge } from "@/components/common/status-badge";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { useCareerStore } from "@/store/career-store"
-import { APPLICATION_STAGES, type ApplicationStage } from "@/types/career"
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useCareerStore } from "@/store/career-store";
+import { APPLICATION_STAGES, type ApplicationStage } from "@/types/career";
 
 import {
   applicationNoteSchema,
   type ApplicationNoteFormValues,
-} from "../schemas/career-schemas"
+} from "../schemas/career-schemas";
 
 interface ApplicationDetailsDialogProps {
-  applicationId: string | null
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  onEdit: (applicationId: string) => void
+  applicationId: string | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onEdit: (applicationId: string) => void;
 }
 
 export function ApplicationDetailsDialog({
@@ -53,13 +53,15 @@ export function ApplicationDetailsDialog({
 }: ApplicationDetailsDialogProps) {
   const application = useCareerStore((state) =>
     state.applications.find((candidate) => candidate.id === applicationId),
-  )
-  const resumeVersions = useCareerStore((state) => state.resumeVersions)
-  const moveApplication = useCareerStore((state) => state.moveApplication)
-  const setFollowUpDate = useCareerStore((state) => state.setFollowUpDate)
-  const togglePriority = useCareerStore((state) => state.togglePriority)
-  const associateResume = useCareerStore((state) => state.associateResume)
-  const addApplicationNote = useCareerStore((state) => state.addApplicationNote)
+  );
+  const resumeVersions = useCareerStore((state) => state.resumeVersions);
+  const moveApplication = useCareerStore((state) => state.moveApplication);
+  const setFollowUpDate = useCareerStore((state) => state.setFollowUpDate);
+  const togglePriority = useCareerStore((state) => state.togglePriority);
+  const associateResume = useCareerStore((state) => state.associateResume);
+  const addApplicationNote = useCareerStore(
+    (state) => state.addApplicationNote,
+  );
   const {
     register,
     handleSubmit,
@@ -68,17 +70,17 @@ export function ApplicationDetailsDialog({
   } = useForm<ApplicationNoteFormValues>({
     resolver: zodResolver(applicationNoteSchema),
     defaultValues: { body: "" },
-  })
+  });
 
-  if (!application) return null
+  if (!application) return null;
 
   const onNoteSubmit = ({ body }: ApplicationNoteFormValues) => {
-    addApplicationNote(application.id, body)
-    reset()
+    addApplicationNote(application.id, body);
+    reset();
     toast.success("Note added", {
       description: `Saved to ${application.company}.`,
-    })
-  }
+    });
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -286,11 +288,11 @@ export function ApplicationDetailsDialog({
         </div>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 function Detail({ label, value }: { label: string; value: string }) {
-  const Icon = label === "Next action" ? CalendarClock : FileText
+  const Icon = label === "Next action" ? CalendarClock : FileText;
   return (
     <div className="rounded-xl border border-border/60 bg-secondary/20 p-3">
       <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -299,5 +301,5 @@ function Detail({ label, value }: { label: string; value: string }) {
       </div>
       <p className="mt-1.5 text-sm font-medium text-foreground">{value}</p>
     </div>
-  )
+  );
 }

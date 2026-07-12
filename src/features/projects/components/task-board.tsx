@@ -1,19 +1,19 @@
-import { format, isBefore, parseISO, startOfDay } from "date-fns"
-import { CalendarDays, Clock3 } from "lucide-react"
+import { format, isBefore, parseISO, startOfDay } from "date-fns";
+import { CalendarDays, Clock3 } from "lucide-react";
 
-import { StatusBadge } from "@/components/common/status-badge"
+import { StatusBadge } from "@/components/common/status-badge";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import type { ProjectTask, ProjectTaskStatus } from "@/types/projects"
+} from "@/components/ui/select";
+import type { ProjectTask, ProjectTaskStatus } from "@/types/projects";
 
 interface TaskBoardProps {
-  tasks: ProjectTask[]
-  onMoveTask: (taskId: string, status: ProjectTaskStatus) => void
+  tasks: ProjectTask[];
+  onMoveTask: (taskId: string, status: ProjectTaskStatus) => void;
 }
 
 const columns: { status: ProjectTaskStatus; label: string; dot: string }[] = [
@@ -22,13 +22,13 @@ const columns: { status: ProjectTaskStatus; label: string; dot: string }[] = [
   { status: "in-progress", label: "In progress", dot: "bg-primary" },
   { status: "blocked", label: "Blocked", dot: "bg-warning" },
   { status: "done", label: "Done", dot: "bg-success" },
-]
+];
 
 const priorityTone = (priority: ProjectTask["priority"]) => {
-  if (priority === "critical") return "danger" as const
-  if (priority === "high") return "warning" as const
-  return "neutral" as const
-}
+  if (priority === "critical") return "danger" as const;
+  if (priority === "high") return "warning" as const;
+  return "neutral" as const;
+};
 
 export function TaskBoard({ tasks, onMoveTask }: TaskBoardProps) {
   return (
@@ -37,7 +37,7 @@ export function TaskBoard({ tasks, onMoveTask }: TaskBoardProps) {
         {columns.map((column) => {
           const columnTasks = tasks.filter(
             (task) => task.status === column.status,
-          )
+          );
           return (
             <section
               key={column.status}
@@ -65,7 +65,7 @@ export function TaskBoard({ tasks, onMoveTask }: TaskBoardProps) {
                     isBefore(
                       parseISO(task.dueDate),
                       startOfDay(new Date("2026-07-12")),
-                    )
+                    );
                   return (
                     <article
                       key={task.id}
@@ -124,7 +124,7 @@ export function TaskBoard({ tasks, onMoveTask }: TaskBoardProps) {
                         </Select>
                       </div>
                     </article>
-                  )
+                  );
                 })}
                 {columnTasks.length === 0 ? (
                   <div className="flex min-h-24 items-center justify-center rounded-xl border border-dashed border-border px-3 text-center text-xs text-muted-foreground">
@@ -133,9 +133,9 @@ export function TaskBoard({ tasks, onMoveTask }: TaskBoardProps) {
                 ) : null}
               </div>
             </section>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }

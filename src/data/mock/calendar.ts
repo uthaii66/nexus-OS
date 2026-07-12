@@ -1,4 +1,4 @@
-import type { CalendarEvent } from "@/types/calendar"
+import type { CalendarEvent } from "@/types/calendar";
 
 export const mockCalendarEvents: CalendarEvent[] = [
   {
@@ -194,4 +194,4 @@ export const mockCalendarEvents: CalendarEvent[] = [
     end: "2026-07-31T19:00:00+05:30",
     allDay: false,
   },
-]
+];

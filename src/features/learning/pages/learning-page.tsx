@@ -1,5 +1,5 @@
-import { format, isBefore, parseISO } from "date-fns"
-import { motion, useReducedMotion } from "framer-motion"
+import { format, isBefore, parseISO } from "date-fns";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   BookOpen,
@@ -10,8 +10,8 @@ import {
   RefreshCcw,
   Target,
   Trophy,
-} from "lucide-react"
-import { useMemo, useState } from "react"
+} from "lucide-react";
+import { useMemo, useState } from "react";
 import {
   Area,
   CartesianGrid,
@@ -21,31 +21,31 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts"
+} from "recharts";
 
-import { ChartCard } from "@/components/common/chart-card"
-import { MetricCard } from "@/components/common/metric-card"
-import { PageHeader } from "@/components/common/page-header"
-import { SectionCard } from "@/components/common/section-card"
-import { StatusBadge } from "@/components/common/status-badge"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
-import { useLearningStore } from "@/store/learning-store"
+import { ChartCard } from "@/components/common/chart-card";
+import { MetricCard } from "@/components/common/metric-card";
+import { PageHeader } from "@/components/common/page-header";
+import { SectionCard } from "@/components/common/section-card";
+import { StatusBadge } from "@/components/common/status-badge";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { useLearningStore } from "@/store/learning-store";
 
-import { DsaProblemTable } from "../components/dsa-problem-table"
-import { StudySessionDialog } from "../components/study-session-dialog"
+import { DsaProblemTable } from "../components/dsa-problem-table";
+import { StudySessionDialog } from "../components/study-session-dialog";
 
 const itemStatusTone = {
   upcoming: "neutral",
   "in-progress": "info",
   completed: "success",
-} as const
+} as const;
 
 const itemStatusLabel = {
   upcoming: "Upcoming",
   "in-progress": "In progress",
   completed: "Complete",
-} as const
+} as const;
 
 const tooltipStyle = {
   background: "hsl(var(--popover))",
@@ -54,40 +54,42 @@ const tooltipStyle = {
   boxShadow: "0 18px 45px rgba(0,0,0,.32)",
   color: "hsl(var(--foreground))",
   fontSize: "12px",
-}
+};
 
 export function LearningPage() {
-  const shouldReduceMotion = useReducedMotion()
-  const [sessionDialogOpen, setSessionDialogOpen] = useState(false)
-  const currentStreak = useLearningStore((state) => state.currentStreak)
-  const weeklyGoalMinutes = useLearningStore((state) => state.weeklyGoalMinutes)
+  const shouldReduceMotion = useReducedMotion();
+  const [sessionDialogOpen, setSessionDialogOpen] = useState(false);
+  const currentStreak = useLearningStore((state) => state.currentStreak);
+  const weeklyGoalMinutes = useLearningStore(
+    (state) => state.weeklyGoalMinutes,
+  );
   const problemsSolvedThisMonth = useLearningStore(
     (state) => state.problemsSolvedThisMonth,
-  )
+  );
   const independentlySolvedThisMonth = useLearningStore(
     (state) => state.independentlySolvedThisMonth,
-  )
-  const activity = useLearningStore((state) => state.activity)
-  const studyPlan = useLearningStore((state) => state.studyPlan)
+  );
+  const activity = useLearningStore((state) => state.activity);
+  const studyPlan = useLearningStore((state) => state.studyPlan);
   const setStudyPlanStatus = useLearningStore(
     (state) => state.setStudyPlanStatus,
-  )
-  const topics = useLearningStore((state) => state.topics)
-  const weakTopics = useLearningStore((state) => state.weakTopics)
-  const problems = useLearningStore((state) => state.problems)
-  const sessions = useLearningStore((state) => state.sessions)
+  );
+  const topics = useLearningStore((state) => state.topics);
+  const weakTopics = useLearningStore((state) => state.weakTopics);
+  const problems = useLearningStore((state) => state.problems);
+  const sessions = useLearningStore((state) => state.sessions);
 
   const weeklyMinutes = activity.reduce(
     (total, point) => total + point.minutes,
     0,
-  )
+  );
   const weeklyGoalProgress = Math.min(
     100,
     Math.round((weeklyMinutes / weeklyGoalMinutes) * 100),
-  )
+  );
   const completedPlanMinutes = studyPlan
     .filter((item) => item.status === "completed")
-    .reduce((total, item) => total + item.durationMinutes, 0)
+    .reduce((total, item) => total + item.durationMinutes, 0);
 
   const revisionQueue = useMemo(
     () =>
@@ -98,15 +100,15 @@ export function LearningPage() {
         .sort((a, b) => a.revisionDate.localeCompare(b.revisionDate))
         .slice(0, 4),
     [problems],
-  )
+  );
 
   const recentSessions = [...sessions]
     .sort((a, b) => b.studiedAt.localeCompare(a.studiedAt))
-    .slice(0, 4)
+    .slice(0, 4);
 
   const entrance = shouldReduceMotion
     ? {}
-    : { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 } }
+    : { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 } };
 
   return (
     <div className="space-y-6 pb-12">
@@ -492,7 +494,7 @@ export function LearningPage() {
         </div>
       </SectionCard>
     </div>
-  )
+  );
 }
 
-export default LearningPage
+export default LearningPage;

@@ -1,8 +1,8 @@
-import js from "@eslint/js"
-import globals from "globals"
-import reactHooks from "eslint-plugin-react-hooks"
-import reactRefresh from "eslint-plugin-react-refresh"
-import tseslint from "typescript-eslint"
+import js from "@eslint/js";
+import globals from "globals";
+import reactHooks from "eslint-plugin-react-hooks";
+import reactRefresh from "eslint-plugin-react-refresh";
+import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   { ignores: ["dist", "node_modules"] },
@@ -20,7 +20,10 @@ export default tseslint.config(
           allowExportNames: ["buttonVariants", "badgeVariants"],
         },
       ],
-      "@typescript-eslint/consistent-type-imports": ["error", { prefer: "type-imports" }],
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        { prefer: "type-imports" },
+      ],
     },
   },
-)
+);

@@ -8,15 +8,15 @@ import {
   parseISO,
   startOfMonth,
   startOfWeek,
-} from "date-fns"
+} from "date-fns";
 
-import { EventChip } from "@/features/calendar/components/event-chip"
-import type { CalendarEvent } from "@/types/calendar"
+import { EventChip } from "@/features/calendar/components/event-chip";
+import type { CalendarEvent } from "@/types/calendar";
 
 interface MonthViewProps {
-  currentDate: Date
-  events: CalendarEvent[]
-  onSelectEvent: (event: CalendarEvent) => void
+  currentDate: Date;
+  events: CalendarEvent[];
+  onSelectEvent: (event: CalendarEvent) => void;
 }
 
 export function MonthView({
@@ -24,11 +24,11 @@ export function MonthView({
   events,
   onSelectEvent,
 }: MonthViewProps) {
-  const monthStart = startOfMonth(currentDate)
+  const monthStart = startOfMonth(currentDate);
   const days = eachDayOfInterval({
     start: startOfWeek(monthStart, { weekStartsOn: 1 }),
     end: endOfWeek(endOfMonth(currentDate), { weekStartsOn: 1 }),
-  })
+  });
 
   return (
     <div className="overflow-x-auto">
@@ -47,8 +47,8 @@ export function MonthView({
           {days.map((day) => {
             const dayEvents = events
               .filter((event) => isSameDay(parseISO(event.start), day))
-              .sort((a, b) => a.start.localeCompare(b.start))
-            const today = isSameDay(day, new Date("2026-07-12T12:00:00+05:30"))
+              .sort((a, b) => a.start.localeCompare(b.start));
+            const today = isSameDay(day, new Date("2026-07-12T12:00:00+05:30"));
             return (
               <div
                 key={day.toISOString()}
@@ -75,10 +75,10 @@ export function MonthView({
                   ) : null}
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </div>
-  )
+  );
 }

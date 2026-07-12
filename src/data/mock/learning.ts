@@ -1,4 +1,4 @@
-import type { LearningDashboard } from "@/types/learning"
+import type { LearningDashboard } from "@/types/learning";
 
 export const mockLearningDashboard: LearningDashboard = {
   currentStreak: 18,
@@ -335,4 +335,4 @@ export const mockLearningDashboard: LearningDashboard = {
     "Topological sorting",
     "Advanced tree serialization",
   ],
-}
+};

@@ -1,4 +1,4 @@
-import { create } from "zustand"
+import { create } from "zustand";
 
 import {
   mockProjectActivity,
@@ -7,7 +7,7 @@ import {
   mockProjects,
   mockProjectTasks,
   projectMembers,
-} from "@/data/mock/projects"
+} from "@/data/mock/projects";
 import type {
   CreateProjectNoteInput,
   CreateProjectTaskInput,
@@ -18,27 +18,27 @@ import type {
   ProjectNote,
   ProjectTask,
   ProjectTaskStatus,
-} from "@/types/projects"
+} from "@/types/projects";
 
 interface ProjectsState {
-  projects: Project[]
-  members: ProjectMember[]
-  tasks: ProjectTask[]
-  milestones: ProjectMilestone[]
-  activity: ProjectActivity[]
-  notes: ProjectNote[]
+  projects: Project[];
+  members: ProjectMember[];
+  tasks: ProjectTask[];
+  milestones: ProjectMilestone[];
+  activity: ProjectActivity[];
+  notes: ProjectNote[];
   addTask: (
     projectId: string,
     input: Omit<CreateProjectTaskInput, "projectId">,
-  ) => void
-  moveTask: (taskId: string, status: ProjectTaskStatus) => void
-  toggleMilestone: (milestoneId: string) => void
-  addNote: (input: CreateProjectNoteInput) => void
-  resetProjects: () => void
+  ) => void;
+  moveTask: (taskId: string, status: ProjectTaskStatus) => void;
+  toggleMilestone: (milestoneId: string) => void;
+  addNote: (input: CreateProjectNoteInput) => void;
+  resetProjects: () => void;
 }
 
 const createSessionId = (prefix: string) =>
-  `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+  `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
 const initialState = () => ({
   projects: structuredClone(mockProjects),
@@ -47,7 +47,7 @@ const initialState = () => ({
   milestones: structuredClone(mockProjectMilestones),
   activity: structuredClone(mockProjectActivity),
   notes: structuredClone(mockProjectNotes),
-})
+});
 
 export const useProjectsStore = create<ProjectsState>((set) => ({
   ...initialState(),
@@ -64,7 +64,7 @@ export const useProjectsStore = create<ProjectsState>((set) => ({
         estimateHours: input.estimateHours ?? 1,
         assigneeId: input.assigneeId,
         tags: [],
-      }
+      };
       const activity: ProjectActivity = {
         id: createSessionId("activity"),
         projectId,
@@ -72,16 +72,16 @@ export const useProjectsStore = create<ProjectsState>((set) => ({
         message: `Added task “${input.title}”`,
         actor: "Uthai",
         occurredAt: new Date().toISOString(),
-      }
+      };
       return {
         tasks: [task, ...state.tasks],
         activity: [activity, ...state.activity],
-      }
+      };
     }),
   moveTask: (taskId, status) =>
     set((state) => {
-      const current = state.tasks.find((task) => task.id === taskId)
-      if (!current || current.status === status) return state
+      const current = state.tasks.find((task) => task.id === taskId);
+      if (!current || current.status === status) return state;
       const activity: ProjectActivity = {
         id: createSessionId("activity"),
         projectId: current.projectId,
@@ -89,13 +89,13 @@ export const useProjectsStore = create<ProjectsState>((set) => ({
         message: `Moved “${current.title}” to ${status.replace("-", " ")}`,
         actor: "Uthai",
         occurredAt: new Date().toISOString(),
-      }
+      };
       return {
         tasks: state.tasks.map((task) =>
           task.id === taskId ? { ...task, status } : task,
         ),
         activity: [activity, ...state.activity],
-      }
+      };
     }),
   toggleMilestone: (milestoneId) =>
     set((state) => ({
@@ -112,7 +112,7 @@ export const useProjectsStore = create<ProjectsState>((set) => ({
         ...input,
         createdAt: new Date().toISOString(),
         author: "Uthai",
-      }
+      };
       const activity: ProjectActivity = {
         id: createSessionId("activity"),
         projectId: input.projectId,
@@ -120,11 +120,11 @@ export const useProjectsStore = create<ProjectsState>((set) => ({
         message: `Added ${input.kind} “${input.title}”`,
         actor: "Uthai",
         occurredAt: note.createdAt,
-      }
+      };
       return {
         notes: [note, ...state.notes],
         activity: [activity, ...state.activity],
-      }
+      };
     }),
   resetProjects: () => set(initialState()),
-}))
+}));

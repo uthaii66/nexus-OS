@@ -4,29 +4,29 @@ import {
   Plus,
   RotateCcw,
   SearchX,
-} from "lucide-react"
-import { useMemo, useState } from "react"
+} from "lucide-react";
+import { useMemo, useState } from "react";
 
-import { EmptyState } from "@/components/common/empty-state"
-import { FilterBar } from "@/components/common/filter-bar"
-import { SearchInput } from "@/components/common/search-input"
-import { StatusBadge } from "@/components/common/status-badge"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
+import { EmptyState } from "@/components/common/empty-state";
+import { FilterBar } from "@/components/common/filter-bar";
+import { SearchInput } from "@/components/common/search-input";
+import { StatusBadge } from "@/components/common/status-badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { useLearningStore } from "@/store/learning-store"
+} from "@/components/ui/select";
+import { useLearningStore } from "@/store/learning-store";
 import type {
   DsaProblem,
   ProblemDifficulty,
   ProblemStatus,
-} from "@/types/learning"
+} from "@/types/learning";
 
 const difficultyTone: Record<
   ProblemDifficulty,
@@ -35,7 +35,7 @@ const difficultyTone: Record<
   Easy: "success",
   Medium: "warning",
   Hard: "danger",
-}
+};
 
 const statusTone: Record<
   ProblemStatus,
@@ -45,22 +45,22 @@ const statusTone: Record<
   Attempted: "warning",
   Solved: "success",
   Revising: "info",
-}
+};
 
 const statuses: ProblemStatus[] = [
   "Not started",
   "Attempted",
   "Solved",
   "Revising",
-]
-const difficulties: ProblemDifficulty[] = ["Easy", "Medium", "Hard"]
+];
+const difficulties: ProblemDifficulty[] = ["Easy", "Medium", "Hard"];
 
 interface ProblemRowProps {
-  problem: DsaProblem
+  problem: DsaProblem;
 }
 
 function ProblemRow({ problem }: ProblemRowProps) {
-  const updateProblem = useLearningStore((state) => state.updateProblem)
+  const updateProblem = useLearningStore((state) => state.updateProblem);
 
   return (
     <tr className="border-b border-border/70 transition-colors last:border-0 hover:bg-white/[0.018]">
@@ -168,35 +168,37 @@ function ProblemRow({ problem }: ProblemRowProps) {
         />
       </td>
     </tr>
-  )
+  );
 }
 
 export function DsaProblemTable() {
-  const problems = useLearningStore((state) => state.problems)
-  const [query, setQuery] = useState("")
-  const [difficulty, setDifficulty] = useState<ProblemDifficulty | "all">("all")
-  const [status, setStatus] = useState<ProblemStatus | "all">("all")
+  const problems = useLearningStore((state) => state.problems);
+  const [query, setQuery] = useState("");
+  const [difficulty, setDifficulty] = useState<ProblemDifficulty | "all">(
+    "all",
+  );
+  const [status, setStatus] = useState<ProblemStatus | "all">("all");
 
   const filteredProblems = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase()
+    const normalizedQuery = query.trim().toLowerCase();
     return problems.filter((problem) => {
       const matchesQuery =
         !normalizedQuery ||
         `${problem.name} ${problem.pattern} ${problem.platform}`
           .toLowerCase()
-          .includes(normalizedQuery)
+          .includes(normalizedQuery);
       const matchesDifficulty =
-        difficulty === "all" || problem.difficulty === difficulty
-      const matchesStatus = status === "all" || problem.status === status
-      return matchesQuery && matchesDifficulty && matchesStatus
-    })
-  }, [difficulty, problems, query, status])
+        difficulty === "all" || problem.difficulty === difficulty;
+      const matchesStatus = status === "all" || problem.status === status;
+      return matchesQuery && matchesDifficulty && matchesStatus;
+    });
+  }, [difficulty, problems, query, status]);
 
   const resetFilters = () => {
-    setQuery("")
-    setDifficulty("all")
-    setStatus("all")
-  }
+    setQuery("");
+    setDifficulty("all");
+    setStatus("all");
+  };
 
   return (
     <div>
@@ -311,5 +313,5 @@ export function DsaProblemTable() {
         changes persist for this session
       </div>
     </div>
-  )
+  );
 }

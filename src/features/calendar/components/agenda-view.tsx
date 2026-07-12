@@ -1,27 +1,27 @@
-import { format, isSameDay, parseISO } from "date-fns"
-import { CalendarDays, Clock3, MapPin } from "lucide-react"
+import { format, isSameDay, parseISO } from "date-fns";
+import { CalendarDays, Clock3, MapPin } from "lucide-react";
 
-import { StatusBadge } from "@/components/common/status-badge"
-import type { CalendarEvent } from "@/types/calendar"
+import { StatusBadge } from "@/components/common/status-badge";
+import type { CalendarEvent } from "@/types/calendar";
 
 interface AgendaViewProps {
-  events: CalendarEvent[]
-  onSelectEvent: (event: CalendarEvent) => void
+  events: CalendarEvent[];
+  onSelectEvent: (event: CalendarEvent) => void;
 }
 
 export function AgendaView({ events, onSelectEvent }: AgendaViewProps) {
-  const sorted = [...events].sort((a, b) => a.start.localeCompare(b.start))
+  const sorted = [...events].sort((a, b) => a.start.localeCompare(b.start));
   const dates = Array.from(
     new Set(sorted.map((event) => format(parseISO(event.start), "yyyy-MM-dd"))),
-  )
+  );
 
   return (
     <div className="space-y-6">
       {dates.map((dateKey) => {
-        const date = parseISO(dateKey)
+        const date = parseISO(dateKey);
         const dateEvents = sorted.filter((event) =>
           isSameDay(parseISO(event.start), date),
-        )
+        );
         return (
           <section
             key={dateKey}
@@ -80,7 +80,7 @@ export function AgendaView({ events, onSelectEvent }: AgendaViewProps) {
               ))}
             </div>
           </section>
-        )
+        );
       })}
       {events.length === 0 ? (
         <div className="py-16 text-center text-sm text-muted-foreground">
@@ -89,5 +89,5 @@ export function AgendaView({ events, onSelectEvent }: AgendaViewProps) {
         </div>
       ) : null}
     </div>
-  )
+  );
 }

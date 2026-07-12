@@ -1,25 +1,25 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Save } from "lucide-react"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Save } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useSettingsStore } from "@/store/settings-store"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useSettingsStore } from "@/store/settings-store";
 
 const profileSchema = z.object({
   displayName: z.string().trim().min(2, "Enter at least 2 characters.").max(50),
   email: z.string().trim().email("Enter a valid email address.").max(100),
-})
+});
 
-type ProfileFormValues = z.infer<typeof profileSchema>
+type ProfileFormValues = z.infer<typeof profileSchema>;
 
 export function ProfileForm() {
-  const displayName = useSettingsStore((state) => state.displayName)
-  const email = useSettingsStore((state) => state.email)
-  const updateProfile = useSettingsStore((state) => state.updateProfile)
+  const displayName = useSettingsStore((state) => state.displayName);
+  const email = useSettingsStore((state) => state.email);
+  const updateProfile = useSettingsStore((state) => state.updateProfile);
   const {
     register,
     handleSubmit,
@@ -27,12 +27,12 @@ export function ProfileForm() {
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: { displayName, email },
-  })
+  });
 
   const onSubmit = (values: ProfileFormValues) => {
-    updateProfile(values)
-    toast.success("Profile preferences saved")
-  }
+    updateProfile(values);
+    toast.success("Profile preferences saved");
+  };
 
   return (
     <form
@@ -59,7 +59,9 @@ export function ProfileForm() {
           aria-invalid={Boolean(errors.displayName)}
         />
         {errors.displayName ? (
-          <p className="text-destructive text-xs">{errors.displayName.message}</p>
+          <p className="text-destructive text-xs">
+            {errors.displayName.message}
+          </p>
         ) : null}
       </div>
       <div className="space-y-2">
@@ -78,5 +80,5 @@ export function ProfileForm() {
         <Save /> Save
       </Button>
     </form>
-  )
+  );
 }

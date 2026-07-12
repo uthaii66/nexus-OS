@@ -632,36 +632,36 @@ Do not place the entire application in one file.
 Use a clean feature-based structure:
 
 src/
-  app/
-    App.tsx
-    router.tsx
-    providers.tsx
-  components/
-    layout/
-    navigation/
-    common/
-    charts/
-    forms/
-    feedback/
-  features/
-    overview/
-    finance/
-    health/
-    learning/
-    career/
-    projects/
-    calendar/
-    insights/
-    settings/
-  data/
-    mock/
-  hooks/
-  lib/
-  services/
-  store/
-  types/
-  utils/
-  styles/
+app/
+App.tsx
+router.tsx
+providers.tsx
+components/
+layout/
+navigation/
+common/
+charts/
+forms/
+feedback/
+features/
+overview/
+finance/
+health/
+learning/
+career/
+projects/
+calendar/
+insights/
+settings/
+data/
+mock/
+hooks/
+lib/
+services/
+store/
+types/
+utils/
+styles/
 
 Inside each feature, use folders such as:
 

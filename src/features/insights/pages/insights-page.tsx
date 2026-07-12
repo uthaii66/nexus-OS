@@ -9,8 +9,8 @@ import {
   RefreshCw,
   Sparkles,
   WalletCards,
-} from "lucide-react"
-import { useEffect, useMemo, useState } from "react"
+} from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CartesianGrid,
   Line,
@@ -19,23 +19,23 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts"
+} from "recharts";
 
-import { ChartCard } from "@/components/common/chart-card"
-import { PageHeader } from "@/components/common/page-header"
-import { SectionCard } from "@/components/common/section-card"
-import { StatusBadge } from "@/components/common/status-badge"
-import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
-import { insightsService } from "@/services/insights"
+import { ChartCard } from "@/components/common/chart-card";
+import { PageHeader } from "@/components/common/page-header";
+import { SectionCard } from "@/components/common/section-card";
+import { StatusBadge } from "@/components/common/status-badge";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { insightsService } from "@/services/insights";
 import type {
   DashboardInsight,
   FutureAgent,
   InsightDomain,
   InsightTrendPoint,
-} from "@/types/insights"
+} from "@/types/insights";
 
-type DomainFilter = InsightDomain | "all"
+type DomainFilter = InsightDomain | "all";
 
 const domainIcons = {
   finance: WalletCards,
@@ -43,7 +43,7 @@ const domainIcons = {
   learning: GraduationCap,
   career: BriefcaseBusiness,
   projects: FolderKanban,
-} satisfies Record<InsightDomain, typeof WalletCards>
+} satisfies Record<InsightDomain, typeof WalletCards>;
 
 const filterLabels: { id: DomainFilter; label: string }[] = [
   { id: "all", label: "All" },
@@ -52,36 +52,36 @@ const filterLabels: { id: DomainFilter; label: string }[] = [
   { id: "learning", label: "Learning" },
   { id: "career", label: "Career" },
   { id: "projects", label: "Projects" },
-]
+];
 
 export function InsightsPage() {
-  const [insights, setInsights] = useState<DashboardInsight[]>([])
-  const [trend, setTrend] = useState<InsightTrendPoint[]>([])
-  const [agents, setAgents] = useState<FutureAgent[]>([])
-  const [filter, setFilter] = useState<DomainFilter>("all")
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
+  const [insights, setInsights] = useState<DashboardInsight[]>([]);
+  const [trend, setTrend] = useState<InsightTrendPoint[]>([]);
+  const [agents, setAgents] = useState<FutureAgent[]>([]);
+  const [filter, setFilter] = useState<DomainFilter>("all");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const loadInsights = () => {
-    setLoading(true)
-    setError(false)
+    setLoading(true);
+    setError(false);
     Promise.all([
       insightsService.getInsights(),
       insightsService.getTrend(),
       insightsService.getFutureAgents(),
     ])
       .then(([insightData, trendData, agentData]) => {
-        setInsights(insightData)
-        setTrend(trendData)
-        setAgents(agentData)
+        setInsights(insightData);
+        setTrend(trendData);
+        setAgents(agentData);
       })
       .catch(() => setError(true))
-      .finally(() => setLoading(false))
-  }
+      .finally(() => setLoading(false));
+  };
 
   useEffect(() => {
-    loadInsights()
-  }, [])
+    loadInsights();
+  }, []);
 
   const visibleInsights = useMemo(
     () =>
@@ -89,7 +89,7 @@ export function InsightsPage() {
         (insight) => filter === "all" || insight.domain === filter,
       ),
     [filter, insights],
-  )
+  );
 
   return (
     <div className="space-y-6">
@@ -155,7 +155,7 @@ export function InsightsPage() {
 
           <div className="grid gap-4 lg:grid-cols-2">
             {visibleInsights.map((insight) => {
-              const Icon = domainIcons[insight.domain]
+              const Icon = domainIcons[insight.domain];
               return (
                 <article
                   key={insight.id}
@@ -203,7 +203,7 @@ export function InsightsPage() {
                     {insight.evidence}
                   </p>
                 </article>
-              )
+              );
             })}
           </div>
 
@@ -295,7 +295,7 @@ export function InsightsPage() {
         </>
       )}
     </div>
-  )
+  );
 }
 
-export default InsightsPage
+export default InsightsPage;

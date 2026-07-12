@@ -2,7 +2,7 @@ import type {
   DashboardInsight,
   FutureAgent,
   InsightTrendPoint,
-} from "@/types/insights"
+} from "@/types/insights";
 
 export const mockInsights: DashboardInsight[] = [
   {
@@ -70,7 +70,7 @@ export const mockInsights: DashboardInsight[] = [
     comparison: "task velocity",
     generatedAt: "2026-07-12T06:00:00+05:30",
   },
-]
+];
 
 export const mockInsightTrend: InsightTrendPoint[] = [
   { label: "Feb", consistency: 61, balance: 58 },
@@ -79,7 +79,7 @@ export const mockInsightTrend: InsightTrendPoint[] = [
   { label: "May", consistency: 72, balance: 69 },
   { label: "Jun", consistency: 76, balance: 73 },
   { label: "Jul", consistency: 81, balance: 76 },
-]
+];
 
 export const futureAgents: FutureAgent[] = [
   {
@@ -125,4 +125,4 @@ export const futureAgents: FutureAgent[] = [
     domain: "projects",
     status: "coming-later",
   },
-]
+];

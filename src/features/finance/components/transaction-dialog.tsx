@@ -1,10 +1,10 @@
-import { useEffect } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Controller, useForm } from "react-hook-form"
-import { toast } from "sonner"
+import { useEffect } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -12,29 +12,29 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import {
   transactionSchema,
   type TransactionFormValues,
-} from "@/features/finance/schemas/transaction-schema"
-import { useFinanceStore } from "@/store/finance-store"
-import { transactionCategories, type Transaction } from "@/types/finance"
+} from "@/features/finance/schemas/transaction-schema";
+import { useFinanceStore } from "@/store/finance-store";
+import { transactionCategories, type Transaction } from "@/types/finance";
 
 interface TransactionDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  transaction?: Transaction | null
-  defaultType?: "income" | "expense"
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  transaction?: Transaction | null;
+  defaultType?: "income" | "expense";
 }
 
 const accounts = [
@@ -42,7 +42,7 @@ const accounts = [
   "High-yield savings",
   "Venture card",
   "Core portfolio",
-]
+];
 
 const getDefaultValues = (
   transaction?: Transaction | null,
@@ -58,14 +58,14 @@ const getDefaultValues = (
   account: transaction?.account ?? "Everyday checking",
   recurring: transaction?.recurring ?? false,
   note: transaction?.note ?? "",
-})
+});
 
 function FieldError({ message }: { message?: string }) {
   return message ? (
     <p className="text-xs text-red-300" role="alert">
       {message}
     </p>
-  ) : null
+  ) : null;
 }
 
 export function TransactionDialog({
@@ -74,9 +74,9 @@ export function TransactionDialog({
   transaction,
   defaultType = "expense",
 }: TransactionDialogProps) {
-  const addTransaction = useFinanceStore((state) => state.addTransaction)
-  const updateTransaction = useFinanceStore((state) => state.updateTransaction)
-  const isEditing = Boolean(transaction)
+  const addTransaction = useFinanceStore((state) => state.addTransaction);
+  const updateTransaction = useFinanceStore((state) => state.updateTransaction);
+  const isEditing = Boolean(transaction);
   const {
     register,
     control,
@@ -87,27 +87,29 @@ export function TransactionDialog({
   } = useForm<TransactionFormValues>({
     resolver: zodResolver(transactionSchema),
     defaultValues: getDefaultValues(transaction, defaultType),
-  })
+  });
 
   useEffect(() => {
-    if (open) reset(getDefaultValues(transaction, defaultType))
-  }, [defaultType, open, reset, transaction])
+    if (open) reset(getDefaultValues(transaction, defaultType));
+  }, [defaultType, open, reset, transaction]);
 
   const onSubmit = (values: TransactionFormValues) => {
     const cleanValues = {
       ...values,
       merchant: values.merchant || undefined,
       note: values.note || undefined,
-    }
+    };
     if (transaction) {
-      updateTransaction(transaction.id, cleanValues)
-      toast.success("Transaction updated")
+      updateTransaction(transaction.id, cleanValues);
+      toast.success("Transaction updated");
     } else {
-      addTransaction(cleanValues)
-      toast.success(values.type === "income" ? "Income added" : "Expense added")
+      addTransaction(cleanValues);
+      toast.success(
+        values.type === "income" ? "Income added" : "Expense added",
+      );
     }
-    onOpenChange(false)
-  }
+    onOpenChange(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -149,8 +151,8 @@ export function TransactionDialog({
                   <Select
                     value={field.value}
                     onValueChange={(value: "income" | "expense") => {
-                      field.onChange(value)
-                      if (value === "income") setValue("category", "Income")
+                      field.onChange(value);
+                      if (value === "income") setValue("category", "Income");
                     }}
                   >
                     <SelectTrigger aria-label="Transaction type">
@@ -303,5 +305,5 @@ export function TransactionDialog({
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

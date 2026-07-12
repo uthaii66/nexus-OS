@@ -1,10 +1,10 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect } from "react"
-import { Controller, useForm } from "react-hook-form"
-import { toast } from "sonner"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -12,29 +12,29 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { useCareerStore } from "@/store/career-store"
-import { APPLICATION_STAGES, type JobApplication } from "@/types/career"
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useCareerStore } from "@/store/career-store";
+import { APPLICATION_STAGES, type JobApplication } from "@/types/career";
 
 import {
   applicationFormSchema,
   type ApplicationFormValues,
-} from "../schemas/career-schemas"
+} from "../schemas/career-schemas";
 
 interface ApplicationFormDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  application?: JobApplication | null
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  application?: JobApplication | null;
 }
 
 const defaults = (
@@ -53,16 +53,16 @@ const defaults = (
   source: application?.source ?? "",
   salaryRange: application?.salaryRange ?? "",
   initialNote: "",
-})
+});
 
 export function ApplicationFormDialog({
   open,
   onOpenChange,
   application,
 }: ApplicationFormDialogProps) {
-  const addApplication = useCareerStore((state) => state.addApplication)
-  const updateApplication = useCareerStore((state) => state.updateApplication)
-  const resumeVersions = useCareerStore((state) => state.resumeVersions)
+  const addApplication = useCareerStore((state) => state.addApplication);
+  const updateApplication = useCareerStore((state) => state.updateApplication);
+  const resumeVersions = useCareerStore((state) => state.resumeVersions);
   const {
     control,
     register,
@@ -72,11 +72,11 @@ export function ApplicationFormDialog({
   } = useForm<ApplicationFormValues>({
     resolver: zodResolver(applicationFormSchema),
     defaultValues: defaults(application),
-  })
+  });
 
   useEffect(() => {
-    if (open) reset(defaults(application))
-  }, [application, open, reset])
+    if (open) reset(defaults(application));
+  }, [application, open, reset]);
 
   const onSubmit = (values: ApplicationFormValues) => {
     const input = {
@@ -95,21 +95,24 @@ export function ApplicationFormDialog({
           : undefined,
       source: values.source,
       salaryRange: values.salaryRange || undefined,
-    }
+    };
 
     if (application) {
-      updateApplication(application.id, input)
+      updateApplication(application.id, input);
       toast.success("Application updated", {
         description: `${values.company} · ${values.role}`,
-      })
+      });
     } else {
-      addApplication({ ...input, initialNote: values.initialNote || undefined })
+      addApplication({
+        ...input,
+        initialNote: values.initialNote || undefined,
+      });
       toast.success("Application added", {
         description: `${values.company} is now in your pipeline.`,
-      })
+      });
     }
-    onOpenChange(false)
-  }
+    onOpenChange(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -342,14 +345,14 @@ export function ApplicationFormDialog({
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
 interface FieldProps {
-  label: string
-  htmlFor: string
-  error?: string
-  children: React.ReactNode
+  label: string;
+  htmlFor: string;
+  error?: string;
+  children: React.ReactNode;
 }
 
 function Field({ label, htmlFor, error, children }: FieldProps) {
@@ -359,5 +362,5 @@ function Field({ label, htmlFor, error, children }: FieldProps) {
       {children}
       {error && <p className="text-xs text-destructive">{error}</p>}
     </div>
-  )
+  );
 }

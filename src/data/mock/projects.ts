@@ -5,7 +5,7 @@ import type {
   ProjectMilestone,
   ProjectNote,
   ProjectTask,
-} from "@/types/projects"
+} from "@/types/projects";
 
 export const projectMembers: ProjectMember[] = [
   {
@@ -29,7 +29,7 @@ export const projectMembers: ProjectMember[] = [
     role: "Technical reviewer",
     color: "#d19a53",
   },
-]
+];
 
 export const mockProjects: Project[] = [
   {
@@ -117,7 +117,7 @@ export const mockProjects: Project[] = [
     blockerCount: 0,
     updatedAt: "2026-07-03T12:00:00+05:30",
   },
-]
+];
 
 export const mockProjectTasks: ProjectTask[] = [
   {
@@ -287,7 +287,7 @@ export const mockProjectTasks: ProjectTask[] = [
     estimateHours: 3,
     tags: ["Planning"],
   },
-]
+];
 
 export const mockProjectMilestones: ProjectMilestone[] = [
   {
@@ -360,7 +360,7 @@ export const mockProjectMilestones: ProjectMilestone[] = [
     dueDate: "2026-08-04",
     completed: false,
   },
-]
+];
 
 export const mockProjectActivity: ProjectActivity[] = [
   {
@@ -411,7 +411,7 @@ export const mockProjectActivity: ProjectActivity[] = [
     actor: "Uthai",
     occurredAt: "2026-07-03T12:00:00+05:30",
   },
-]
+];
 
 export const mockProjectNotes: ProjectNote[] = [
   {
@@ -454,4 +454,4 @@ export const mockProjectNotes: ProjectNote[] = [
     createdAt: "2026-07-08T09:30:00+05:30",
     author: "Uthai",
   },
-]
+];

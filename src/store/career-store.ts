@@ -1,6 +1,6 @@
-import { create } from "zustand"
+import { create } from "zustand";
 
-import { mockCareerDashboard } from "@/data/mock/career"
+import { mockCareerDashboard } from "@/data/mock/career";
 import type {
   ApplicationNote,
   ApplicationStage,
@@ -10,22 +10,22 @@ import type {
   JobApplication,
   ResumeVersion,
   UpdateApplicationInput,
-} from "@/types/career"
+} from "@/types/career";
 
 interface CareerState extends CareerDashboard {
-  addApplication: (input: CreateApplicationInput) => JobApplication
-  updateApplication: (id: string, input: UpdateApplicationInput) => void
-  deleteApplication: (id: string) => void
-  moveApplication: (id: string, stage: ApplicationStage) => void
-  addApplicationNote: (id: string, body: string) => ApplicationNote
-  setFollowUpDate: (id: string, followUpDate?: string) => void
-  togglePriority: (id: string) => void
-  associateResume: (id: string, resumeVersionId?: ResumeVersion["id"]) => void
-  resetCareer: () => void
+  addApplication: (input: CreateApplicationInput) => JobApplication;
+  updateApplication: (id: string, input: UpdateApplicationInput) => void;
+  deleteApplication: (id: string) => void;
+  moveApplication: (id: string, stage: ApplicationStage) => void;
+  addApplicationNote: (id: string, body: string) => ApplicationNote;
+  setFollowUpDate: (id: string, followUpDate?: string) => void;
+  togglePriority: (id: string) => void;
+  associateResume: (id: string, resumeVersionId?: ResumeVersion["id"]) => void;
+  resetCareer: () => void;
 }
 
 const initialCareerState = (): CareerDashboard =>
-  structuredClone(mockCareerDashboard)
+  structuredClone(mockCareerDashboard);
 
 const activity = (
   type: CareerActivity["type"],
@@ -35,13 +35,13 @@ const activity = (
   type,
   description,
   occurredAt: new Date().toISOString(),
-})
+});
 
 export const useCareerStore = create<CareerState>((set) => ({
   ...initialCareerState(),
   addApplication: (input) => {
-    const { initialNote, ...applicationInput } = input
-    const now = new Date().toISOString()
+    const { initialNote, ...applicationInput } = input;
+    const now = new Date().toISOString();
     const application: JobApplication = {
       ...applicationInput,
       id: `application-${crypto.randomUUID()}`,
@@ -55,7 +55,7 @@ export const useCareerStore = create<CareerState>((set) => ({
           ]
         : [],
       updatedAt: now,
-    }
+    };
 
     set((state) => ({
       applications: [application, ...state.applications],
@@ -66,16 +66,16 @@ export const useCareerStore = create<CareerState>((set) => ({
         ),
         ...state.recentActivity,
       ].slice(0, 12),
-    }))
+    }));
 
-    return application
+    return application;
   },
   updateApplication: (id, input) => {
     set((state) => {
       const application = state.applications.find(
         (candidate) => candidate.id === id,
-      )
-      if (!application) return state
+      );
+      if (!application) return state;
 
       return {
         applications: state.applications.map((candidate) =>
@@ -87,22 +87,22 @@ export const useCareerStore = create<CareerState>((set) => ({
           activity("stage", `Updated ${application.company} application`),
           ...state.recentActivity,
         ].slice(0, 12),
-      }
-    })
+      };
+    });
   },
   deleteApplication: (id) => {
     set((state) => ({
       applications: state.applications.filter(
         (application) => application.id !== id,
       ),
-    }))
+    }));
   },
   moveApplication: (id, stage) => {
     set((state) => {
       const application = state.applications.find(
         (candidate) => candidate.id === id,
-      )
-      if (!application || application.stage === stage) return state
+      );
+      if (!application || application.stage === stage) return state;
 
       return {
         applications: state.applications.map((candidate) =>
@@ -114,21 +114,21 @@ export const useCareerStore = create<CareerState>((set) => ({
           activity("stage", `Moved ${application.company} to ${stage}`),
           ...state.recentActivity,
         ].slice(0, 12),
-      }
-    })
+      };
+    });
   },
   addApplicationNote: (id, body) => {
     const note: ApplicationNote = {
       id: `note-${crypto.randomUUID()}`,
       body,
       createdAt: new Date().toISOString(),
-    }
+    };
 
     set((state) => {
       const application = state.applications.find(
         (candidate) => candidate.id === id,
-      )
-      if (!application) return state
+      );
+      if (!application) return state;
 
       return {
         applications: state.applications.map((candidate) =>
@@ -144,10 +144,10 @@ export const useCareerStore = create<CareerState>((set) => ({
           activity("note", `Added a note to ${application.company}`),
           ...state.recentActivity,
         ].slice(0, 12),
-      }
-    })
+      };
+    });
 
-    return note
+    return note;
   },
   setFollowUpDate: (id, followUpDate) => {
     set((state) => ({
@@ -160,7 +160,7 @@ export const useCareerStore = create<CareerState>((set) => ({
             }
           : application,
       ),
-    }))
+    }));
   },
   togglePriority: (id) => {
     set((state) => ({
@@ -173,7 +173,7 @@ export const useCareerStore = create<CareerState>((set) => ({
             }
           : application,
       ),
-    }))
+    }));
   },
   associateResume: (id, resumeVersionId) => {
     set((state) => ({
@@ -186,9 +186,9 @@ export const useCareerStore = create<CareerState>((set) => ({
             }
           : application,
       ),
-    }))
+    }));
   },
   resetCareer: () => set(initialCareerState()),
-}))
+}));
 
-export type { CareerState }
+export type { CareerState };

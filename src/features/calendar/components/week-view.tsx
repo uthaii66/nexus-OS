@@ -1,12 +1,12 @@
-import { addDays, format, isSameDay, parseISO, startOfWeek } from "date-fns"
+import { addDays, format, isSameDay, parseISO, startOfWeek } from "date-fns";
 
-import { EventChip } from "@/features/calendar/components/event-chip"
-import type { CalendarEvent } from "@/types/calendar"
+import { EventChip } from "@/features/calendar/components/event-chip";
+import type { CalendarEvent } from "@/types/calendar";
 
 interface WeekViewProps {
-  currentDate: Date
-  events: CalendarEvent[]
-  onSelectEvent: (event: CalendarEvent) => void
+  currentDate: Date;
+  events: CalendarEvent[];
+  onSelectEvent: (event: CalendarEvent) => void;
 }
 
 export function WeekView({
@@ -14,10 +14,10 @@ export function WeekView({
   events,
   onSelectEvent,
 }: WeekViewProps) {
-  const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 })
+  const weekStart = startOfWeek(currentDate, { weekStartsOn: 1 });
   const days = Array.from({ length: 7 }, (_, index) =>
     addDays(weekStart, index),
-  )
+  );
 
   return (
     <div className="overflow-x-auto">
@@ -25,8 +25,8 @@ export function WeekView({
         {days.map((day) => {
           const dayEvents = events
             .filter((event) => isSameDay(parseISO(event.start), day))
-            .sort((a, b) => a.start.localeCompare(b.start))
-          const today = isSameDay(day, new Date("2026-07-12T12:00:00+05:30"))
+            .sort((a, b) => a.start.localeCompare(b.start));
+          const today = isSameDay(day, new Date("2026-07-12T12:00:00+05:30"));
           return (
             <section key={day.toISOString()} className="px-2.5 py-3">
               <div
@@ -54,9 +54,9 @@ export function WeekView({
                 ) : null}
               </div>
             </section>
-          )
+          );
         })}
       </div>
     </div>
-  )
+  );
 }

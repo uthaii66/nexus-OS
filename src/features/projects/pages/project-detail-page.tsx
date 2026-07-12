@@ -10,36 +10,36 @@ import {
   Sparkles,
   Target,
   Users,
-} from "lucide-react"
-import { format, parseISO } from "date-fns"
-import { Link, useParams } from "react-router-dom"
+} from "lucide-react";
+import { format, parseISO } from "date-fns";
+import { Link, useParams } from "react-router-dom";
 
-import { EmptyState } from "@/components/common/empty-state"
-import { MetricCard } from "@/components/common/metric-card"
-import { PageHeader } from "@/components/common/page-header"
-import { SectionCard } from "@/components/common/section-card"
-import { StatusBadge } from "@/components/common/status-badge"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Progress } from "@/components/ui/progress"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { AddNoteDialog } from "@/features/projects/components/add-note-dialog"
-import { AddTaskDialog } from "@/features/projects/components/add-task-dialog"
-import { TaskBoard } from "@/features/projects/components/task-board"
-import { useProjectsStore } from "@/store/projects-store"
+import { EmptyState } from "@/components/common/empty-state";
+import { MetricCard } from "@/components/common/metric-card";
+import { PageHeader } from "@/components/common/page-header";
+import { SectionCard } from "@/components/common/section-card";
+import { StatusBadge } from "@/components/common/status-badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AddNoteDialog } from "@/features/projects/components/add-note-dialog";
+import { AddTaskDialog } from "@/features/projects/components/add-task-dialog";
+import { TaskBoard } from "@/features/projects/components/task-board";
+import { useProjectsStore } from "@/store/projects-store";
 
 export function ProjectDetailPage() {
-  const { projectId } = useParams<{ projectId: string }>()
+  const { projectId } = useParams<{ projectId: string }>();
   const project = useProjectsStore((state) =>
     state.projects.find((item) => item.id === projectId),
-  )
-  const allTasks = useProjectsStore((state) => state.tasks)
-  const allMembers = useProjectsStore((state) => state.members)
-  const allMilestones = useProjectsStore((state) => state.milestones)
-  const allActivity = useProjectsStore((state) => state.activity)
-  const allNotes = useProjectsStore((state) => state.notes)
-  const moveTask = useProjectsStore((state) => state.moveTask)
-  const toggleMilestone = useProjectsStore((state) => state.toggleMilestone)
+  );
+  const allTasks = useProjectsStore((state) => state.tasks);
+  const allMembers = useProjectsStore((state) => state.members);
+  const allMilestones = useProjectsStore((state) => state.milestones);
+  const allActivity = useProjectsStore((state) => state.activity);
+  const allNotes = useProjectsStore((state) => state.notes);
+  const moveTask = useProjectsStore((state) => state.moveTask);
+  const toggleMilestone = useProjectsStore((state) => state.toggleMilestone);
 
   if (!project || !projectId) {
     return (
@@ -55,23 +55,23 @@ export function ProjectDetailPage() {
           }
         />
       </div>
-    )
+    );
   }
 
-  const tasks = allTasks.filter((item) => item.projectId === projectId)
+  const tasks = allTasks.filter((item) => item.projectId === projectId);
   const milestones = allMilestones.filter(
     (item) => item.projectId === projectId,
-  )
-  const activity = allActivity.filter((item) => item.projectId === projectId)
-  const notes = allNotes.filter((item) => item.projectId === projectId)
+  );
+  const activity = allActivity.filter((item) => item.projectId === projectId);
+  const notes = allNotes.filter((item) => item.projectId === projectId);
   const members = allMembers.filter((member) =>
     project.memberIds.includes(member.id),
-  )
-  const completedTasks = tasks.filter((task) => task.status === "done").length
-  const blockedTasks = tasks.filter((task) => task.status === "blocked").length
+  );
+  const completedTasks = tasks.filter((task) => task.status === "done").length;
+  const blockedTasks = tasks.filter((task) => task.status === "blocked").length;
   const completedMilestones = milestones.filter(
     (milestone) => milestone.completed,
-  ).length
+  ).length;
 
   return (
     <div className="space-y-6">
@@ -334,7 +334,7 @@ export function ProjectDetailPage() {
         </aside>
       </div>
     </div>
-  )
+  );
 }
 
-export default ProjectDetailPage
+export default ProjectDetailPage;

@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { format, parseISO } from "date-fns"
+import { useState } from "react";
+import { format, parseISO } from "date-fns";
 import {
   Activity,
   AlertTriangle,
@@ -12,16 +12,16 @@ import {
   Target,
   Trash2,
   TrendingDown,
-} from "lucide-react"
-import { toast } from "sonner"
+} from "lucide-react";
+import { toast } from "sonner";
 
-import { ConfirmationDialog } from "@/components/common/confirmation-dialog"
-import { EmptyState } from "@/components/common/empty-state"
-import { SectionCard } from "@/components/common/section-card"
-import { StatusBadge } from "@/components/common/status-badge"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
-import { useHealthStore } from "@/store/health-store"
+import { ConfirmationDialog } from "@/components/common/confirmation-dialog";
+import { EmptyState } from "@/components/common/empty-state";
+import { SectionCard } from "@/components/common/section-card";
+import { StatusBadge } from "@/components/common/status-badge";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { useHealthStore } from "@/store/health-store";
 import type {
   DailyHabitPoint,
   HabitConsistency,
@@ -29,24 +29,24 @@ import type {
   HealthSummary,
   ProgressPhoto,
   WorkoutLog,
-} from "@/types/health"
+} from "@/types/health";
 
 interface GoalProgressProps {
-  summary: HealthSummary
+  summary: HealthSummary;
 }
 
 interface HabitConsistencyProps {
-  habits: HabitConsistency[]
-  dailyHabits: DailyHabitPoint[]
+  habits: HabitConsistency[];
+  dailyHabits: DailyHabitPoint[];
 }
 
 interface WorkoutHistoryProps {
-  logs: HealthLog[]
-  onAddWorkout: () => void
+  logs: HealthLog[];
+  onAddWorkout: () => void;
 }
 
 interface ProgressPhotosProps {
-  photos: ProgressPhoto[]
+  photos: ProgressPhoto[];
 }
 
 const habitAccent = {
@@ -54,16 +54,16 @@ const habitAccent = {
   green: "[&>div]:bg-emerald-400",
   amber: "[&>div]:bg-amber-400",
   violet: "[&>div]:bg-violet-400",
-}
+};
 
 export function GoalProgress({ summary }: GoalProgressProps) {
-  const totalGoal = summary.startingWeightKg - summary.targetWeightKg
+  const totalGoal = summary.startingWeightKg - summary.targetWeightKg;
   const progress =
-    ((summary.startingWeightKg - summary.currentWeightKg) / totalGoal) * 100
+    ((summary.startingWeightKg - summary.currentWeightKg) / totalGoal) * 100;
   const remaining = Math.max(
     summary.currentWeightKg - summary.targetWeightKg,
     0,
-  )
+  );
 
   return (
     <SectionCard
@@ -116,7 +116,7 @@ export function GoalProgress({ summary }: GoalProgressProps) {
         {remaining.toFixed(1)} kg remaining · 4.8 kg changed since March
       </div>
     </SectionCard>
-  )
+  );
 }
 
 export function HabitConsistency({
@@ -158,7 +158,7 @@ export function HabitConsistency({
 
       <div className="space-y-4">
         {habits.map((habit) => {
-          const percentage = (habit.completedDays / habit.targetDays) * 100
+          const percentage = (habit.completedDays / habit.targetDays) * 100;
           return (
             <div key={habit.id} className="space-y-2">
               <div className="flex items-center justify-between gap-3 text-xs">
@@ -174,7 +174,7 @@ export function HabitConsistency({
                 className={habitAccent[habit.accent]}
               />
             </div>
-          )
+          );
         })}
       </div>
 
@@ -194,16 +194,16 @@ export function HabitConsistency({
         </div>
       </div>
     </SectionCard>
-  )
+  );
 }
 
 export function WorkoutHistory({ logs, onAddWorkout }: WorkoutHistoryProps) {
-  const [pendingDelete, setPendingDelete] = useState<WorkoutLog | null>(null)
-  const deleteHealthLog = useHealthStore((state) => state.deleteHealthLog)
+  const [pendingDelete, setPendingDelete] = useState<WorkoutLog | null>(null);
+  const deleteHealthLog = useHealthStore((state) => state.deleteHealthLog);
   const workouts = logs
     .filter((log): log is WorkoutLog => log.type === "workout")
     .sort((left, right) => right.date.localeCompare(left.date))
-    .slice(0, 6)
+    .slice(0, 6);
 
   return (
     <>
@@ -275,21 +275,21 @@ export function WorkoutHistory({ logs, onAddWorkout }: WorkoutHistoryProps) {
       <ConfirmationDialog
         open={Boolean(pendingDelete)}
         onOpenChange={(open) => {
-          if (!open) setPendingDelete(null)
+          if (!open) setPendingDelete(null);
         }}
         title="Delete workout log?"
         description={`This removes “${pendingDelete?.workoutName ?? "this workout"}” from the current session.`}
         confirmLabel="Delete"
         destructive
         onConfirm={() => {
-          if (!pendingDelete) return
-          deleteHealthLog(pendingDelete.id)
-          toast.success("Workout log deleted")
-          setPendingDelete(null)
+          if (!pendingDelete) return;
+          deleteHealthLog(pendingDelete.id);
+          toast.success("Workout log deleted");
+          setPendingDelete(null);
         }}
       />
     </>
-  )
+  );
 }
 
 export function ProgressPhotos({ photos }: ProgressPhotosProps) {
@@ -326,16 +326,16 @@ export function ProgressPhotos({ photos }: ProgressPhotosProps) {
         Photo upload and secure storage will be connected in a later phase.
       </div>
     </SectionCard>
-  )
+  );
 }
 
 export function DailySignals({
   dailyHabits,
 }: {
-  dailyHabits: DailyHabitPoint[]
+  dailyHabits: DailyHabitPoint[];
 }) {
-  const latest = dailyHabits[dailyHabits.length - 1]
-  if (!latest) return null
+  const latest = dailyHabits[dailyHabits.length - 1];
+  if (!latest) return null;
 
   const signals = [
     { label: "Steps", value: latest.steps.toLocaleString(), icon: Footprints },
@@ -346,7 +346,7 @@ export function DailySignals({
       value: latest.workoutComplete ? "Complete" : "Recovery",
       icon: Target,
     },
-  ]
+  ];
 
   return (
     <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -365,5 +365,5 @@ export function DailySignals({
         </div>
       ))}
     </div>
-  )
+  );
 }

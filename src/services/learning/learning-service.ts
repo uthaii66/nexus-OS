@@ -4,10 +4,10 @@ import type {
   LearningDashboard,
   StudySession,
   UpdateDsaProblemInput,
-} from "@/types/learning"
+} from "@/types/learning";
 
 export interface LearningService {
-  getDashboard(): Promise<LearningDashboard>
-  createStudySession(input: CreateStudySessionInput): Promise<StudySession>
-  updateProblem(id: string, input: UpdateDsaProblemInput): Promise<DsaProblem>
+  getDashboard(): Promise<LearningDashboard>;
+  createStudySession(input: CreateStudySessionInput): Promise<StudySession>;
+  updateProblem(id: string, input: UpdateDsaProblemInput): Promise<DsaProblem>;
 }

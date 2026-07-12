@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react"
-import { format, parseISO } from "date-fns"
+import { useMemo, useState } from "react";
+import { format, parseISO } from "date-fns";
 import {
   CalendarDays,
   Pencil,
@@ -7,38 +7,41 @@ import {
   RefreshCw,
   SlidersHorizontal,
   Trash2,
-} from "lucide-react"
-import { toast } from "sonner"
+} from "lucide-react";
+import { toast } from "sonner";
 
-import { ConfirmationDialog } from "@/components/common/confirmation-dialog"
-import { DataTable, type DataTableColumn } from "@/components/common/data-table"
-import { EmptyState } from "@/components/common/empty-state"
-import { FilterBar } from "@/components/common/filter-bar"
-import { SearchInput } from "@/components/common/search-input"
-import { SectionCard } from "@/components/common/section-card"
-import { StatusBadge } from "@/components/common/status-badge"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { ConfirmationDialog } from "@/components/common/confirmation-dialog";
+import {
+  DataTable,
+  type DataTableColumn,
+} from "@/components/common/data-table";
+import { EmptyState } from "@/components/common/empty-state";
+import { FilterBar } from "@/components/common/filter-bar";
+import { SearchInput } from "@/components/common/search-input";
+import { SectionCard } from "@/components/common/section-card";
+import { StatusBadge } from "@/components/common/status-badge";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { useFinanceStore } from "@/store/finance-store"
+} from "@/components/ui/select";
+import { useFinanceStore } from "@/store/finance-store";
 import {
   transactionCategories,
   type Transaction,
   type TransactionCategory,
   type TransactionFilters,
   type TransactionType,
-} from "@/types/finance"
+} from "@/types/finance";
 
 interface TransactionTableProps {
-  transactions: Transaction[]
-  onEdit: (transaction: Transaction) => void
-  onAdd: () => void
+  transactions: Transaction[];
+  onEdit: (transaction: Transaction) => void;
+  onAdd: () => void;
 }
 
 const initialFilters: TransactionFilters = {
@@ -49,29 +52,29 @@ const initialFilters: TransactionFilters = {
   dateTo: "",
   minAmount: "",
   maxAmount: "",
-}
+};
 
 const currency = new Intl.NumberFormat("en-IN", {
   style: "currency",
   currency: "INR",
   minimumFractionDigits: 2,
-})
+});
 
 export function TransactionTable({
   transactions,
   onEdit,
   onAdd,
 }: TransactionTableProps) {
-  const [filters, setFilters] = useState<TransactionFilters>(initialFilters)
-  const [filtersExpanded, setFiltersExpanded] = useState(false)
-  const [pendingDelete, setPendingDelete] = useState<Transaction | null>(null)
-  const deleteTransaction = useFinanceStore((state) => state.deleteTransaction)
-  const toggleRecurring = useFinanceStore((state) => state.toggleRecurring)
+  const [filters, setFilters] = useState<TransactionFilters>(initialFilters);
+  const [filtersExpanded, setFiltersExpanded] = useState(false);
+  const [pendingDelete, setPendingDelete] = useState<Transaction | null>(null);
+  const deleteTransaction = useFinanceStore((state) => state.deleteTransaction);
+  const toggleRecurring = useFinanceStore((state) => state.toggleRecurring);
 
   const filteredTransactions = useMemo(() => {
-    const query = filters.query.trim().toLowerCase()
-    const minAmount = filters.minAmount ? Number(filters.minAmount) : null
-    const maxAmount = filters.maxAmount ? Number(filters.maxAmount) : null
+    const query = filters.query.trim().toLowerCase();
+    const minAmount = filters.minAmount ? Number(filters.minAmount) : null;
+    const maxAmount = filters.maxAmount ? Number(filters.maxAmount) : null;
 
     return transactions
       .filter((transaction) => {
@@ -79,17 +82,19 @@ export function TransactionTable({
           !query ||
           transaction.description.toLowerCase().includes(query) ||
           transaction.merchant?.toLowerCase().includes(query) ||
-          transaction.account.toLowerCase().includes(query)
+          transaction.account.toLowerCase().includes(query);
         const matchesCategory =
           filters.category === "all" ||
-          transaction.category === filters.category
+          transaction.category === filters.category;
         const matchesType =
-          filters.type === "all" || transaction.type === filters.type
+          filters.type === "all" || transaction.type === filters.type;
         const matchesFrom =
-          !filters.dateFrom || transaction.date >= filters.dateFrom
-        const matchesTo = !filters.dateTo || transaction.date <= filters.dateTo
-        const matchesMin = minAmount === null || transaction.amount >= minAmount
-        const matchesMax = maxAmount === null || transaction.amount <= maxAmount
+          !filters.dateFrom || transaction.date >= filters.dateFrom;
+        const matchesTo = !filters.dateTo || transaction.date <= filters.dateTo;
+        const matchesMin =
+          minAmount === null || transaction.amount >= minAmount;
+        const matchesMax =
+          maxAmount === null || transaction.amount <= maxAmount;
         return (
           matchesQuery &&
           matchesCategory &&
@@ -98,10 +103,10 @@ export function TransactionTable({
           matchesTo &&
           matchesMin &&
           matchesMax
-        )
+        );
       })
-      .sort((left, right) => right.date.localeCompare(left.date))
-  }, [filters, transactions])
+      .sort((left, right) => right.date.localeCompare(left.date));
+  }, [filters, transactions]);
 
   const columns: DataTableColumn<Transaction>[] = [
     {
@@ -145,12 +150,12 @@ export function TransactionTable({
             transaction.recurring ? "text-indigo-300" : "text-muted-foreground"
           }
           onClick={() => {
-            toggleRecurring(transaction.id)
+            toggleRecurring(transaction.id);
             toast.success(
               transaction.recurring
                 ? "Recurring status removed"
                 : "Marked recurring",
-            )
+            );
           }}
           aria-label={`${transaction.recurring ? "Remove" : "Mark"} recurring status for ${transaction.description}`}
         >
@@ -202,11 +207,11 @@ export function TransactionTable({
         </div>
       ),
     },
-  ]
+  ];
 
   const hasActiveFilters = Object.values(filters).some(
     (filter) => filter !== "" && filter !== "all",
-  )
+  );
 
   return (
     <>
@@ -373,19 +378,19 @@ export function TransactionTable({
       <ConfirmationDialog
         open={Boolean(pendingDelete)}
         onOpenChange={(open) => {
-          if (!open) setPendingDelete(null)
+          if (!open) setPendingDelete(null);
         }}
         title="Delete transaction?"
         description={`This removes “${pendingDelete?.description ?? "this transaction"}” from the current session. This cannot be undone.`}
         confirmLabel="Delete"
         destructive
         onConfirm={() => {
-          if (!pendingDelete) return
-          deleteTransaction(pendingDelete.id)
-          toast.success("Transaction deleted")
-          setPendingDelete(null)
+          if (!pendingDelete) return;
+          deleteTransaction(pendingDelete.id);
+          toast.success("Transaction deleted");
+          setPendingDelete(null);
         }}
       />
     </>
-  )
+  );
 }

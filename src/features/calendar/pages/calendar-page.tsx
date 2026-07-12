@@ -14,7 +14,7 @@ import {
   startOfWeek,
   subMonths,
   subWeeks,
-} from "date-fns"
+} from "date-fns";
 import {
   CalendarCheck2,
   ChevronLeft,
@@ -22,36 +22,36 @@ import {
   Clock3,
   MapPin,
   Video,
-} from "lucide-react"
-import { useMemo, useState } from "react"
+} from "lucide-react";
+import { useMemo, useState } from "react";
 
-import { MetricCard } from "@/components/common/metric-card"
-import { PageHeader } from "@/components/common/page-header"
-import { SectionCard } from "@/components/common/section-card"
-import { StatusBadge } from "@/components/common/status-badge"
-import { Button } from "@/components/ui/button"
+import { MetricCard } from "@/components/common/metric-card";
+import { PageHeader } from "@/components/common/page-header";
+import { SectionCard } from "@/components/common/section-card";
+import { StatusBadge } from "@/components/common/status-badge";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { AddEventDialog } from "@/features/calendar/components/add-event-dialog"
-import { AgendaView } from "@/features/calendar/components/agenda-view"
-import { MonthView } from "@/features/calendar/components/month-view"
-import { WeekView } from "@/features/calendar/components/week-view"
-import { calendarEventStyles } from "@/features/calendar/utils/event-styles"
-import { useCalendarStore } from "@/store/calendar-store"
+} from "@/components/ui/dialog";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AddEventDialog } from "@/features/calendar/components/add-event-dialog";
+import { AgendaView } from "@/features/calendar/components/agenda-view";
+import { MonthView } from "@/features/calendar/components/month-view";
+import { WeekView } from "@/features/calendar/components/week-view";
+import { calendarEventStyles } from "@/features/calendar/utils/event-styles";
+import { useCalendarStore } from "@/store/calendar-store";
 import type {
   CalendarEvent,
   CalendarEventType,
   CalendarView,
   CreateCalendarEventInput,
-} from "@/types/calendar"
+} from "@/types/calendar";
 
-const nexusToday = new Date("2026-07-12T12:00:00+05:30")
+const nexusToday = new Date("2026-07-12T12:00:00+05:30");
 
 const eventLabels: Record<CalendarEventType, string> = {
   study: "Study",
@@ -60,24 +60,26 @@ const eventLabels: Record<CalendarEventType, string> = {
   bill: "Bills",
   project: "Projects",
   personal: "Personal",
-}
+};
 
 export function CalendarPage() {
-  const events = useCalendarStore((state) => state.events)
-  const addEvent = useCalendarStore((state) => state.addEvent)
-  const [currentDate, setCurrentDate] = useState(nexusToday)
-  const [view, setView] = useState<CalendarView>("month")
-  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
+  const events = useCalendarStore((state) => state.events);
+  const addEvent = useCalendarStore((state) => state.addEvent);
+  const [currentDate, setCurrentDate] = useState(nexusToday);
+  const [view, setView] = useState<CalendarView>("month");
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(
+    null,
+  );
 
   const visibleEvents = useMemo(() => {
-    if (view !== "agenda") return events
+    if (view !== "agenda") return events;
     return events.filter((event) =>
       isWithinInterval(parseISO(event.start), {
         start: startOfDay(currentDate),
         end: endOfDay(addDays(currentDate, 13)),
       }),
-    )
-  }, [currentDate, events, view])
+    );
+  }, [currentDate, events, view]);
 
   const upcoming = useMemo(
     () =>
@@ -88,14 +90,14 @@ export function CalendarPage() {
         .sort((a, b) => a.start.localeCompare(b.start))
         .slice(0, 6),
     [events],
-  )
+  );
 
   const todayEvents = events.filter((event) =>
     isSameDay(parseISO(event.start), nexusToday),
-  )
+  );
   const weekEnd = endOfDay(
     addDays(startOfWeek(nexusToday, { weekStartsOn: 1 }), 6),
-  )
+  );
   const focusMinutes = events
     .filter(
       (event) =>
@@ -109,28 +111,28 @@ export function CalendarPage() {
       (total, event) =>
         total + differenceInMinutes(parseISO(event.end), parseISO(event.start)),
       0,
-    )
+    );
 
   const moveDate = (direction: -1 | 1) => {
     setCurrentDate((date) => {
       if (view === "month")
-        return direction === 1 ? addMonths(date, 1) : subMonths(date, 1)
-      return direction === 1 ? addWeeks(date, 1) : subWeeks(date, 1)
-    })
-  }
+        return direction === 1 ? addMonths(date, 1) : subMonths(date, 1);
+      return direction === 1 ? addWeeks(date, 1) : subWeeks(date, 1);
+    });
+  };
 
   const handleAddEvent = async (input: CreateCalendarEventInput) => {
-    const event = addEvent(input)
-    setCurrentDate(parseISO(event.start))
-    return event
-  }
+    const event = addEvent(input);
+    setCurrentDate(parseISO(event.start));
+    return event;
+  };
 
   const rangeLabel =
     view === "month"
       ? format(currentDate, "MMMM yyyy")
       : view === "week"
         ? `${format(startOfWeek(currentDate, { weekStartsOn: 1 }), "MMM d")} – ${format(addDays(startOfWeek(currentDate, { weekStartsOn: 1 }), 6), "MMM d, yyyy")}`
-        : `${format(currentDate, "MMM d")} – ${format(addDays(currentDate, 13), "MMM d, yyyy")}`
+        : `${format(currentDate, "MMM d")} – ${format(addDays(currentDate, 13), "MMM d, yyyy")}`;
 
   return (
     <div className="space-y-6">
@@ -365,7 +367,7 @@ export function CalendarPage() {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }
 
-export default CalendarPage
+export default CalendarPage;

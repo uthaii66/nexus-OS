@@ -6,26 +6,26 @@ import {
   nutritionTrend,
   progressPhotos,
   weightTrend,
-} from "@/data/mock/health"
-import type { HealthService } from "@/services/health/health-service"
-import type { CreateHealthLogInput, HealthLog } from "@/types/health"
+} from "@/data/mock/health";
+import type { HealthService } from "@/services/health/health-service";
+import type { CreateHealthLogInput, HealthLog } from "@/types/health";
 
-const clone = <T>(value: T): T => structuredClone(value)
+const clone = <T>(value: T): T => structuredClone(value);
 
 const createLogId = () =>
   typeof crypto !== "undefined" && "randomUUID" in crypto
     ? `health-${crypto.randomUUID()}`
-    : `health-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+    : `health-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
 export class MockHealthService implements HealthService {
-  private logs = clone(healthLogs)
+  private logs = clone(healthLogs);
 
   async getSummary() {
-    return clone(healthSummary)
+    return clone(healthSummary);
   }
 
   async getLogs() {
-    return clone(this.logs)
+    return clone(this.logs);
   }
 
   async createLog(input: CreateHealthLogInput) {
@@ -33,34 +33,34 @@ export class MockHealthService implements HealthService {
       ...input,
       id: createLogId(),
       createdAt: new Date().toISOString(),
-    } as HealthLog
-    this.logs = [log, ...this.logs]
-    return clone(log)
+    } as HealthLog;
+    this.logs = [log, ...this.logs];
+    return clone(log);
   }
 
   async deleteLog(id: string) {
-    this.logs = this.logs.filter((log) => log.id !== id)
+    this.logs = this.logs.filter((log) => log.id !== id);
   }
 
   async getWeightTrend() {
-    return clone(weightTrend)
+    return clone(weightTrend);
   }
 
   async getNutritionTrend() {
-    return clone(nutritionTrend)
+    return clone(nutritionTrend);
   }
 
   async getDailyHabits() {
-    return clone(dailyHabits)
+    return clone(dailyHabits);
   }
 
   async getHabitConsistency() {
-    return clone(habitConsistency)
+    return clone(habitConsistency);
   }
 
   async getProgressPhotos() {
-    return clone(progressPhotos)
+    return clone(progressPhotos);
   }
 }
 
-export const healthService: HealthService = new MockHealthService()
+export const healthService: HealthService = new MockHealthService();

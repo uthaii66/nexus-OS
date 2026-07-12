@@ -8,20 +8,20 @@ import type {
   SpendingTrendPoint,
   Transaction,
   UpdateTransactionInput,
-} from "@/types/finance"
+} from "@/types/finance";
 
 export interface FinanceService {
-  getTransactions(): Promise<Transaction[]>
-  createTransaction(input: CreateTransactionInput): Promise<Transaction>
+  getTransactions(): Promise<Transaction[]>;
+  createTransaction(input: CreateTransactionInput): Promise<Transaction>;
   updateTransaction(
     id: string,
     input: UpdateTransactionInput,
-  ): Promise<Transaction>
-  deleteTransaction(id: string): Promise<void>
-  getFinanceSummary(): Promise<FinanceSummary>
-  getAccounts(): Promise<FinanceAccount[]>
-  getBudgets(): Promise<BudgetCategory[]>
-  getUpcomingBills(): Promise<Bill[]>
-  getSpendingTrend(): Promise<SpendingTrendPoint[]>
-  getDebtAccounts(): Promise<DebtAccount[]>
+  ): Promise<Transaction>;
+  deleteTransaction(id: string): Promise<void>;
+  getFinanceSummary(): Promise<FinanceSummary>;
+  getAccounts(): Promise<FinanceAccount[]>;
+  getBudgets(): Promise<BudgetCategory[]>;
+  getUpcomingBills(): Promise<Bill[]>;
+  getSpendingTrend(): Promise<SpendingTrendPoint[]>;
+  getDebtAccounts(): Promise<DebtAccount[]>;
 }

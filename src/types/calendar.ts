@@ -4,34 +4,34 @@ export type CalendarEventType =
   | "interview"
   | "bill"
   | "project"
-  | "personal"
+  | "personal";
 
-export type CalendarView = "month" | "week" | "agenda"
+export type CalendarView = "month" | "week" | "agenda";
 
 export interface CalendarEvent {
-  id: string
-  title: string
-  description?: string
-  type: CalendarEventType
-  start: string
-  end: string
-  allDay: boolean
-  location?: string
-  projectId?: string
-  completed?: boolean
+  id: string;
+  title: string;
+  description?: string;
+  type: CalendarEventType;
+  start: string;
+  end: string;
+  allDay: boolean;
+  location?: string;
+  projectId?: string;
+  completed?: boolean;
 }
 
 export interface CreateCalendarEventInput {
-  title: string
-  description?: string
-  type: CalendarEventType
-  start: string
-  end: string
-  allDay?: boolean
-  location?: string
+  title: string;
+  description?: string;
+  type: CalendarEventType;
+  start: string;
+  end: string;
+  allDay?: boolean;
+  location?: string;
 }
 
 export interface CalendarDateRange {
-  from: string
-  to: string
+  from: string;
+  to: string;
 }

@@ -1,12 +1,12 @@
-import { format, parseISO } from "date-fns"
+import { format, parseISO } from "date-fns";
 
-import { calendarEventStyles } from "@/features/calendar/utils/event-styles"
-import type { CalendarEvent } from "@/types/calendar"
+import { calendarEventStyles } from "@/features/calendar/utils/event-styles";
+import type { CalendarEvent } from "@/types/calendar";
 
 interface EventChipProps {
-  event: CalendarEvent
-  compact?: boolean
-  onSelect: (event: CalendarEvent) => void
+  event: CalendarEvent;
+  compact?: boolean;
+  onSelect: (event: CalendarEvent) => void;
 }
 
 export function EventChip({
@@ -27,5 +27,5 @@ export function EventChip({
       ) : null}
       <span className="font-medium">{event.title}</span>
     </button>
-  )
+  );
 }

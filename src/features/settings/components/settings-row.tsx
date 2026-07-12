@@ -1,10 +1,10 @@
-import type { ReactNode } from "react"
+import type { ReactNode } from "react";
 
 interface SettingsRowProps {
-  title: string
-  description: string
-  control: ReactNode
-  htmlFor?: string
+  title: string;
+  description: string;
+  control: ReactNode;
+  htmlFor?: string;
 }
 
 export function SettingsRow({
@@ -20,7 +20,7 @@ export function SettingsRow({
         {description}
       </span>
     </span>
-  )
+  );
 
   return (
     <div className="flex items-center gap-4 border-b border-border/60 py-4 last:border-b-0">
@@ -33,5 +33,5 @@ export function SettingsRow({
       )}
       <div className="shrink-0">{control}</div>
     </div>
-  )
+  );
 }

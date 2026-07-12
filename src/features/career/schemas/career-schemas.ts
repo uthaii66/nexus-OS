@@ -1,6 +1,6 @@
-import { z } from "zod"
+import { z } from "zod";
 
-import { APPLICATION_STAGES } from "@/types/career"
+import { APPLICATION_STAGES } from "@/types/career";
 
 export const applicationFormSchema = z.object({
   company: z.string().trim().min(2, "Enter a company name").max(60),
@@ -16,11 +16,11 @@ export const applicationFormSchema = z.object({
   source: z.string().trim().min(2, "Enter where you found the role").max(60),
   salaryRange: z.string().trim().max(50).optional(),
   initialNote: z.string().trim().max(500).optional(),
-})
+});
 
 export const applicationNoteSchema = z.object({
   body: z.string().trim().min(2, "Write a short note").max(500),
-})
+});
 
-export type ApplicationFormValues = z.infer<typeof applicationFormSchema>
-export type ApplicationNoteFormValues = z.infer<typeof applicationNoteSchema>
+export type ApplicationFormValues = z.infer<typeof applicationFormSchema>;
+export type ApplicationNoteFormValues = z.infer<typeof applicationNoteSchema>;

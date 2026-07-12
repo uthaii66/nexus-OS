@@ -10,7 +10,7 @@ import type {
   SavingsAllocation,
   SpendingTrendPoint,
   Transaction,
-} from "@/types/finance"
+} from "@/types/finance";
 
 export const financeAccounts: FinanceAccount[] = [
   {
@@ -49,7 +49,7 @@ export const financeAccounts: FinanceAccount[] = [
     lastFour: "4832",
     changePercent: -7.5,
   },
-]
+];
 
 export const financeTransactions: Transaction[] = [
   {
@@ -341,7 +341,7 @@ export const financeTransactions: Transaction[] = [
     recurring: false,
     createdAt: "2026-07-12T15:05:00+05:30",
   },
-]
+];
 
 export const financeBudgets: BudgetCategory[] = [
   { category: "Housing", allocated: 30000, spent: 27500, color: "#6366f1" },
@@ -354,7 +354,7 @@ export const financeBudgets: BudgetCategory[] = [
   { category: "Shopping", allocated: 4000, spent: 1540, color: "#fb7185" },
   { category: "Entertainment", allocated: 2500, spent: 720, color: "#e879f9" },
   { category: "Subscriptions", allocated: 2500, spent: 1039, color: "#94a3b8" },
-]
+];
 
 export const upcomingBills: Bill[] = [
   {
@@ -397,7 +397,7 @@ export const upcomingBills: Bill[] = [
     autopay: true,
     status: "scheduled",
   },
-]
+];
 
 export const spendingTrend: SpendingTrendPoint[] = [
   { month: "Jan", spending: 61200, budget: 75000, income: 92000 },
@@ -407,7 +407,7 @@ export const spendingTrend: SpendingTrendPoint[] = [
   { month: "May", spending: 64700, budget: 80000, income: 98000 },
   { month: "Jun", spending: 61900, budget: 80000, income: 100000 },
   { month: "Jul", spending: 54362, budget: 74500, income: 108000 },
-]
+];
 
 export const debtAccounts: DebtAccount[] = [
   {
@@ -437,7 +437,7 @@ export const debtAccounts: DebtAccount[] = [
     minimumPayment: 15000,
     nextPaymentDate: "2026-07-30",
   },
-]
+];
 
 export const financeSummary: FinanceSummary = {
   totalBalance: 139000,
@@ -449,7 +449,7 @@ export const financeSummary: FinanceSummary = {
   monthlyBudget: 74500,
   savingsRate: 49.7,
   balanceChangePercent: 3.8,
-}
+};
 
 export const financeDashboardData: FinanceDashboardData = {
   summary: financeSummary,
@@ -459,7 +459,7 @@ export const financeDashboardData: FinanceDashboardData = {
   bills: upcomingBills,
   spendingTrend,
   debts: debtAccounts,
-}
+};
 
 export const debtTrackerItems: DebtTrackerItem[] = [
   {
@@ -544,7 +544,7 @@ export const debtTrackerItems: DebtTrackerItem[] = [
     status: "active",
     note: "Updated in February",
   },
-]
+];
 
 export const homeContributions: HomeContribution[] = [
   {
@@ -667,7 +667,7 @@ export const homeContributions: HomeContribution[] = [
     amountGiven: 27500,
     actualHomeAmount: 27500,
   },
-]
+];
 
 export const savingsAllocations: SavingsAllocation[] = [
   {
@@ -775,4 +775,4 @@ export const savingsAllocations: SavingsAllocation[] = [
     totalSavings: 7400,
     remarks: "Aura Gold sold for approximately ₹5,000",
   },
-]
+];

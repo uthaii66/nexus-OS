@@ -9,9 +9,9 @@ export type QuickAddAction =
   | "application-update"
   | "project-task"
   | "calendar-event"
-  | "note"
+  | "note";
 
 export interface QuickAddRequest {
-  action?: QuickAddAction
-  source?: "button" | "command" | "shortcut" | "module"
+  action?: QuickAddAction;
+  source?: "button" | "command" | "shortcut" | "module";
 }

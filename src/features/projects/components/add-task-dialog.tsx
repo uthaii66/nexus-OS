@@ -1,11 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Plus } from "lucide-react"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -14,18 +14,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { useProjectsStore } from "@/store/projects-store"
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useProjectsStore } from "@/store/projects-store";
 
 const taskSchema = z.object({
   title: z.string().trim().min(3, "Use at least 3 characters.").max(90),
@@ -34,17 +34,17 @@ const taskSchema = z.object({
   status: z.enum(["backlog", "todo", "in-progress", "blocked", "done"]),
   dueDate: z.string().min(1, "Choose a due date."),
   estimateHours: z.coerce.number().min(0.5).max(80),
-})
+});
 
-type TaskFormValues = z.infer<typeof taskSchema>
+type TaskFormValues = z.infer<typeof taskSchema>;
 
 interface AddTaskDialogProps {
-  projectId: string
+  projectId: string;
 }
 
 export function AddTaskDialog({ projectId }: AddTaskDialogProps) {
-  const [open, setOpen] = useState(false)
-  const addTask = useProjectsStore((state) => state.addTask)
+  const [open, setOpen] = useState(false);
+  const addTask = useProjectsStore((state) => state.addTask);
   const {
     register,
     handleSubmit,
@@ -61,14 +61,14 @@ export function AddTaskDialog({ projectId }: AddTaskDialogProps) {
       dueDate: "2026-07-20",
       estimateHours: 2,
     },
-  })
+  });
 
   const onSubmit = (values: TaskFormValues) => {
-    addTask(projectId, values)
-    toast.success("Task added to this session")
-    reset()
-    setOpen(false)
-  }
+    addTask(projectId, values);
+    toast.success("Task added to this session");
+    reset();
+    setOpen(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -156,7 +156,9 @@ export function AddTaskDialog({ projectId }: AddTaskDialogProps) {
               <Label htmlFor="task-due">Due date</Label>
               <Input id="task-due" type="date" {...register("dueDate")} />
               {errors.dueDate ? (
-                <p className="text-destructive text-xs">{errors.dueDate.message}</p>
+                <p className="text-destructive text-xs">
+                  {errors.dueDate.message}
+                </p>
               ) : null}
             </div>
             <div className="space-y-2">
@@ -187,5 +189,5 @@ export function AddTaskDialog({ projectId }: AddTaskDialogProps) {
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

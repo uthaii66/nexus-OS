@@ -1,5 +1,5 @@
-import { format, parseISO } from "date-fns"
-import { motion, useReducedMotion } from "framer-motion"
+import { format, parseISO } from "date-fns";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   BellRing,
   BriefcaseBusiness,
@@ -11,27 +11,27 @@ import {
   Plus,
   Trophy,
   Users,
-} from "lucide-react"
-import { useMemo, useState } from "react"
+} from "lucide-react";
+import { useMemo, useState } from "react";
 import {
   Funnel,
   FunnelChart,
   LabelList,
   ResponsiveContainer,
   Tooltip,
-} from "recharts"
+} from "recharts";
 
-import { ChartCard } from "@/components/common/chart-card"
-import { MetricCard } from "@/components/common/metric-card"
-import { PageHeader } from "@/components/common/page-header"
-import { SectionCard } from "@/components/common/section-card"
-import { StatusBadge } from "@/components/common/status-badge"
-import { Button } from "@/components/ui/button"
-import { useCareerStore } from "@/store/career-store"
+import { ChartCard } from "@/components/common/chart-card";
+import { MetricCard } from "@/components/common/metric-card";
+import { PageHeader } from "@/components/common/page-header";
+import { SectionCard } from "@/components/common/section-card";
+import { StatusBadge } from "@/components/common/status-badge";
+import { Button } from "@/components/ui/button";
+import { useCareerStore } from "@/store/career-store";
 
-import { ApplicationDetailsDialog } from "../components/application-details-dialog"
-import { ApplicationFormDialog } from "../components/application-form-dialog"
-import { ApplicationPipeline } from "../components/application-pipeline"
+import { ApplicationDetailsDialog } from "../components/application-details-dialog";
+import { ApplicationFormDialog } from "../components/application-form-dialog";
+import { ApplicationPipeline } from "../components/application-pipeline";
 
 const tooltipStyle = {
   background: "hsl(var(--popover))",
@@ -40,23 +40,23 @@ const tooltipStyle = {
   boxShadow: "0 18px 45px rgba(0,0,0,.32)",
   color: "hsl(var(--foreground))",
   fontSize: "12px",
-}
+};
 
 export function CareerPage() {
-  const shouldReduceMotion = useReducedMotion()
-  const applications = useCareerStore((state) => state.applications)
-  const interviews = useCareerStore((state) => state.interviews)
-  const contacts = useCareerStore((state) => state.contacts)
-  const resumeVersions = useCareerStore((state) => state.resumeVersions)
-  const recentActivity = useCareerStore((state) => state.recentActivity)
-  const [formOpen, setFormOpen] = useState(false)
-  const [detailsOpen, setDetailsOpen] = useState(false)
+  const shouldReduceMotion = useReducedMotion();
+  const applications = useCareerStore((state) => state.applications);
+  const interviews = useCareerStore((state) => state.interviews);
+  const contacts = useCareerStore((state) => state.contacts);
+  const resumeVersions = useCareerStore((state) => state.resumeVersions);
+  const recentActivity = useCareerStore((state) => state.recentActivity);
+  const [formOpen, setFormOpen] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
   const [selectedApplicationId, setSelectedApplicationId] = useState<
     string | null
-  >(null)
+  >(null);
   const [editingApplicationId, setEditingApplicationId] = useState<
     string | null
-  >(null)
+  >(null);
 
   const stats = useMemo(() => {
     const followUpsDue = applications.filter(
@@ -64,7 +64,7 @@ export function CareerPage() {
         application.followUpDate &&
         application.followUpDate <= "2026-07-15" &&
         !["Rejected"].includes(application.stage),
-    ).length
+    ).length;
     return {
       total: applications.length,
       thisMonth: applications.filter((application) =>
@@ -80,13 +80,13 @@ export function CareerPage() {
       offers: applications.filter(
         (application) => application.stage === "Offer",
       ).length,
-    }
-  }, [applications])
+    };
+  }, [applications]);
 
   const funnelData = useMemo(() => {
     const atOrPast = (stages: string[]) =>
       applications.filter((application) => stages.includes(application.stage))
-        .length
+        .length;
     return [
       {
         name: "Tracked",
@@ -135,31 +135,31 @@ export function CareerPage() {
         fill: "hsl(var(--primary) / .82)",
       },
       { name: "Offer", value: stats.offers, fill: "hsl(var(--success) / .9)" },
-    ]
-  }, [applications, stats.offers])
+    ];
+  }, [applications, stats.offers]);
 
   const openApplication = (id: string) => {
-    setSelectedApplicationId(id)
-    setDetailsOpen(true)
-  }
+    setSelectedApplicationId(id);
+    setDetailsOpen(true);
+  };
 
   const openEdit = (id: string) => {
-    setDetailsOpen(false)
-    setEditingApplicationId(id)
-    setFormOpen(true)
-  }
+    setDetailsOpen(false);
+    setEditingApplicationId(id);
+    setFormOpen(true);
+  };
 
   const openAdd = () => {
-    setEditingApplicationId(null)
-    setFormOpen(true)
-  }
+    setEditingApplicationId(null);
+    setFormOpen(true);
+  };
 
   const editingApplication = applications.find(
     (application) => application.id === editingApplicationId,
-  )
+  );
   const entrance = shouldReduceMotion
     ? {}
-    : { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 } }
+    : { initial: { opacity: 0, y: 10 }, animate: { opacity: 1, y: 0 } };
 
   return (
     <div className="space-y-6 pb-12">
@@ -463,7 +463,7 @@ export function CareerPage() {
         onEdit={openEdit}
       />
     </div>
-  )
+  );
 }
 
-export default CareerPage
+export default CareerPage;

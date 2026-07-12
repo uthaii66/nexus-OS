@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react"
-import { motion, useReducedMotion } from "framer-motion"
+import { useMemo, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   Activity,
   Beef,
@@ -13,43 +13,43 @@ import {
   Sparkles,
   Target,
   Utensils,
-} from "lucide-react"
+} from "lucide-react";
 
-import { ErrorState } from "@/components/common/error-state"
-import { LoadingSkeleton } from "@/components/common/loading-skeleton"
-import { MetricCard } from "@/components/common/metric-card"
-import { PageHeader } from "@/components/common/page-header"
-import { Button } from "@/components/ui/button"
-import { Progress } from "@/components/ui/progress"
-import { HealthCharts } from "@/features/health/components/health-charts"
+import { ErrorState } from "@/components/common/error-state";
+import { LoadingSkeleton } from "@/components/common/loading-skeleton";
+import { MetricCard } from "@/components/common/metric-card";
+import { PageHeader } from "@/components/common/page-header";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { HealthCharts } from "@/features/health/components/health-charts";
 import {
   GoalProgress,
   HabitConsistency,
   ProgressPhotos,
   WorkoutHistory,
-} from "@/features/health/components/health-details"
-import { HealthLogDialog } from "@/features/health/components/health-log-dialog"
-import { RecentCheckIns } from "@/features/health/components/recent-check-ins"
-import { useHealthDashboard } from "@/features/health/hooks/use-health-dashboard"
-import { calculateHealthSummary, useHealthStore } from "@/store/health-store"
-import type { HealthLogType } from "@/types/health"
+} from "@/features/health/components/health-details";
+import { HealthLogDialog } from "@/features/health/components/health-log-dialog";
+import { RecentCheckIns } from "@/features/health/components/recent-check-ins";
+import { useHealthDashboard } from "@/features/health/hooks/use-health-dashboard";
+import { calculateHealthSummary, useHealthStore } from "@/store/health-store";
+import type { HealthLogType } from "@/types/health";
 
 export function HealthPage() {
-  const reduceMotion = useReducedMotion()
-  const logs = useHealthStore((state) => state.logs)
-  const { data, error, reload } = useHealthDashboard()
-  const [logDialogOpen, setLogDialogOpen] = useState(false)
-  const [defaultLogType, setDefaultLogType] = useState<HealthLogType>("weight")
-  const summary = useMemo(() => calculateHealthSummary(logs), [logs])
+  const reduceMotion = useReducedMotion();
+  const logs = useHealthStore((state) => state.logs);
+  const { data, error, reload } = useHealthDashboard();
+  const [logDialogOpen, setLogDialogOpen] = useState(false);
+  const [defaultLogType, setDefaultLogType] = useState<HealthLogType>("weight");
+  const summary = useMemo(() => calculateHealthSummary(logs), [logs]);
 
   const openLog = (type: HealthLogType) => {
-    setDefaultLogType(type)
-    setLogDialogOpen(true)
-  }
+    setDefaultLogType(type);
+    setLogDialogOpen(true);
+  };
 
   if (error)
-    return <ErrorState description={error} onRetry={() => void reload()} />
-  if (!data) return <LoadingSkeleton />
+    return <ErrorState description={error} onRetry={() => void reload()} />;
+  if (!data) return <LoadingSkeleton />;
 
   const metrics = [
     {
@@ -140,7 +140,7 @@ export function HealthPage() {
       icon: Gauge,
       accent: "neutral" as const,
     },
-  ]
+  ];
 
   return (
     <div className="space-y-6 pb-10">
@@ -241,7 +241,7 @@ export function HealthPage() {
         defaultType={defaultLogType}
       />
     </div>
-  )
+  );
 }
 
-export default HealthPage
+export default HealthPage;

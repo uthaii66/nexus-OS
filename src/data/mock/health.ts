@@ -7,7 +7,7 @@ import type {
   NutritionTrendPoint,
   ProgressPhoto,
   WeightTrendPoint,
-} from "@/types/health"
+} from "@/types/health";
 
 export const healthSummary: HealthSummary = {
   currentWeightKg: 81.4,
@@ -25,7 +25,7 @@ export const healthSummary: HealthSummary = {
   todayWaterLiters: 2.1,
   waterTargetLiters: 3,
   bodyFatPercent: null,
-}
+};
 
 export const weightTrend: WeightTrendPoint[] = [
   { date: "2026-06-15", weightKg: 83.4, movingAverageKg: 83.5 },
@@ -44,7 +44,7 @@ export const weightTrend: WeightTrendPoint[] = [
   { date: "2026-07-10", weightKg: 81.7, movingAverageKg: 81.8 },
   { date: "2026-07-11", weightKg: 81.5, movingAverageKg: 81.7 },
   { date: "2026-07-12", weightKg: 81.4, movingAverageKg: 81.7 },
-]
+];
 
 export const nutritionTrend: NutritionTrendPoint[] = [
   {
@@ -131,7 +131,7 @@ export const nutritionTrend: NutritionTrendPoint[] = [
     calorieTarget: 2250,
     proteinGrams: 104,
   },
-]
+];
 
 export const dailyHabits: DailyHabitPoint[] = [
   {
@@ -190,7 +190,7 @@ export const dailyHabits: DailyHabitPoint[] = [
     workoutComplete: false,
     proteinTargetMet: false,
   },
-]
+];
 
 export const habitConsistency: HabitConsistency[] = [
   {
@@ -225,7 +225,7 @@ export const habitConsistency: HabitConsistency[] = [
     unit: "nights",
     accent: "violet",
   },
-]
+];
 
 export const healthLogs: HealthLog[] = [
   {
@@ -395,13 +395,13 @@ export const healthLogs: HealthLog[] = [
     weightKg: 82.2,
     createdAt: "2026-07-01T07:21:00+05:30",
   },
-]
+];
 
 export const progressPhotos: ProgressPhoto[] = [
   { id: "photo-start", date: "2026-03-01", label: "Starting point" },
   { id: "photo-month-two", date: "2026-05-03", label: "Month 2" },
   { id: "photo-latest", date: "2026-07-05", label: "Latest check-in" },
-]
+];
 
 export const healthDashboardData: HealthDashboardData = {
   summary: healthSummary,
@@ -411,4 +411,4 @@ export const healthDashboardData: HealthDashboardData = {
   dailyHabits,
   habitConsistency,
   progressPhotos,
-}
+};

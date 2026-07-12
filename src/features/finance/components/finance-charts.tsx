@@ -1,5 +1,5 @@
-import { useMemo } from "react"
-import { useReducedMotion } from "framer-motion"
+import { useMemo } from "react";
+import { useReducedMotion } from "framer-motion";
 import {
   Area,
   AreaChart,
@@ -12,20 +12,20 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from "recharts"
+} from "recharts";
 
-import { ChartCard } from "@/components/common/chart-card"
+import { ChartCard } from "@/components/common/chart-card";
 import type {
   BudgetCategory,
   SpendingTrendPoint,
   Transaction,
   TransactionCategory,
-} from "@/types/finance"
+} from "@/types/finance";
 
 interface FinanceChartsProps {
-  trend: SpendingTrendPoint[]
-  budgets: BudgetCategory[]
-  transactions: Transaction[]
+  trend: SpendingTrendPoint[];
+  budgets: BudgetCategory[];
+  transactions: Transaction[];
 }
 
 const compactCurrency = new Intl.NumberFormat("en-IN", {
@@ -33,25 +33,25 @@ const compactCurrency = new Intl.NumberFormat("en-IN", {
   currency: "INR",
   notation: "compact",
   maximumFractionDigits: 1,
-})
+});
 
 const currency = new Intl.NumberFormat("en-IN", {
   style: "currency",
   currency: "INR",
   maximumFractionDigits: 0,
-})
+});
 
 export function FinanceCharts({
   trend,
   budgets,
   transactions,
 }: FinanceChartsProps) {
-  const reduceMotion = useReducedMotion()
+  const reduceMotion = useReducedMotion();
   const spendingByCategory = useMemo(() => {
     const colors = new Map(
       budgets.map((budget) => [budget.category, budget.color]),
-    )
-    const grouped = new Map<TransactionCategory, number>()
+    );
+    const grouped = new Map<TransactionCategory, number>();
     transactions
       .filter(
         (transaction) =>
@@ -63,8 +63,8 @@ export function FinanceCharts({
         grouped.set(
           transaction.category,
           (grouped.get(transaction.category) ?? 0) + transaction.amount,
-        )
-      })
+        );
+      });
 
     return [...grouped.entries()]
       .map(([name, value]) => ({
@@ -73,13 +73,13 @@ export function FinanceCharts({
         color: colors.get(name) ?? "#64748b",
       }))
       .sort((left, right) => right.value - left.value)
-      .slice(0, 7)
-  }, [budgets, transactions])
+      .slice(0, 7);
+  }, [budgets, transactions]);
 
   const julySpending = spendingByCategory.reduce(
     (total, category) => total + category.value,
     0,
-  )
+  );
 
   return (
     <div className="grid gap-4 xl:grid-cols-[1.45fr_1fr]">
@@ -225,5 +225,5 @@ export function FinanceCharts({
         </ResponsiveContainer>
       </ChartCard>
     </div>
-  )
+  );
 }

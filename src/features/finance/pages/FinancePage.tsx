@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react"
-import { motion, useReducedMotion } from "framer-motion"
+import { useMemo, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowDownToLine,
   ArrowUpFromLine,
@@ -8,69 +8,80 @@ import {
   ReceiptText,
   ShieldCheck,
   WalletCards,
-} from "lucide-react"
+} from "lucide-react";
 
-import { ErrorState } from "@/components/common/error-state"
-import { LoadingSkeleton } from "@/components/common/loading-skeleton"
-import { MetricCard } from "@/components/common/metric-card"
-import { PageHeader } from "@/components/common/page-header"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ErrorState } from "@/components/common/error-state";
+import { LoadingSkeleton } from "@/components/common/loading-skeleton";
+import { MetricCard } from "@/components/common/metric-card";
+import { PageHeader } from "@/components/common/page-header";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   AccountOverview,
   FinanceDetails,
-} from "@/features/finance/components/finance-details"
-import { FinanceCharts } from "@/features/finance/components/finance-charts"
-import { TransactionDialog } from "@/features/finance/components/transaction-dialog"
-import { TransactionTable } from "@/features/finance/components/transaction-table"
-import { DebtTracker, HomeContributionTracker, SavingsTracker } from "@/features/finance/components/personal-finance-trackers"
-import { debtTrackerItems, homeContributions, savingsAllocations } from "@/data/mock/finance"
-import { useFinanceDashboard } from "@/features/finance/hooks/use-finance-dashboard"
-import { calculateFinanceSummary, useFinanceStore } from "@/store/finance-store"
-import type { Transaction, TransactionType } from "@/types/finance"
+} from "@/features/finance/components/finance-details";
+import { FinanceCharts } from "@/features/finance/components/finance-charts";
+import { TransactionDialog } from "@/features/finance/components/transaction-dialog";
+import { TransactionTable } from "@/features/finance/components/transaction-table";
+import {
+  DebtTracker,
+  HomeContributionTracker,
+  SavingsTracker,
+} from "@/features/finance/components/personal-finance-trackers";
+import {
+  debtTrackerItems,
+  homeContributions,
+  savingsAllocations,
+} from "@/data/mock/finance";
+import { useFinanceDashboard } from "@/features/finance/hooks/use-finance-dashboard";
+import {
+  calculateFinanceSummary,
+  useFinanceStore,
+} from "@/store/finance-store";
+import type { Transaction, TransactionType } from "@/types/finance";
 
 const currency = new Intl.NumberFormat("en-IN", {
   style: "currency",
   currency: "INR",
   maximumFractionDigits: 0,
-})
+});
 
 const preciseCurrency = new Intl.NumberFormat("en-IN", {
   style: "currency",
   currency: "INR",
   minimumFractionDigits: 2,
-})
+});
 
 export function FinancePage() {
-  const reduceMotion = useReducedMotion()
-  const transactions = useFinanceStore((state) => state.transactions)
-  const { data, error, reload } = useFinanceDashboard()
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [defaultType, setDefaultType] = useState<TransactionType>("expense")
+  const reduceMotion = useReducedMotion();
+  const transactions = useFinanceStore((state) => state.transactions);
+  const { data, error, reload } = useFinanceDashboard();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [defaultType, setDefaultType] = useState<TransactionType>("expense");
   const [selectedTransaction, setSelectedTransaction] =
-    useState<Transaction | null>(null)
+    useState<Transaction | null>(null);
   const summary = useMemo(
     () => calculateFinanceSummary(transactions),
     [transactions],
-  )
+  );
 
   const openCreate = (type: TransactionType) => {
-    setSelectedTransaction(null)
-    setDefaultType(type)
-    setDialogOpen(true)
-  }
+    setSelectedTransaction(null);
+    setDefaultType(type);
+    setDialogOpen(true);
+  };
 
   const openEdit = (transaction: Transaction) => {
-    setSelectedTransaction(transaction)
-    setDefaultType(transaction.type)
-    setDialogOpen(true)
-  }
+    setSelectedTransaction(transaction);
+    setDefaultType(transaction.type);
+    setDialogOpen(true);
+  };
 
   if (error) {
-    return <ErrorState description={error} onRetry={() => void reload()} />
+    return <ErrorState description={error} onRetry={() => void reload()} />;
   }
 
-  if (!data) return <LoadingSkeleton />
+  if (!data) return <LoadingSkeleton />;
 
   const metrics = [
     {
@@ -131,7 +142,7 @@ export function FinancePage() {
           ? ("primary" as const)
           : ("danger" as const),
     },
-  ]
+  ];
 
   return (
     <div className="space-y-6 pb-10">
@@ -189,12 +200,25 @@ export function FinancePage() {
 
         <TabsContent value="overview" className="space-y-4">
           <AccountOverview accounts={data.accounts} />
-          <FinanceCharts trend={data.spendingTrend} budgets={data.budgets} transactions={transactions} />
-          <FinanceDetails bills={data.bills} budgets={data.budgets} debts={data.debts} transactions={transactions} />
+          <FinanceCharts
+            trend={data.spendingTrend}
+            budgets={data.budgets}
+            transactions={transactions}
+          />
+          <FinanceDetails
+            bills={data.bills}
+            budgets={data.budgets}
+            debts={data.debts}
+            transactions={transactions}
+          />
         </TabsContent>
 
         <TabsContent value="transactions">
-          <TransactionTable transactions={transactions} onEdit={openEdit} onAdd={() => openCreate("expense")} />
+          <TransactionTable
+            transactions={transactions}
+            onEdit={openEdit}
+            onAdd={() => openCreate("expense")}
+          />
         </TabsContent>
 
         <TabsContent value="debt">
@@ -210,8 +234,17 @@ export function FinancePage() {
         </TabsContent>
 
         <TabsContent value="budgets" className="space-y-4">
-          <FinanceCharts trend={data.spendingTrend} budgets={data.budgets} transactions={transactions} />
-          <FinanceDetails bills={data.bills} budgets={data.budgets} debts={[]} transactions={transactions} />
+          <FinanceCharts
+            trend={data.spendingTrend}
+            budgets={data.budgets}
+            transactions={transactions}
+          />
+          <FinanceDetails
+            bills={data.bills}
+            budgets={data.budgets}
+            debts={[]}
+            transactions={transactions}
+          />
         </TabsContent>
       </Tabs>
 
@@ -222,7 +255,7 @@ export function FinancePage() {
         defaultType={defaultType}
       />
     </div>
-  )
+  );
 }
 
-export default FinancePage
+export default FinancePage;

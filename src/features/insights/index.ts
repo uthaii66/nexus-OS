@@ -1,1 +1,1 @@
-export { InsightsPage } from "./pages/insights-page"
+export { InsightsPage } from "./pages/insights-page";

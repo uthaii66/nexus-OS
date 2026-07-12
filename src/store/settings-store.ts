@@ -1,12 +1,12 @@
-import { create } from "zustand"
-import { createJSONStorage, persist } from "zustand/middleware"
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 import type {
   DashboardWidgetId,
   NotificationPreferences,
   SettingsActions,
   SettingsPreferences,
-} from "@/types/settings"
+} from "@/types/settings";
 
 export const defaultSettings: SettingsPreferences = {
   displayName: "Uthai Kumar",
@@ -33,9 +33,9 @@ export const defaultSettings: SettingsPreferences = {
     careerFollowUps: true,
     weeklyDigest: false,
   },
-}
+};
 
-export type SettingsStore = SettingsPreferences & SettingsActions
+export type SettingsStore = SettingsPreferences & SettingsActions;
 
 export const useSettingsStore = create<SettingsStore>()(
   persist(
@@ -71,4 +71,4 @@ export const useSettingsStore = create<SettingsStore>()(
       }),
     },
   ),
-)
+);

@@ -1,4 +1,4 @@
-import { formatCurrency } from "@/lib/utils"
+import { formatCurrency } from "@/lib/utils";
 import type {
   AttentionAlert,
   LifeScore,
@@ -7,7 +7,7 @@ import type {
   RecentActivityItem,
   ScheduleItem,
   WeeklyProgressDatum,
-} from "@/types/overview"
+} from "@/types/overview";
 
 export const overviewPriorities: PriorityTask[] = [
   {
@@ -34,7 +34,7 @@ export const overviewPriorities: PriorityTask[] = [
     priority: "high",
     completed: false,
   },
-]
+];
 
 export const overviewLifeScore: LifeScore = {
   overall: 78,
@@ -46,7 +46,7 @@ export const overviewLifeScore: LifeScore = {
     { name: "Learning", score: 86, change: 5 },
     { name: "Projects", score: 80, change: 1 },
   ],
-}
+};
 
 export const overviewMetrics: OverviewMetric[] = [
   {
@@ -124,7 +124,7 @@ export const overviewMetrics: OverviewMetric[] = [
     detail: "1 blocked task",
     sparkline: [3, 4, 4, 5, 5, 5, 5],
   },
-]
+];
 
 export const overviewSchedule: ScheduleItem[] = [
   {
@@ -169,7 +169,7 @@ export const overviewSchedule: ScheduleItem[] = [
     end: "09:10",
     date: "2026-07-16",
   },
-]
+];
 
 export const overviewAlerts: AttentionAlert[] = [
   {
@@ -207,7 +207,7 @@ export const overviewAlerts: AttentionAlert[] = [
     action: "Resolve",
     route: "/projects/terra-zone",
   },
-]
+];
 
 export const overviewWeeklyProgress: WeeklyProgressDatum[] = [
   {
@@ -273,7 +273,7 @@ export const overviewWeeklyProgress: WeeklyProgressDatum[] = [
     spend: 7362,
     budget: 10900,
   },
-]
+];
 
 export const overviewRecentActivity: RecentActivityItem[] = [
   {
@@ -312,4 +312,4 @@ export const overviewRecentActivity: RecentActivityItem[] = [
     description: "Uthai Nexus navigation architecture",
     time: "Yesterday",
   },
-]
+];

@@ -2,14 +2,14 @@ import type {
   CalendarDateRange,
   CalendarEvent,
   CreateCalendarEventInput,
-} from "@/types/calendar"
+} from "@/types/calendar";
 
 export interface CalendarService {
-  getEvents(range?: CalendarDateRange): Promise<CalendarEvent[]>
-  createEvent(input: CreateCalendarEventInput): Promise<CalendarEvent>
+  getEvents(range?: CalendarDateRange): Promise<CalendarEvent[]>;
+  createEvent(input: CreateCalendarEventInput): Promise<CalendarEvent>;
   updateEvent(
     eventId: string,
     input: Partial<CreateCalendarEventInput>,
-  ): Promise<CalendarEvent>
-  deleteEvent(eventId: string): Promise<void>
+  ): Promise<CalendarEvent>;
+  deleteEvent(eventId: string): Promise<void>;
 }

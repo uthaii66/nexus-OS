@@ -1,1 +1,1 @@
-export { CalendarPage } from "./pages/calendar-page"
+export { CalendarPage } from "./pages/calendar-page";

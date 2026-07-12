@@ -1,11 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod"
-import { FilePlus2 } from "lucide-react"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { toast } from "sonner"
-import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FilePlus2 } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -14,30 +14,30 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import { useProjectsStore } from "@/store/projects-store"
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useProjectsStore } from "@/store/projects-store";
 
 const noteSchema = z.object({
   kind: z.enum(["note", "decision"]),
   title: z.string().trim().min(3, "Add a clear title.").max(80),
   content: z.string().trim().min(8, "Add a little more context.").max(600),
-})
+});
 
-type NoteFormValues = z.infer<typeof noteSchema>
+type NoteFormValues = z.infer<typeof noteSchema>;
 
 export function AddNoteDialog({ projectId }: { projectId: string }) {
-  const [open, setOpen] = useState(false)
-  const addNote = useProjectsStore((state) => state.addNote)
+  const [open, setOpen] = useState(false);
+  const addNote = useProjectsStore((state) => state.addNote);
   const {
     register,
     handleSubmit,
@@ -47,16 +47,16 @@ export function AddNoteDialog({ projectId }: { projectId: string }) {
   } = useForm<NoteFormValues>({
     resolver: zodResolver(noteSchema),
     defaultValues: { kind: "note", title: "", content: "" },
-  })
+  });
 
   const onSubmit = (values: NoteFormValues) => {
-    addNote({ projectId, ...values })
+    addNote({ projectId, ...values });
     toast.success(
       values.kind === "decision" ? "Decision recorded" : "Note added",
-    )
-    reset()
-    setOpen(false)
-  }
+    );
+    reset();
+    setOpen(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -115,7 +115,9 @@ export function AddNoteDialog({ projectId }: { projectId: string }) {
               aria-invalid={Boolean(errors.content)}
             />
             {errors.content ? (
-              <p className="text-destructive text-xs">{errors.content.message}</p>
+              <p className="text-destructive text-xs">
+                {errors.content.message}
+              </p>
             ) : null}
           </div>
           <DialogFooter>
@@ -131,5 +133,5 @@ export function AddNoteDialog({ projectId }: { projectId: string }) {
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

@@ -2,27 +2,27 @@ import {
   futureAgents,
   mockInsights,
   mockInsightTrend,
-} from "@/data/mock/insights"
-import type { InsightsService } from "@/services/insights/insights-service"
+} from "@/data/mock/insights";
+import type { InsightsService } from "@/services/insights/insights-service";
 
 export class MockInsightsService implements InsightsService {
-  private insights = structuredClone(mockInsights)
+  private insights = structuredClone(mockInsights);
 
   async getInsights() {
-    return structuredClone(this.insights)
+    return structuredClone(this.insights);
   }
 
   async getTrend() {
-    return structuredClone(mockInsightTrend)
+    return structuredClone(mockInsightTrend);
   }
 
   async getFutureAgents() {
-    return structuredClone(futureAgents)
+    return structuredClone(futureAgents);
   }
 
   async dismissInsight(insightId: string) {
-    this.insights = this.insights.filter((insight) => insight.id !== insightId)
+    this.insights = this.insights.filter((insight) => insight.id !== insightId);
   }
 }
 
-export const insightsService: InsightsService = new MockInsightsService()
+export const insightsService: InsightsService = new MockInsightsService();
