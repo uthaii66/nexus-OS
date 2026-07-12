@@ -112,3 +112,36 @@ export interface TransactionFilters {
   minAmount: string
   maxAmount: string
 }
+
+
+export interface DebtTrackerItem {
+  id: string
+  name: string
+  totalAmount: number
+  paidAmount: number
+  remainingAmount: number
+  completionPercent: number
+  status: "active" | "completed"
+  note?: string
+}
+
+export interface HomeContribution {
+  id: string
+  year: number
+  month: string
+  emi: number
+  amountGiven: number
+  actualHomeAmount: number
+}
+
+export interface SavingsAllocation {
+  id: string
+  month: string
+  auraGold: number
+  tanishqGold: number
+  chitFund: number
+  mutualFund: number
+  rdIcici: number
+  totalSavings: number
+  remarks?: string
+}

@@ -15,6 +15,7 @@ import { LoadingSkeleton } from "@/components/common/loading-skeleton"
 import { MetricCard } from "@/components/common/metric-card"
 import { PageHeader } from "@/components/common/page-header"
 import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   AccountOverview,
   FinanceDetails,
@@ -22,19 +23,21 @@ import {
 import { FinanceCharts } from "@/features/finance/components/finance-charts"
 import { TransactionDialog } from "@/features/finance/components/transaction-dialog"
 import { TransactionTable } from "@/features/finance/components/transaction-table"
+import { DebtTracker, HomeContributionTracker, SavingsTracker } from "@/features/finance/components/personal-finance-trackers"
+import { debtTrackerItems, homeContributions, savingsAllocations } from "@/data/mock/finance"
 import { useFinanceDashboard } from "@/features/finance/hooks/use-finance-dashboard"
 import { calculateFinanceSummary, useFinanceStore } from "@/store/finance-store"
 import type { Transaction, TransactionType } from "@/types/finance"
 
-const currency = new Intl.NumberFormat("en-US", {
+const currency = new Intl.NumberFormat("en-IN", {
   style: "currency",
-  currency: "USD",
+  currency: "INR",
   maximumFractionDigits: 0,
 })
 
-const preciseCurrency = new Intl.NumberFormat("en-US", {
+const preciseCurrency = new Intl.NumberFormat("en-IN", {
   style: "currency",
-  currency: "USD",
+  currency: "INR",
   minimumFractionDigits: 2,
 })
 
@@ -73,7 +76,7 @@ export function FinancePage() {
     {
       label: "Total balance",
       value: preciseCurrency.format(summary.totalBalance),
-      detail: "Across four accounts",
+      detail: "Tracked savings value",
       trend: `+${summary.balanceChangePercent}%`,
       trendDirection: "up" as const,
       icon: WalletCards,
@@ -100,7 +103,7 @@ export function FinancePage() {
     {
       label: "Savings reserve",
       value: currency.format(summary.savings),
-      detail: "4.3 months of expenses",
+      detail: "Across gold, chit fund, MF and RD",
       trend: "+7.2%",
       trendDirection: "up" as const,
       icon: PiggyBank,
@@ -109,7 +112,7 @@ export function FinancePage() {
     {
       label: "Total debt",
       value: currency.format(summary.totalDebt),
-      detail: "2 active balances",
+      detail: "6 active · 3 completed",
       trend: "−8.1%",
       trendDirection: "down" as const,
       icon: Landmark,
@@ -174,23 +177,43 @@ export function FinancePage() {
         ))}
       </motion.section>
 
-      <AccountOverview accounts={data.accounts} />
-      <FinanceCharts
-        trend={data.spendingTrend}
-        budgets={data.budgets}
-        transactions={transactions}
-      />
-      <FinanceDetails
-        bills={data.bills}
-        budgets={data.budgets}
-        debts={data.debts}
-        transactions={transactions}
-      />
-      <TransactionTable
-        transactions={transactions}
-        onEdit={openEdit}
-        onAdd={() => openCreate("expense")}
-      />
+      <Tabs defaultValue="overview" className="space-y-4">
+        <TabsList className="h-auto w-full justify-start overflow-x-auto">
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="transactions">Transactions</TabsTrigger>
+          <TabsTrigger value="debt">Debt</TabsTrigger>
+          <TabsTrigger value="home">Home contributions</TabsTrigger>
+          <TabsTrigger value="savings">Savings</TabsTrigger>
+          <TabsTrigger value="budgets">Budgets</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview" className="space-y-4">
+          <AccountOverview accounts={data.accounts} />
+          <FinanceCharts trend={data.spendingTrend} budgets={data.budgets} transactions={transactions} />
+          <FinanceDetails bills={data.bills} budgets={data.budgets} debts={data.debts} transactions={transactions} />
+        </TabsContent>
+
+        <TabsContent value="transactions">
+          <TransactionTable transactions={transactions} onEdit={openEdit} onAdd={() => openCreate("expense")} />
+        </TabsContent>
+
+        <TabsContent value="debt">
+          <DebtTracker debts={debtTrackerItems} />
+        </TabsContent>
+
+        <TabsContent value="home">
+          <HomeContributionTracker rows={homeContributions} />
+        </TabsContent>
+
+        <TabsContent value="savings">
+          <SavingsTracker rows={savingsAllocations} />
+        </TabsContent>
+
+        <TabsContent value="budgets" className="space-y-4">
+          <FinanceCharts trend={data.spendingTrend} budgets={data.budgets} transactions={transactions} />
+          <FinanceDetails bills={data.bills} budgets={data.budgets} debts={[]} transactions={transactions} />
+        </TabsContent>
+      </Tabs>
 
       <TransactionDialog
         open={dialogOpen}

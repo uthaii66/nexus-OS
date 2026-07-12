@@ -28,16 +28,16 @@ interface FinanceChartsProps {
   transactions: Transaction[]
 }
 
-const compactCurrency = new Intl.NumberFormat("en-US", {
+const compactCurrency = new Intl.NumberFormat("en-IN", {
   style: "currency",
-  currency: "USD",
+  currency: "INR",
   notation: "compact",
   maximumFractionDigits: 1,
 })
 
-const currency = new Intl.NumberFormat("en-US", {
+const currency = new Intl.NumberFormat("en-IN", {
   style: "currency",
-  currency: "USD",
+  currency: "INR",
   maximumFractionDigits: 0,
 })
 
