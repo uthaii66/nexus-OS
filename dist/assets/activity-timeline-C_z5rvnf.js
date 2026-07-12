@@ -1,7 +1,0 @@
-import{n as c,j as e,c as a}from"./index-CdnEJbx-.js";/**
- * @license lucide-react v0.468.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */const i=c("Activity",[["path",{d:"M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2",key:"169zse"}]]),x={primary:"bg-primary/15 text-indigo-300",success:"bg-success/10 text-emerald-300",warning:"bg-warning/10 text-amber-300",neutral:"bg-secondary text-muted-foreground"};function d({items:t,className:n}){return e.jsx("ol",{className:a("space-y-0",n),children:t.map((s,r)=>{const l=s.icon??i;return e.jsxs("li",{className:"relative flex gap-3 pb-5 last:pb-0",children:[r<t.length-1?e.jsx("span",{className:"absolute left-[17px] top-9 h-[calc(100%-1.1rem)] w-px bg-border"}):null,e.jsx("span",{className:a("relative z-10 flex size-9 shrink-0 items-center justify-center rounded-xl",x[s.tone??"neutral"]),children:e.jsx(l,{className:"size-4"})}),e.jsxs("div",{className:"min-w-0 flex-1 pt-0.5",children:[e.jsxs("div",{className:"flex items-start justify-between gap-3",children:[e.jsx("p",{className:"text-sm font-medium text-foreground",children:s.title}),e.jsx("time",{className:"shrink-0 text-[11px] text-muted-foreground",children:s.time})]}),s.description?e.jsx("p",{className:"mt-1 text-xs leading-5 text-muted-foreground",children:s.description}):null]})]},s.id)})})}export{d as A,i as a};
-//# sourceMappingURL=activity-timeline-C_z5rvnf.js.map

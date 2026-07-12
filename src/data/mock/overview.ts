@@ -1,4 +1,5 @@
 import type { AttentionAlert, LifeScore, OverviewMetric, PriorityTask, RecentActivityItem, ScheduleItem, WeeklyProgressDatum } from "@/types/overview"
+import { formatCurrency } from "@/lib/utils"
 
 export const overviewPriorities: PriorityTask[] = [
   { id: "priority-1", title: "Complete Python array practice", category: "Learning", duration: "45 min", priority: "high", completed: false },
@@ -19,8 +20,8 @@ export const overviewLifeScore: LifeScore = {
 }
 
 export const overviewMetrics: OverviewMetric[] = [
-  { id: "spending", label: "Monthly spending", value: "£2,184", trend: "6.4% lower", direction: "down", positive: true, detail: "£1,016 left", sparkline: [420, 390, 510, 370, 330, 290, 310] },
-  { id: "debt", label: "Current debt", value: "£8,460", trend: "£320 paid", direction: "down", positive: true, detail: "67% repaid", sparkline: [10.2, 9.9, 9.6, 9.3, 9.05, 8.78, 8.46] },
+  { id: "spending", label: "Monthly spending", value: formatCurrency(2184, "whole"), trend: "6.4% lower", direction: "down", positive: true, detail: `${formatCurrency(1016, "whole")} left`, sparkline: [420, 390, 510, 370, 330, 290, 310] },
+  { id: "debt", label: "Total debt", value: formatCurrency(864000, "whole"), trend: `${formatCurrency(338063, "whole")} paid`, direction: "down", positive: true, detail: `${formatCurrency(525937, "whole")} remaining · 39.1% repaid`, sparkline: [864, 790, 728, 674, 621, 574, 526] },
   { id: "weight", label: "Current weight", value: "82.4 kg", trend: "0.6 kg", direction: "down", positive: true, detail: "Target 76 kg", sparkline: [84.2, 84, 83.6, 83.4, 83.1, 82.8, 82.4] },
   { id: "calories", label: "Weekly calories", value: "2,080", trend: "3% on target", direction: "neutral", detail: "Daily average", sparkline: [2010, 2180, 2060, 2110, 1980, 2230, 1990] },
   { id: "streak", label: "Study streak", value: "12 days", trend: "Best: 18", direction: "up", detail: "7.2h this week", sparkline: [25, 50, 45, 70, 55, 80, 75] },
@@ -38,7 +39,7 @@ export const overviewSchedule: ScheduleItem[] = [
 ]
 
 export const overviewAlerts: AttentionAlert[] = [
-  { id: "alert-1", title: "Credit-card payment due soon", description: "£184.20 is due in four days. Review the statement before marking it ready.", severity: "warning", action: "Review", route: "/finance" },
+  { id: "alert-1", title: "Credit-card payment due soon", description: `${formatCurrency(184.2)} is due in four days. Review the statement before marking it ready.`, severity: "warning", action: "Review", route: "/finance" },
   { id: "alert-2", title: "Two applications need follow-up", description: "Capital One and Vanguard have crossed your seven-day follow-up window.", severity: "info", action: "Open", route: "/career" },
   { id: "alert-3", title: "Protein target missed", description: "Average protein has been below 145g for the last three tracked days.", severity: "warning", action: "Inspect", route: "/health" },
   { id: "alert-4", title: "Terra-Zone task is blocked", description: "Deployment checklist is waiting on the environment configuration decision.", severity: "danger", action: "Resolve", route: "/projects/terra-zone" },
@@ -57,7 +58,7 @@ export const overviewWeeklyProgress: WeeklyProgressDatum[] = [
 export const overviewRecentActivity: RecentActivityItem[] = [
   { id: "activity-1", type: "health", title: "Weight logged", description: "82.4 kg · down 0.2 kg from the previous entry", time: "18 min ago" },
   { id: "activity-2", type: "learning", title: "LeetCode problem completed", description: "Longest Substring Without Repeating Characters · independently", time: "1 hr ago" },
-  { id: "activity-3", type: "finance", title: "Expense added", description: "£24.60 · Groceries · Tesco", time: "3 hrs ago" },
+  { id: "activity-3", type: "finance", title: "Expense added", description: `${formatCurrency(24.6, "precise")} · Groceries · Tesco`, time: "3 hrs ago" },
   { id: "activity-4", type: "career", title: "Application updated", description: "Capital One moved to Recruiter screen", time: "Yesterday" },
   { id: "activity-5", type: "project", title: "Project task completed", description: "Uthai Nexus navigation architecture", time: "Yesterday" },
 ]

@@ -15,6 +15,7 @@ import {
 } from "recharts"
 
 import { ChartCard } from "@/components/common/chart-card"
+import { formatCurrency } from "@/lib/utils"
 import type {
   BudgetCategory,
   SpendingTrendPoint,
@@ -27,19 +28,6 @@ interface FinanceChartsProps {
   budgets: BudgetCategory[]
   transactions: Transaction[]
 }
-
-const compactCurrency = new Intl.NumberFormat("en-IN", {
-  style: "currency",
-  currency: "INR",
-  notation: "compact",
-  maximumFractionDigits: 1,
-})
-
-const currency = new Intl.NumberFormat("en-IN", {
-  style: "currency",
-  currency: "INR",
-  maximumFractionDigits: 0,
-})
 
 export function FinanceCharts({
   trend,
@@ -115,7 +103,7 @@ export function FinanceCharts({
               axisLine={false}
               tickLine={false}
               tick={{ fill: "#94a3b8", fontSize: 11 }}
-              tickFormatter={(value: number) => compactCurrency.format(value)}
+              tickFormatter={(value: number) => formatCurrency(value, "compact")}
             />
             <Tooltip
               cursor={{
@@ -130,7 +118,7 @@ export function FinanceCharts({
                 boxShadow: "0 16px 40px rgba(0,0,0,.3)",
               }}
               formatter={(value, name) => [
-                currency.format(Number(value)),
+                formatCurrency(Number(value), "whole"),
                 String(name),
               ]}
             />
@@ -186,7 +174,7 @@ export function FinanceCharts({
             Spent
           </p>
           <p className="mt-1 font-display text-xl font-semibold text-foreground">
-            {compactCurrency.format(julySpending)}
+            {formatCurrency(julySpending, "compact")}
           </p>
         </div>
         <ResponsiveContainer width="100%" height="100%">
@@ -213,7 +201,7 @@ export function FinanceCharts({
                 borderRadius: 12,
                 color: "#f8fafc",
               }}
-              formatter={(value) => currency.format(Number(value))}
+              formatter={(value) => formatCurrency(Number(value), "whole")}
             />
             <Legend
               verticalAlign="bottom"

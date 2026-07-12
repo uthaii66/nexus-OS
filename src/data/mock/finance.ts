@@ -11,6 +11,7 @@ import type {
   HomeContribution,
   SavingsAllocation,
 } from "@/types/finance"
+import { formatCurrency } from "@/lib/utils"
 
 export const financeAccounts: FinanceAccount[] = [
   {
@@ -455,14 +456,11 @@ export const financeDashboardData: FinanceDashboardData = {
 
 
 export const debtTrackerItems: DebtTrackerItem[] = [
-  { id: "hari-loan", name: "Hari Loan", totalAmount: 75000, paidAmount: 50000, remainingAmount: 25000, completionPercent: 66.7, status: "active" },
+  { id: "hari-loan", name: "Hari Loan", totalAmount: 75000, paidAmount: 75000, remainingAmount: 0, completionPercent: 100, status: "completed" },
   { id: "mano-loan", name: "Mano Loan", totalAmount: 100000, paidAmount: 50000, remainingAmount: 50000, completionPercent: 50, status: "active" },
-  { id: "cp-loan", name: "CP Loan", totalAmount: 20000, paidAmount: 20000, remainingAmount: 0, completionPercent: 100, status: "completed" },
   { id: "marriage-loan", name: "Marriage Loan", totalAmount: 75000, paidAmount: 75000, remainingAmount: 0, completionPercent: 100, status: "completed" },
   { id: "gold-loan", name: "Gold Loan", totalAmount: 104000, paidAmount: 16500, remainingAmount: 87500, completionPercent: 15.9, status: "active" },
   { id: "mom-gold", name: "Mom Gold", totalAmount: 110000, paidAmount: 0, remainingAmount: 110000, completionPercent: 0, status: "active" },
-  { id: "bracelet", name: "Bracelet", totalAmount: 50000, paidAmount: 0, remainingAmount: 50000, completionPercent: 0, status: "active" },
-  { id: "parker-loan", name: "Parker Loan", totalAmount: 200000, paidAmount: 200000, remainingAmount: 0, completionPercent: 100, status: "completed" },
   { id: "renji-loan", name: "Renji Loan", totalAmount: 400000, paidAmount: 121563, remainingAmount: 278437, completionPercent: 30.4, status: "active", note: "Updated in February" },
 ]
 
@@ -490,9 +488,9 @@ export const savingsAllocations: SavingsAllocation[] = [
   { id: "dec-2025", month: "Dec 2025", auraGold: 1000, tanishqGold: 4000, chitFund: 10380, mutualFund: 3000, rdIcici: 2000, totalSavings: 20380, remarks: "Tanishq redeemed as gold" },
   { id: "jan-2026", month: "Jan 2026", auraGold: 1000, tanishqGold: 4000, chitFund: 10380, mutualFund: 4000, rdIcici: 2000, totalSavings: 2000, remarks: "Aura Jan–Mar sold and used for monthly expenses" },
   { id: "feb-2026", month: "Feb 2026", auraGold: 2000, tanishqGold: 2000, chitFund: 10500, mutualFund: 4000, rdIcici: 2000, totalSavings: 4000 },
-  { id: "mar-2026", month: "Mar 2026", auraGold: 2000, tanishqGold: 5000, chitFund: 18350, mutualFund: 4000, rdIcici: 2000, totalSavings: 25350, remarks: "Extra gold ₹2,000 and silver ₹1,000" },
-  { id: "apr-2026", month: "Apr 2026", auraGold: 0, tanishqGold: 5000, chitFund: 15000, mutualFund: 0, rdIcici: 2000, totalSavings: 22000, remarks: "₹8,000 mutual fund used for May expenses" },
+  { id: "mar-2026", month: "Mar 2026", auraGold: 2000, tanishqGold: 5000, chitFund: 18350, mutualFund: 4000, rdIcici: 2000, totalSavings: 25350, remarks: `Extra gold ${formatCurrency(2000, "whole")} and silver ${formatCurrency(1000, "whole")}` },
+  { id: "apr-2026", month: "Apr 2026", auraGold: 0, tanishqGold: 5000, chitFund: 15000, mutualFund: 0, rdIcici: 2000, totalSavings: 22000, remarks: `${formatCurrency(8000, "whole")} mutual fund used for May expenses` },
   { id: "may-2026", month: "May 2026", auraGold: 1000, tanishqGold: 5000, chitFund: 15000, mutualFund: 0, rdIcici: 2000, totalSavings: 23000 },
   { id: "jun-2026", month: "Jun 2026", auraGold: 1000, tanishqGold: 5000, chitFund: 27150, mutualFund: 4400, rdIcici: 2000, totalSavings: 39550 },
-  { id: "jul-2026", month: "Jul 2026", auraGold: 1000, tanishqGold: 0, chitFund: 0, mutualFund: 4400, rdIcici: 2000, totalSavings: 7400, remarks: "Aura Gold sold for approximately ₹5,000" },
+  { id: "jul-2026", month: "Jul 2026", auraGold: 1000, tanishqGold: 0, chitFund: 0, mutualFund: 4400, rdIcici: 2000, totalSavings: 7400, remarks: `Aura Gold sold for approximately ${formatCurrency(5000, "whole")}` },
 ]

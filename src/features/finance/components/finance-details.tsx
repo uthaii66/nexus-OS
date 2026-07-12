@@ -13,6 +13,7 @@ import {
 import { SectionCard } from "@/components/common/section-card"
 import { StatusBadge } from "@/components/common/status-badge"
 import { Progress } from "@/components/ui/progress"
+import { formatCurrency } from "@/lib/utils"
 import type {
   Bill,
   BudgetCategory,
@@ -31,13 +32,6 @@ interface FinanceDetailsProps {
   debts: DebtAccount[]
   transactions: Transaction[]
 }
-
-const currency = new Intl.NumberFormat("en-IN", {
-  style: "currency",
-  currency: "INR",
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 2,
-})
 
 const accountIcons = {
   checking: Landmark,
@@ -79,7 +73,7 @@ export function AccountOverview({ accounts }: AccountOverviewProps) {
               {account.name}
             </p>
             <p className="mt-1 font-display text-xl font-semibold tabular-nums text-foreground">
-              {currency.format(account.balance)}
+              {formatCurrency(account.balance)}
             </p>
             <p className="mt-2 text-xs text-muted-foreground">
               {account.institution} ·••{account.lastFour}
@@ -132,7 +126,7 @@ export function FinanceDetails({
                 <span
                   className={isOver ? "text-red-300" : "text-muted-foreground"}
                 >
-                  {currency.format(spent)} / {currency.format(budget.allocated)}
+                  {formatCurrency(spent)} / {formatCurrency(budget.allocated)}
                 </span>
               </div>
               <Progress
@@ -177,7 +171,7 @@ export function FinanceDetails({
               </div>
               <div className="text-right">
                 <p className="text-sm font-semibold tabular-nums text-foreground">
-                  {currency.format(bill.amount)}
+                  {formatCurrency(bill.amount)}
                 </p>
                 <p className="mt-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">
                   {bill.autopay ? "Autopay" : "Manual"}
@@ -222,7 +216,7 @@ export function FinanceDetails({
                   </div>
                 </div>
                 <StatusBadge tone={debt.apr > 10 ? "warning" : "info"}>
-                  {currency.format(debt.balance)}
+                  {formatCurrency(debt.balance)}
                 </StatusBadge>
               </div>
               <Progress
@@ -231,7 +225,7 @@ export function FinanceDetails({
               />
               <div className="flex items-center justify-between text-xs text-muted-foreground">
                 <span>{Math.round(paidPercent)}% repaid</span>
-                <span>Next {currency.format(debt.minimumPayment)}</span>
+                <span>Next {formatCurrency(debt.minimumPayment)}</span>
               </div>
             </article>
           )

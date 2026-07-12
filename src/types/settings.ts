@@ -1,6 +1,6 @@
 export type ThemePreference = "dark" | "system"
 export type SidebarPreference = "expanded" | "collapsed" | "remember"
-export type CurrencyPreference = "USD" | "INR" | "EUR" | "GBP"
+export type CurrencyPreference = "INR"
 export type WeightUnit = "kg" | "lb"
 export type DateFormatPreference = "MMM d, yyyy" | "dd/MM/yyyy" | "MM/dd/yyyy"
 

@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { navigationItems } from "@/components/navigation/nav-items"
 import { useUiStore } from "@/store/ui-store"
+import { formatCurrency } from "@/lib/utils"
 
 const initialNotifications = [
-  { id: "bill", title: "Barclaycard payment due", detail: "£184.20 is due on 16 July", tone: "bg-amber-300" },
+  { id: "bill", title: "Credit-card payment due", detail: `${formatCurrency(184.2)} is due on 16 July`, tone: "bg-amber-300" },
   { id: "career", title: "Follow-up window reached", detail: "Capital One and Vanguard applications", tone: "bg-indigo-300" },
   { id: "project", title: "Project task is blocked", detail: "Terra-Zone deployment checklist", tone: "bg-red-300" },
 ]

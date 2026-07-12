@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { useCareerStore } from "@/store/career-store"
+import { formatCurrency } from "@/lib/utils"
 import { APPLICATION_STAGES, type JobApplication } from "@/types/career"
 
 import {
@@ -283,7 +284,7 @@ export function ApplicationFormDialog({
             <Field label="Salary range" htmlFor="career-salary">
               <Input
                 id="career-salary"
-                placeholder="$150k–$185k"
+                placeholder={`${formatCurrency(150000, "compact")}–${formatCurrency(185000, "compact")}`}
                 {...register("salaryRange")}
               />
             </Field>
