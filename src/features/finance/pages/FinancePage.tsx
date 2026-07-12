@@ -28,7 +28,18 @@ import { debtTrackerItems, homeContributions, savingsAllocations } from "@/data/
 import { useFinanceDashboard } from "@/features/finance/hooks/use-finance-dashboard"
 import { calculateFinanceSummary, useFinanceStore } from "@/store/finance-store"
 import type { Transaction, TransactionType } from "@/types/finance"
-import { formatCurrency } from "@/lib/utils"
+
+const currency = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  maximumFractionDigits: 0,
+})
+
+const preciseCurrency = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  minimumFractionDigits: 2,
+})
 
 export function FinancePage() {
   const reduceMotion = useReducedMotion()
@@ -64,7 +75,7 @@ export function FinancePage() {
   const metrics = [
     {
       label: "Total balance",
-      value: formatCurrency(summary.totalBalance, "precise"),
+      value: preciseCurrency.format(summary.totalBalance),
       detail: "Tracked savings value",
       trend: `+${summary.balanceChangePercent}%`,
       trendDirection: "up" as const,
@@ -73,7 +84,7 @@ export function FinancePage() {
     },
     {
       label: "Monthly income",
-      value: formatCurrency(summary.monthlyIncome, "whole"),
+      value: currency.format(summary.monthlyIncome),
       detail: "Salary + freelance",
       trend: "+6.3%",
       trendDirection: "up" as const,
@@ -82,7 +93,7 @@ export function FinancePage() {
     },
     {
       label: "Monthly spending",
-      value: formatCurrency(summary.monthlyExpenses, "whole"),
+      value: currency.format(summary.monthlyExpenses),
       detail: `${Math.max(0, 100 - (summary.monthlyExpenses / summary.monthlyBudget) * 100).toFixed(0)}% budget left`,
       trend: "−4.1%",
       trendDirection: "down" as const,
@@ -91,7 +102,7 @@ export function FinancePage() {
     },
     {
       label: "Savings reserve",
-      value: formatCurrency(summary.savings, "whole"),
+      value: currency.format(summary.savings),
       detail: "Across gold, chit fund, MF and RD",
       trend: "+7.2%",
       trendDirection: "up" as const,
@@ -100,8 +111,8 @@ export function FinancePage() {
     },
     {
       label: "Total debt",
-      value: formatCurrency(summary.totalDebt, "whole"),
-      detail: "4 active · 2 completed",
+      value: currency.format(summary.totalDebt),
+      detail: "6 active · 3 completed",
       trend: "−8.1%",
       trendDirection: "down" as const,
       icon: Landmark,
@@ -109,7 +120,7 @@ export function FinancePage() {
     },
     {
       label: "Budget remaining",
-      value: formatCurrency(summary.budgetRemaining, "whole"),
+      value: currency.format(summary.budgetRemaining),
       detail: `${summary.savingsRate.toFixed(1)}% savings rate`,
       trend: summary.budgetRemaining >= 0 ? "On track" : "Over budget",
       trendDirection:

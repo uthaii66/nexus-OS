@@ -3,7 +3,6 @@ import type {
   FutureAgent,
   InsightTrendPoint,
 } from "@/types/insights"
-import { formatCurrency } from "@/lib/utils"
 
 export const mockInsights: DashboardInsight[] = [
   {
@@ -13,7 +12,7 @@ export const mockInsights: DashboardInsight[] = [
     summary:
       "Dining and transport are the main sources of this month’s increase.",
     evidence:
-      `${formatCurrency(842, "whole")} across those categories versus ${formatCurrency(618, "whole")} at the same point in June.`,
+      "£842 across those categories versus £618 at the same point in June.",
     sentiment: "attention",
     metric: "+12%",
     comparison: "month over month",

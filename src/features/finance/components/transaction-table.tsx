@@ -27,7 +27,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useFinanceStore } from "@/store/finance-store"
-import { formatCurrency } from "@/lib/utils"
 import {
   transactionCategories,
   type Transaction,
@@ -51,6 +50,12 @@ const initialFilters: TransactionFilters = {
   minAmount: "",
   maxAmount: "",
 }
+
+const currency = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  minimumFractionDigits: 2,
+})
 
 export function TransactionTable({
   transactions,
@@ -167,7 +172,7 @@ export function TransactionTable({
           }`}
         >
           {transaction.type === "income" ? "+" : "−"}
-          {formatCurrency(transaction.amount, "precise")}
+          {currency.format(transaction.amount)}
         </p>
       ),
     },

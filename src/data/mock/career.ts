@@ -1,8 +1,4 @@
 import type { CareerDashboard } from "@/types/career"
-import { formatCurrency } from "@/lib/utils"
-
-const salaryRange = (minimum: number, maximum: number) =>
-  `${formatCurrency(minimum, "compact")}–${formatCurrency(maximum, "compact")}`
 
 export const mockCareerDashboard: CareerDashboard = {
   applications: [
@@ -19,7 +15,7 @@ export const mockCareerDashboard: CareerDashboard = {
       followUpDate: "2026-07-15",
       resumeVersionId: "resume-fullstack",
       source: "Employee referral",
-      salaryRange: salaryRange(165000, 188000),
+      salaryRange: "$165k–$188k",
       notes: [
         {
           id: "note-capital-1",
@@ -42,7 +38,7 @@ export const mockCareerDashboard: CareerDashboard = {
       followUpDate: "2026-07-17",
       resumeVersionId: "resume-platform",
       source: "Amazon Jobs",
-      salaryRange: salaryRange(151000, 204000),
+      salaryRange: "$151k–$204k",
       notes: [
         {
           id: "note-amazon-1",
@@ -64,7 +60,7 @@ export const mockCareerDashboard: CareerDashboard = {
       followUpDate: "2026-07-13",
       resumeVersionId: "resume-cloud",
       source: "Google Careers",
-      salaryRange: salaryRange(147000, 216000),
+      salaryRange: "$147k–$216k",
       notes: [],
       updatedAt: "2026-07-11T09:15:00+05:30",
     },
@@ -81,7 +77,7 @@ export const mockCareerDashboard: CareerDashboard = {
       followUpDate: "2026-07-14",
       resumeVersionId: "resume-fullstack",
       source: "LinkedIn",
-      salaryRange: salaryRange(135000, 170000),
+      salaryRange: "$135k–$170k",
       notes: [],
       updatedAt: "2026-07-05T21:00:00+05:30",
     },
@@ -97,7 +93,7 @@ export const mockCareerDashboard: CareerDashboard = {
       followUpDate: "2026-07-16",
       resumeVersionId: "resume-cloud",
       source: "Microsoft Careers",
-      salaryRange: salaryRange(139000, 208000),
+      salaryRange: "$139k–$208k",
       notes: [],
       updatedAt: "2026-07-11T18:05:00+05:30",
     },
@@ -114,7 +110,7 @@ export const mockCareerDashboard: CareerDashboard = {
       followUpDate: "2026-07-22",
       resumeVersionId: "resume-platform",
       source: "Recruiter outreach",
-      salaryRange: salaryRange(170000, 215000),
+      salaryRange: "$170k–$215k",
       notes: [
         {
           id: "note-coreweave-1",
@@ -135,7 +131,7 @@ export const mockCareerDashboard: CareerDashboard = {
       discoveredAt: "2026-07-10",
       resumeVersionId: "resume-fullstack",
       source: "Company careers",
-      salaryRange: salaryRange(155000, 205000),
+      salaryRange: "$155k–$205k",
       notes: [],
       updatedAt: "2026-07-10T21:10:00+05:30",
     },
@@ -149,7 +145,7 @@ export const mockCareerDashboard: CareerDashboard = {
       priority: "standard",
       discoveredAt: "2026-07-11",
       source: "Company careers",
-      salaryRange: salaryRange(172000, 258000),
+      salaryRange: "$172k–$258k",
       notes: [],
       updatedAt: "2026-07-11T20:45:00+05:30",
     },
@@ -166,7 +162,7 @@ export const mockCareerDashboard: CareerDashboard = {
       followUpDate: "2026-07-18",
       resumeVersionId: "resume-platform",
       source: "LinkedIn",
-      salaryRange: salaryRange(145000, 195000),
+      salaryRange: "$145k–$195k",
       notes: [],
       updatedAt: "2026-07-07T11:20:00+05:30",
     },
@@ -204,7 +200,7 @@ export const mockCareerDashboard: CareerDashboard = {
       followUpDate: "2026-07-12",
       resumeVersionId: "resume-platform",
       source: "Company careers",
-      salaryRange: salaryRange(185000, 223000),
+      salaryRange: "$185k–$223k",
       notes: [],
       updatedAt: "2026-07-01T19:25:00+05:30",
     },
@@ -221,7 +217,7 @@ export const mockCareerDashboard: CareerDashboard = {
       followUpDate: "2026-07-13",
       resumeVersionId: "resume-cloud",
       source: "Recruiter outreach",
-      salaryRange: salaryRange(157000, 216000),
+      salaryRange: "$157k–$216k",
       notes: [],
       updatedAt: "2026-07-06T16:10:00+05:30",
     },
@@ -238,7 +234,7 @@ export const mockCareerDashboard: CareerDashboard = {
       followUpDate: "2026-07-14",
       resumeVersionId: "resume-fullstack",
       source: "Employee referral",
-      salaryRange: salaryRange(160000, 190000),
+      salaryRange: "$160k–$190k",
       notes: [
         {
           id: "note-hubspot-1",
