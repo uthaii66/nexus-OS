@@ -1,0 +1,63 @@
+import type { AttentionAlert, LifeScore, OverviewMetric, PriorityTask, RecentActivityItem, ScheduleItem, WeeklyProgressDatum } from "@/types/overview"
+
+export const overviewPriorities: PriorityTask[] = [
+  { id: "priority-1", title: "Complete Python array practice", category: "Learning", duration: "45 min", priority: "high", completed: false },
+  { id: "priority-2", title: "Review monthly expenses", category: "Finance", duration: "25 min", priority: "medium", completed: false },
+  { id: "priority-3", title: "Finish Terra-Zone deployment task", category: "Projects", duration: "1 hr 20 min", priority: "high", completed: false },
+]
+
+export const overviewLifeScore: LifeScore = {
+  overall: 78,
+  weeklyChange: 4,
+  categories: [
+    { name: "Health", score: 74, change: 3 },
+    { name: "Finance", score: 81, change: 2 },
+    { name: "Career", score: 69, change: 6 },
+    { name: "Learning", score: 86, change: 5 },
+    { name: "Projects", score: 80, change: 1 },
+  ],
+}
+
+export const overviewMetrics: OverviewMetric[] = [
+  { id: "spending", label: "Monthly spending", value: "£2,184", trend: "6.4% lower", direction: "down", positive: true, detail: "£1,016 left", sparkline: [420, 390, 510, 370, 330, 290, 310] },
+  { id: "debt", label: "Current debt", value: "£8,460", trend: "£320 paid", direction: "down", positive: true, detail: "67% repaid", sparkline: [10.2, 9.9, 9.6, 9.3, 9.05, 8.78, 8.46] },
+  { id: "weight", label: "Current weight", value: "82.4 kg", trend: "0.6 kg", direction: "down", positive: true, detail: "Target 76 kg", sparkline: [84.2, 84, 83.6, 83.4, 83.1, 82.8, 82.4] },
+  { id: "calories", label: "Weekly calories", value: "2,080", trend: "3% on target", direction: "neutral", detail: "Daily average", sparkline: [2010, 2180, 2060, 2110, 1980, 2230, 1990] },
+  { id: "streak", label: "Study streak", value: "12 days", trend: "Best: 18", direction: "up", detail: "7.2h this week", sparkline: [25, 50, 45, 70, 55, 80, 75] },
+  { id: "problems", label: "Problems solved", value: "148", trend: "+9 this week", direction: "up", detail: "104 independent", sparkline: [2, 1, 2, 0, 1, 1, 2] },
+  { id: "applications", label: "Active applications", value: "14", trend: "+3 this month", direction: "up", detail: "4 in interview", sparkline: [7, 8, 8, 10, 11, 12, 14] },
+  { id: "projects", label: "Active projects", value: "5", trend: "2 on track", direction: "neutral", detail: "1 blocked task", sparkline: [3, 4, 4, 5, 5, 5, 5] },
+]
+
+export const overviewSchedule: ScheduleItem[] = [
+  { id: "schedule-1", title: "Python: Sliding window patterns", category: "Learning", start: "08:00", end: "08:50", date: "2026-07-12" },
+  { id: "schedule-2", title: "Strength workout · Upper body", category: "Health", start: "12:30", end: "13:20", date: "2026-07-12", location: "Home gym" },
+  { id: "schedule-3", title: "Capital One recruiter screen", category: "Career", start: "15:00", end: "15:30", date: "2026-07-12", location: "Google Meet" },
+  { id: "schedule-4", title: "Uthai Nexus weekly review", category: "Projects", start: "18:00", end: "18:40", date: "2026-07-12" },
+  { id: "schedule-5", title: "Barclaycard payment", category: "Finance", start: "09:00", end: "09:10", date: "2026-07-16" },
+]
+
+export const overviewAlerts: AttentionAlert[] = [
+  { id: "alert-1", title: "Credit-card payment due soon", description: "£184.20 is due in four days. Review the statement before marking it ready.", severity: "warning", action: "Review", route: "/finance" },
+  { id: "alert-2", title: "Two applications need follow-up", description: "Capital One and Vanguard have crossed your seven-day follow-up window.", severity: "info", action: "Open", route: "/career" },
+  { id: "alert-3", title: "Protein target missed", description: "Average protein has been below 145g for the last three tracked days.", severity: "warning", action: "Inspect", route: "/health" },
+  { id: "alert-4", title: "Terra-Zone task is blocked", description: "Deployment checklist is waiting on the environment configuration decision.", severity: "danger", action: "Resolve", route: "/projects/terra-zone" },
+]
+
+export const overviewWeeklyProgress: WeeklyProgressDatum[] = [
+  { day: "Mon", planned: 6, completed: 5, studyMinutes: 65, workout: 1, spend: 42, budget: 55 },
+  { day: "Tue", planned: 5, completed: 5, studyMinutes: 80, workout: 0, spend: 31, budget: 55 },
+  { day: "Wed", planned: 7, completed: 5, studyMinutes: 45, workout: 1, spend: 68, budget: 55 },
+  { day: "Thu", planned: 5, completed: 4, studyMinutes: 70, workout: 1, spend: 24, budget: 55 },
+  { day: "Fri", planned: 6, completed: 5, studyMinutes: 55, workout: 0, spend: 59, budget: 55 },
+  { day: "Sat", planned: 4, completed: 4, studyMinutes: 95, workout: 1, spend: 47, budget: 55 },
+  { day: "Sun", planned: 5, completed: 2, studyMinutes: 35, workout: 0, spend: 18, budget: 55 },
+]
+
+export const overviewRecentActivity: RecentActivityItem[] = [
+  { id: "activity-1", type: "health", title: "Weight logged", description: "82.4 kg · down 0.2 kg from the previous entry", time: "18 min ago" },
+  { id: "activity-2", type: "learning", title: "LeetCode problem completed", description: "Longest Substring Without Repeating Characters · independently", time: "1 hr ago" },
+  { id: "activity-3", type: "finance", title: "Expense added", description: "£24.60 · Groceries · Tesco", time: "3 hrs ago" },
+  { id: "activity-4", type: "career", title: "Application updated", description: "Capital One moved to Recruiter screen", time: "Yesterday" },
+  { id: "activity-5", type: "project", title: "Project task completed", description: "Uthai Nexus navigation architecture", time: "Yesterday" },
+]
